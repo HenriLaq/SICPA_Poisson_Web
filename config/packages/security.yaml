@@ -13,7 +13,7 @@ security:
                 search_password: password
                 default_roles: ROLE_USER
                 filter: (&(uid={0}))
-                # uid_key: uid
+                uid_key: uid
                 # extra_fields: ['email']
     firewalls:
         dev:

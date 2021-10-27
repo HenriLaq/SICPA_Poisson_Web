@@ -1,0 +1,263 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18 juil. 2015, 17:32:02
+    Author     : Gaëtan, Adrien
+*/
+thead input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+}
+.metro .dropdown-menu.drop-left {
+  left: -100%;
+}
+.float-left{
+    float:left;
+}
+
+.margin-left10{
+    margin-left: 10px;
+}
+
+.hidden{
+    display:none;
+}
+
+.link-undecor{
+    text-decoration:none;
+    color:white;
+}
+
+.display{
+    display: block;
+}
+
+.metro .input-control.label-filtre {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    background-color: #eeeeee;
+    outline: 0;
+    height: 34px;
+    width: 100%;
+}
+
+.metro .dropdown-menu.open{
+    left: 0;
+    top: 45px;
+    position: fixed;
+    height: 100%;
+}
+
+.metro .navigation-bar.fixed-top{
+  position: fixed;
+  z-index: 1060;
+  left: 0;
+  top:0;
+}
+
+
+/*****Dispositifs******/
+.tab-dispositif{
+    list-style:none;
+}
+.tab-dispositif a{
+    text-decoration: none;
+}
+.tab-dispositif a:hover{
+    font-weight: bolder;
+}
+
+#list-dispositifs>ul>li>a{
+    color:green;
+}
+
+#list-dispositifs>ul>li>ul>li>a{
+    color:blue;
+}
+
+#list-dispositifs>ul>li>ul>li>ul>li>a{
+    color:black;
+}
+/*******************/
+
+p.bonjour{
+    font-weight: bold;
+}
+
+.no-display-filtres{
+    display:none;
+}
+
+.input-control .required:after {
+    content: '*';
+    color:red;
+    margin-left: 2px;
+}
+
+.td-actions,.th-actions{
+    min-width: 62px;
+}
+
+.space-bar{
+    width: 100%;
+    border-top: solid 1px black;
+    min-height: 5px;
+}
+
+.icon-extra-large{
+    font-size: 22px;
+}
+.text-align-center{
+    text-align: center;
+}
+
+.accordion .add {
+    list-style: none;
+}
+
+label.label_form_accordeon {
+    margin: 0 0 0 0;
+}
+
+#pied_de_page{
+  padding: 5px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  text-align: center;
+  clear: both;
+  z-index:9999;
+  /*background-color:#efeae3;*/
+  background-color:#fdfdfd;
+  border-top:1px solid green;
+}
+
+.btn {
+  background: #9bb56b;
+  background-image: -webkit-linear-gradient(top, #9bb56b, #61743c);
+  background-image: -moz-linear-gradient(top, #9bb56b, #61743c);
+  background-image: -ms-linear-gradient(top, #9bb56b, #61743c);
+  background-image: -o-linear-gradient(top, #9bb56b, #61743c);
+  background-image: linear-gradient(to bottom, #9bb56b, #61743c);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 0px 20px 10px 20px;
+  text-decoration: none;
+  text-align:center;
+  margin-bottom:2px;
+  height:30px;
+}
+
+.btnniveau2 {
+  background: #158cdb;
+  background-image: -webkit-linear-gradient(top, #158cdb, #06466e);
+  background-image: -moz-linear-gradient(top, #158cdb, #06466e);
+  background-image: -ms-linear-gradient(top, #158cdb, #06466e);
+  background-image: -o-linear-gradient(top, #158cdb, #06466e);
+  background-image: linear-gradient(to bottom, #158cdb, #06466e);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 0px 20px 10px 20px;
+  text-align:center;
+  text-decoration: none;
+  display: inline-block;
+  height:30px;
+  margin-bottom:2px;
+}
+
+.btnniveau3 {
+  background: #e64747;
+  background-image: -webkit-linear-gradient(top, #e64747, #59080c);
+  background-image: -moz-linear-gradient(top, #e64747, #59080c);
+  background-image: -ms-linear-gradient(top, #e64747, #59080c);
+  background-image: -o-linear-gradient(top, #e64747, #59080c);
+  background-image: linear-gradient(to bottom, #e64747, #59080c);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 0px 20px 10px 20px;
+  text-decoration: none;
+  text-align:center;
+  display: inline-block;
+  height:30px;
+  margin-bottom:2px;
+}
+
+.btn:hover {
+  background: #b6c795;
+  background-image: -webkit-linear-gradient(top, #b6c795, #90a863);
+  background-image: -moz-linear-gradient(top, #b6c795, #90a863);
+  background-image: -ms-linear-gradient(top, #b6c795, #90a863);
+  background-image: -o-linear-gradient(top, #b6c795, #90a863);
+  background-image: linear-gradient(to bottom, #b6c795, #90a863);
+  text-decoration: none;
+}
+.btnniveau2:hover {
+  background: #66a6cc;
+  background-image: -webkit-linear-gradient(top, #66a6cc, #256f9e);
+  background-image: -moz-linear-gradient(top, #66a6cc, #256f9e);
+  background-image: -ms-linear-gradient(top, #66a6cc, #256f9e);
+  background-image: -o-linear-gradient(top, #66a6cc, #256f9e);
+  background-image: linear-gradient(to bottom, #66a6cc, #256f9e);
+  text-decoration: none;
+}
+.btnniveau3:hover {
+  background: #e0a8a8;
+  background-image: -webkit-linear-gradient(top, #e0a8a8, #a14f56);
+  background-image: -moz-linear-gradient(top, #e0a8a8, #a14f56);
+  background-image: -ms-linear-gradient(top, #e0a8a8, #a14f56);
+  background-image: -o-linear-gradient(top, #e0a8a8, #a14f56);
+  background-image: linear-gradient(to bottom, #e0a8a8, #a14f56);
+  text-decoration: none;
+}
+
+.btn2 {
+  background: #b3b9bd;
+  background-image: -webkit-linear-gradient(top, #b3b9bd, #7c7e80);
+  background-image: -moz-linear-gradient(top, #b3b9bd, #7c7e80);
+  background-image: -ms-linear-gradient(top, #b3b9bd, #7c7e80);
+  background-image: -o-linear-gradient(top, #b3b9bd, #7c7e80);
+  background-image: linear-gradient(to bottom, #b3b9bd, #7c7e80);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 0px 20px 10px 20px;
+  text-decoration: none;
+  text-align:center;
+  display: inline-block;
+  height:30px;
+  margin-bottom:2px;
+}
+
+.metro .input-control.text.rangedate input {
+  width: 30%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.fieldset1 label,
+.fieldset1 div,
+.fieldset1 span,
+.fieldset1 p {
+  display: inline;
+}

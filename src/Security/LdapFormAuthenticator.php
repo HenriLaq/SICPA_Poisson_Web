@@ -37,13 +37,18 @@ class LdapFormAuthenticator extends AbstractLoginFormAuthenticator
         $username = $request->request->get('username', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
-        return new Passport(
+
+        $passport = new Passport(
             new UserBadge($username),
             new PasswordCredentials($request->request->get('password', '')),
             [
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
             ]
         );
+
+        //dd($passport);
+
+        return $passport;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response

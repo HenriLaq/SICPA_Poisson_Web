@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #}
+		{% block stylesheets %}
+			<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/iconFont.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/docs.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/amelioration.css') }}" rel="stylesheet">
+		{% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{% block javascripts %}
+			<script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+			<script src="{{ asset('js/jquery/jquery.widget.min.js') }}"></script>
+			<script src="{{ asset('js/jquery/jquery.mousewheel.js') }}"></script>
+			<script src="{{ asset('js/load-js.js') }}"></script>
+			<script src="{{ asset('js/docs.js') }}"></script>
+			<script src="{{ asset('js/github.info.js') }}"></script>
+		{% endblock %}
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+	</body>
 </html>

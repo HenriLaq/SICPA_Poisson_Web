@@ -1,0 +1,77 @@
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.metro .page {
+  width: 980px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.description {
+  margin: 10px 0;
+}
+.show-grid .row [class*="span"] {
+  line-height: 40px;
+  background: rgba(193, 179, 123, 0.52);
+  text-align: center;
+  min-height: 10px !important;
+}
+.color-stack li,
+#icon-list li {
+  margin-bottom: 5px;
+}
+.example > img {
+  margin: 5px;
+  display: inline-block;
+}
+.example .image-container {
+  margin: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.layout {
+  min-height: 100%;
+  position: relative;
+}
+header {
+  height: 45px;
+  position: relative;
+}
+footer {
+  width: 100%;
+  height: 25px;
+}
+@media only screen and (max-width: 640px) {
+  .prettyprint,
+  .example {
+    display: none;
+  }
+}
+
+#facebox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    text-align: left;
+    display:none;
+}
+#facebox .popup {
+    position:relative;
+    border:3px solid rgba(0,0,0,0);
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    -webkit-box-shadow:0 0 18px rgba(0,0,0,0.4);
+    -moz-box-shadow:0 0 18px rgba(0,0,0,0.4);
+    box-shadow:0 0 18px rgba(0,0,0,0.4);
+}
+#facebox .content {
+    display:table;
+    width: 370px;
+    background: #fff;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+}
