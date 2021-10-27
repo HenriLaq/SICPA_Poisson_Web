@@ -8,10 +8,11 @@ security:
         my_ldap:
             ldap:
                 service: Symfony\Component\Ldap\Ldap
-                base_dn: dc=example,dc=com
-                search_dn: "cn=read-only-admin,dc=example,dc=com"
+                base_dn: dc=inra,dc=fr
+                search_dn: "cn=read-only-admin,dc=inra,dc=fr"
                 search_password: password
                 default_roles: ROLE_USER
+                filter: (&(uid={0}))
                 # uid_key: uid
                 # extra_fields: ['email']
     firewalls:
@@ -23,7 +24,7 @@ security:
             provider: my_ldap
             # form_login_ldap:
             #     service: Symfony\Component\Ldap\Ldap
-            #     dn_string: 'uid={username},dc=example,dc=com'
+            #     dn_string: 'uid={username},dc=inra,dc=fr'
             custom_authenticator: App\Security\LdapFormAuthenticator
             logout:
                 path: app_logout

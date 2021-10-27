@@ -29,8 +29,8 @@ services:
             - ldap
     Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
         arguments:
-            -   host: #intranet.inra.fr # ldap-authentification-prod.glb-pra.inra.fr # ldap.inrae.fr
-                port: 389
+            -   host: ldap-authentification.inra.fr
+                port: 636
                 # encryption: tls
                 options:
                     protocol_version: 3
