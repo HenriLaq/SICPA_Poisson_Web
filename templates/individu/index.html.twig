@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IndividuExploitation index
+{% endblock %}
+
+{% block body %}
+	<h1>IndividuExploitation index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>IdIndividuExploitation</th>
+				<th>IdIndi</th>
+				<th>IdentifiantIndi</th>
+				<th>Rfid</th>
+				<th>IdMouvement</th>
+				<th>NouvelEffectif</th>
+				<th>DateMouvement</th>
+				<th>Isentree</th>
+				<th>Issortiedefinitive</th>
+				<th>IdEspece</th>
+				<th>NomEspece</th>
+				<th>IdGenre</th>
+				<th>LibGenre</th>
+				<th>IdLot</th>
+				<th>NomLot</th>
+				<th>DateDebLot</th>
+				<th>DateFinLot</th>
+				<th>IdTest</th>
+				<th>NomTest</th>
+				<th>IdExpe</th>
+				<th>CodeExpe</th>
+				<th>IdBassin</th>
+				<th>NomBassin</th>
+				<th>IdZone</th>
+				<th>NomZone</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for individu_exploitation in individu_exploitations %}
+				<tr>
+					<td>{{ individu_exploitation.idIndividuExploitation }}</td>
+					<td>{{ individu_exploitation.idIndi }}</td>
+					<td>{{ individu_exploitation.identifiantIndi }}</td>
+					<td>{{ individu_exploitation.rfid }}</td>
+					<td>{{ individu_exploitation.idMouvement }}</td>
+					<td>{{ individu_exploitation.nouvelEffectif }}</td>
+					<td>{{ individu_exploitation.dateMouvement ? individu_exploitation.dateMouvement|date('Y-m-d') : '' }}</td>
+					<td>{{ individu_exploitation.isentree }}</td>
+					<td>{{ individu_exploitation.issortiedefinitive }}</td>
+					<td>{{ individu_exploitation.idEspece }}</td>
+					<td>{{ individu_exploitation.nomEspece }}</td>
+					<td>{{ individu_exploitation.idGenre }}</td>
+					<td>{{ individu_exploitation.libGenre }}</td>
+					<td>{{ individu_exploitation.idLot }}</td>
+					<td>{{ individu_exploitation.nomLot }}</td>
+					<td>{{ individu_exploitation.dateDebLot ? individu_exploitation.dateDebLot|date('Y-m-d') : '' }}</td>
+					<td>{{ individu_exploitation.dateFinLot ? individu_exploitation.dateFinLot|date('Y-m-d') : '' }}</td>
+					<td>{{ individu_exploitation.idTest }}</td>
+					<td>{{ individu_exploitation.nomTest }}</td>
+					<td>{{ individu_exploitation.idExpe }}</td>
+					<td>{{ individu_exploitation.codeExpe }}</td>
+					<td>{{ individu_exploitation.idBassin }}</td>
+					<td>{{ individu_exploitation.nomBassin }}</td>
+					<td>{{ individu_exploitation.idZone }}</td>
+					<td>{{ individu_exploitation.nomZone }}</td>
+					<td>
+						<a href="{{ path('individu_show', {'idIndividuExploitation': individu_exploitation.idIndividuExploitation}) }}">show</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="26">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

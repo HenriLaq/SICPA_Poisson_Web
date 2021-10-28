@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lot index
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Lot index</h1>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>IdLot</th>
+					<th>NomLot</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set newArray = [] %}
+				{% for indiv in indivs %}
+					{% if indiv.idIndi not in newArray %}
+						<tr>
+							<td>{{ indiv.idLot }}</td>
+                            <td>{{ indiv.nomLot }}</td>
+							<td>
+								{# <a href="{{ path('individu_show', {'idIndividuExploitation': Individu_exploitation.idIndividuExploitation}) }}">show</a> #}
+							</td>
+						</tr>
+						{% set newArray = newArray|merge([indiv.idIndi]) %} {# distinct results by idExpe #}
+					{% endif %}
+				{% else %}
+					<tr>
+						<td colspan="25">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	<a href="{{ path('experimentation_exploitation_new') }}">Create new</a>
+	</div>
+{% endblock %}
