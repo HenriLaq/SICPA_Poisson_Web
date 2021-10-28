@@ -53,7 +53,7 @@ class ExperimentationController extends AbstractController
      */
     public function lots(IndividuExploitationRepository $individuExploitationRepository, ExperimentationExploitation $expe): Response
     {
-        $indivs = $individuExploitationRepository->findByExpe(21);
+        $indivs = $individuExploitationRepository->findByExpe($expe->getIdExpe());
         return $this->render('individu/lots.html.twig', [
             'indivs' => $indivs
         ]);

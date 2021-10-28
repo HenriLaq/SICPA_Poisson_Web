@@ -12,6 +12,8 @@
 				<tr>
 					<th>IdLot</th>
 					<th>NomLot</th>
+                    <th>DateDebLot</th>
+                    <th>DateFinLot</th>
 					<th>actions</th>
 				</tr>
 			</thead>
@@ -22,8 +24,10 @@
 						<tr>
 							<td>{{ indiv.idLot }}</td>
                             <td>{{ indiv.nomLot }}</td>
+                            <td>{{ indiv.dateDebLot ? indiv.dateDebLot|date('Y-m-d') : '' }}</td>
+                            <td>{{ indiv.dateFinLot ? indiv.dateFinLot|date('Y-m-d') : '' }}</td>
 							<td>
-								{# <a href="{{ path('individu_show', {'idIndividuExploitation': Individu_exploitation.idIndividuExploitation}) }}">show</a> #}
+								{# <a href="{{ path('individu_show', {'idIndividuExploitation': Individu_exploitation.idIndividuExploitation}) }}">Voir l'historique des interventions</a> #}
 							</td>
 						</tr>
 						{% set newArray = newArray|merge([indiv.idIndi]) %} {# distinct results by idExpe #}
