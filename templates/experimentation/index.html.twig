@@ -10,13 +10,11 @@
 		<table class="table striped bordered">
 			<thead>
 				<tr>
-					<th>IdExpe</th>
 					<th>DateDebutExpe</th>
 					<th>DateFinExpe</th>
 					<th>NumSaisine</th>
 					<th>NomExpe</th>
 					<th>InfoExpe</th>
-					<th>IdUtilResptech</th>
 					<th>LienProtoSidex</th>
 					<th>DateDemandeOuv</th>
 					<th>InfoDemandeOuv</th>
@@ -26,26 +24,24 @@
 			</thead>
 			<tbody>
 				{% set newArray = [] %}
-				{% for experimentation_exploitation in experimentation_exploitations %}
-					{% if experimentation_exploitation.idExpe not in newArray %}
+				{% for experimentation in experimentations %}
+					{% if experimentation.idExpe not in newArray %}
 						<tr>
-							<td>{{ experimentation_exploitation.idExpe }}</td>
-							<td>{{ experimentation_exploitation.dateDebutExpe ? experimentation_exploitation.dateDebutExpe|date('Y-m-d') : '' }}</td>
-							<td>{{ experimentation_exploitation.dateFinExpe ? experimentation_exploitation.dateFinExpe|date('Y-m-d') : '' }}</td>
-							<td>{{ experimentation_exploitation.numSaisine }}</td>
-							<td>{{ experimentation_exploitation.nomExpe }}</td>
-							<td>{{ experimentation_exploitation.infoExpe }}</td>
-							<td>{{ experimentation_exploitation.idUtilResptech }}</td>
-							<td>{{ experimentation_exploitation.lienProtoSidex }}</td>
-							<td>{{ experimentation_exploitation.dateDemandeOuv ? experimentation_exploitation.dateDemandeOuv|date('Y-m-d') : '' }}</td>
-							<td>{{ experimentation_exploitation.infoDemandeOuv }}</td>
-							<td>{{ experimentation_exploitation.codeExpe }}</td>
+							<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : '' }}</td>
+							<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : '' }}</td>
+							<td>{{ experimentation.numSaisine }}</td>
+							<td>{{ experimentation.nomExpe }}</td>
+							<td>{{ experimentation.infoExpe }}</td>
+							<td>{{ experimentation.lienProtoSidex }}</td>
+							<td>{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : '' }}</td>
+							<td>{{ experimentation.infoDemandeOuv }}</td>
+							<td>{{ experimentation.codeExpe }}</td>
 							<td>
 								{# <a href="{{ path('experimentation_show', {'idExperimentationExploitation': experimentation_exploitation.idExperimentationExploitation}) }}">show</a> #}
-								<a href="{{ path('lot_index', {'idExpe': experimentation_exploitation.idExpe}) }}" class="button">Voir les lots</a>
+								<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="button">Voir les lots</a>
 							</td>
 						</tr>
-						{% set newArray = newArray|merge([experimentation_exploitation.idExpe]) %} {# distinct results by idExpe #}
+						{% set newArray = newArray|merge([experimentation.idExpe]) %} {# distinct results by idExpe #}
 					{% endif %}
 				{% else %}
 					<tr>

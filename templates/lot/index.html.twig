@@ -39,10 +39,10 @@
                 			<td>{{ lot.libTypeRelAni }}</td>
                 			<td>{{ lot.infoTypeRelAni }}</td>
 							<td>
-								{# <a href="{{ path('individu_show', {'idIndividuExploitation': Individu.idIndividuExploitation}) }}">Voir l'historique des interventions</a> #}
+								<a href="{{ path('individu_index', {'idLot': lot.idLot}) }}" class="button">Voir les individus</a>
 							</td>
 						</tr>
-						{% set newArray = newArray|merge([lot.idIndi]) %} {# distinct results by idExpe #}
+						{% set newArray = newArray|merge([lot.idLot]) %} {# distinct results by idExpe #}
 					{% endif %}
 				{% else %}
 					<tr>

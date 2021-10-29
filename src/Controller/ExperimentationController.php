@@ -19,10 +19,10 @@ class ExperimentationController extends AbstractController
     /**
      * @Route("/", name="experimentation_index")
      */
-    public function index(ExperimentationExploitationRepository $experimentationExploitationRepository): Response
+    public function index(ExperimentationExploitationRepository $experimentations): Response
     {
         return $this->render('experimentation/index.html.twig', [
-            'experimentation_exploitations' => $experimentationExploitationRepository->findAll(), 
+            'experimentations' => $experimentations->findAll(), 
             //BY UTILISATEUR
             //on pourra enlever l'équivalent du DISTINCT sur le template en faisant la requete find DISTINCT
         ]);

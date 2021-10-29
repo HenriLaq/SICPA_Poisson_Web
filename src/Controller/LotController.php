@@ -6,7 +6,6 @@ use App\Entity\ExperimentationExploitation;
 use App\Repository\LotExploitationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\IndividuExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LotController extends AbstractController

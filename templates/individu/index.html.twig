@@ -1,80 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}IndividuExploitation index
+{% block title %}Individu index
 {% endblock %}
 
 {% block body %}
-	<h1>IndividuExploitation index</h1>
+	<div class="container-fluid">
+		<h1>Individu index</h1>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>IdIndividuExploitation</th>
-				<th>IdIndi</th>
-				<th>IdentifiantIndi</th>
-				<th>Rfid</th>
-				<th>IdMouvement</th>
-				<th>NouvelEffectif</th>
-				<th>DateMouvement</th>
-				<th>Isentree</th>
-				<th>Issortiedefinitive</th>
-				<th>IdEspece</th>
-				<th>NomEspece</th>
-				<th>IdGenre</th>
-				<th>LibGenre</th>
-				<th>IdLot</th>
-				<th>NomLot</th>
-				<th>DateDebLot</th>
-				<th>DateFinLot</th>
-				<th>IdTest</th>
-				<th>NomTest</th>
-				<th>IdExpe</th>
-				<th>CodeExpe</th>
-				<th>IdBassin</th>
-				<th>NomBassin</th>
-				<th>IdZone</th>
-				<th>NomZone</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for individu_exploitation in individu_exploitations %}
+		<table class="table striped bordered">
+			<thead>
 				<tr>
-					<td>{{ individu_exploitation.idIndividuExploitation }}</td>
-					<td>{{ individu_exploitation.idIndi }}</td>
-					<td>{{ individu_exploitation.identifiantIndi }}</td>
-					<td>{{ individu_exploitation.rfid }}</td>
-					<td>{{ individu_exploitation.idMouvement }}</td>
-					<td>{{ individu_exploitation.nouvelEffectif }}</td>
-					<td>{{ individu_exploitation.dateMouvement ? individu_exploitation.dateMouvement|date('Y-m-d') : '' }}</td>
-					<td>{{ individu_exploitation.isentree }}</td>
-					<td>{{ individu_exploitation.issortiedefinitive }}</td>
-					<td>{{ individu_exploitation.idEspece }}</td>
-					<td>{{ individu_exploitation.nomEspece }}</td>
-					<td>{{ individu_exploitation.idGenre }}</td>
-					<td>{{ individu_exploitation.libGenre }}</td>
-					<td>{{ individu_exploitation.idLot }}</td>
-					<td>{{ individu_exploitation.nomLot }}</td>
-					<td>{{ individu_exploitation.dateDebLot ? individu_exploitation.dateDebLot|date('Y-m-d') : '' }}</td>
-					<td>{{ individu_exploitation.dateFinLot ? individu_exploitation.dateFinLot|date('Y-m-d') : '' }}</td>
-					<td>{{ individu_exploitation.idTest }}</td>
-					<td>{{ individu_exploitation.nomTest }}</td>
-					<td>{{ individu_exploitation.idExpe }}</td>
-					<td>{{ individu_exploitation.codeExpe }}</td>
-					<td>{{ individu_exploitation.idBassin }}</td>
-					<td>{{ individu_exploitation.nomBassin }}</td>
-					<td>{{ individu_exploitation.idZone }}</td>
-					<td>{{ individu_exploitation.nomZone }}</td>
-					<td>
-						<a href="{{ path('individu_show', {'idIndividuExploitation': individu_exploitation.idIndividuExploitation}) }}">show</a>
-					</td>
+					<th>IdentifiantIndi</th>
+					<th>Rfid</th>
+					<th>NouvelEffectif</th>
+					<th>DateMouvement</th>
+					<th>Isentree</th>
+					<th>Issortiedefinitive</th>
+					<th>NomEspece</th>
+					<th>LibGenre</th>
+					<th>NomLot</th>
+					<th>DateDebLot</th>
+					<th>DateFinLot</th>
+					<th>NomTest</th>
+					<th>CodeExpe</th>
+					<th>NomBassin</th>
+					<th>NomZone</th>
+					<th>actions</th>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="26">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
+			</thead>
+			<tbody>
+				{% set newArray = [] %}
+				{% for individu in individus %}
+					{% if individu.identifiantIndi not in newArray %}
+						<tr>
+							<td>{{ individu.identifiantIndi }}</td>
+							<td>{{ individu.rfid }}</td>
+							<td>{{ individu.nouvelEffectif }}</td>
+							<td>{{ individu.dateMouvement ? individu.dateMouvement|date('Y-m-d') : '' }}</td>
+							<td>{{ individu.isentree }}</td>
+							<td>{{ individu.issortiedefinitive }}</td>
+							<td>{{ individu.nomEspece }}</td>
+							<td>{{ individu.libGenre }}</td>
+							<td>{{ individu.nomLot }}</td>
+							<td>{{ individu.dateDebLot ? individu.dateDebLot|date('Y-m-d') : '' }}</td>
+							<td>{{ individu.dateFinLot ? individu.dateFinLot|date('Y-m-d') : '' }}</td>
+							<td>{{ individu.nomTest }}</td>
+							<td>{{ individu.codeExpe }}</td>
+							<td>{{ individu.nomBassin }}</td>
+							<td>{{ individu.nomZone }}</td>
+							<td>
+								{# <a href="{{ path('individu_show', {'idIndividuExploitation': individu.idIndividuExploitation}) }}">show</a> #}
+							</td>
+						</tr>
+						{% set newArray = newArray|merge([individu.identifiantIndi]) %} {# distinct results by idIndi #}
+					{% endif %}
+				{% else %}
+					<tr>
+						<td colspan="26">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\ExperimentationExploitation;
+use App\Entity\LotExploitation;
 use App\Entity\IndividuExploitation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,17 +10,18 @@ use App\Repository\IndividuExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/experimentation/individu")
+ * @Route("/experimentation")
  */
 class IndividuController extends AbstractController
 {
     /**
-     * @Route("/", name="individu_index")
+     * @Route("/{idLot}/individus", name="individu_index")
      */
-    public function index(IndividuExploitationRepository $individuExploitationRepository): Response
+    public function index(IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot): Response
     {
+        $individus = $individuExploitationRepository->findByLot($lot->getIdLot());
         return $this->render('individu/index.html.twig', [
-            'individu_exploitations' => $individuExploitationRepository->findAll(),
+            'individus' => $individus,
         ]);
     }
 
