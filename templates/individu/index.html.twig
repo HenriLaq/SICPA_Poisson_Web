@@ -49,7 +49,7 @@
 							<td>{{ individu.nomBassin }}</td>
 							<td>{{ individu.nomZone }}</td>
 							<td>
-								{# <a href="{{ path('individu_show', {'idIndividuExploitation': individu.idIndividuExploitation}) }}">show</a> #}
+								{# <a href="{{ path('individu_show', {'idIndividuExploitation': individu.idIndividuExploitation}) }}">Détails</a> #}
 							</td>
 						</tr>
 						{% set newArray = newArray|merge([individu.identifiantIndi]) %} {# distinct results by idIndi #}
@@ -61,5 +61,8 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<div class="navigation">
+			{{ knp_pagination_render(individus) }}
+		</div>
 	</div>
 {% endblock %}
