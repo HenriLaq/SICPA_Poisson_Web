@@ -4,10 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	<div class="container-fluid">
 		<h1>Experimentation index</h1>
 
-		<table class="table">
+		<table class="table striped bordered">
 			<thead>
 				<tr>
 					<th>IdExpe</th>
@@ -42,18 +42,19 @@
 							<td>{{ experimentation_exploitation.codeExpe }}</td>
 							<td>
 								{# <a href="{{ path('experimentation_show', {'idExperimentationExploitation': experimentation_exploitation.idExperimentationExploitation}) }}">show</a> #}
-								<a href="{{ path('experimentation_lots', {'idExpe': experimentation_exploitation.idExpe}) }}">Voir les lots</a>
+								<a href="{{ path('lot_index', {'idExpe': experimentation_exploitation.idExpe}) }}" class="button">Voir les lots</a>
 							</td>
 						</tr>
 						{% set newArray = newArray|merge([experimentation_exploitation.idExpe]) %} {# distinct results by idExpe #}
 					{% endif %}
 				{% else %}
 					<tr>
-						<td colspan="25">no records found</td>
+						<td colspan="25">Aucun résultat</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
-	<a href="{{ path('experimentation_exploitation_new') }}">Create new</a>
 	</div>
+	<a href="{{ path('experimentation_new') }}" class="button">Créer une experimentation</a>
+
 {% endblock %}

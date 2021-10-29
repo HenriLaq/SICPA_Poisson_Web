@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LotExploitation{% endblock %}
+
+{% block body %}
+    <h1>LotExploitation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdLotExploitation</th>
+                <td>{{ lot_exploitation.idLotExploitation }}</td>
+            </tr>
+            <tr>
+                <th>IdLot</th>
+                <td>{{ lot_exploitation.idLot }}</td>
+            </tr>
+            <tr>
+                <th>NomLot</th>
+                <td>{{ lot_exploitation.nomLot }}</td>
+            </tr>
+            <tr>
+                <th>DateDebLot</th>
+                <td>{{ lot_exploitation.dateDebLot ? lot_exploitation.dateDebLot|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFinLot</th>
+                <td>{{ lot_exploitation.dateFinLot ? lot_exploitation.dateFinLot|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IdExpe</th>
+                <td>{{ lot_exploitation.idExpe }}</td>
+            </tr>
+            <tr>
+                <th>IdMouvement</th>
+                <td>{{ lot_exploitation.idMouvement }}</td>
+            </tr>
+            <tr>
+                <th>IdTypeMouvement</th>
+                <td>{{ lot_exploitation.idTypeMouvement }}</td>
+            </tr>
+            <tr>
+                <th>LibMouv</th>
+                <td>{{ lot_exploitation.libMouv }}</td>
+            </tr>
+            <tr>
+                <th>InfoMouv</th>
+                <td>{{ lot_exploitation.infoMouv }}</td>
+            </tr>
+            <tr>
+                <th>IdRelAni</th>
+                <td>{{ lot_exploitation.idRelAni }}</td>
+            </tr>
+            <tr>
+                <th>DateRelAni</th>
+                <td>{{ lot_exploitation.dateRelAni ? lot_exploitation.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ValeurRelAni</th>
+                <td>{{ lot_exploitation.valeurRelAni }}</td>
+            </tr>
+            <tr>
+                <th>IdTypeRelAni</th>
+                <td>{{ lot_exploitation.idTypeRelAni }}</td>
+            </tr>
+            <tr>
+                <th>LibTypeRelAni</th>
+                <td>{{ lot_exploitation.libTypeRelAni }}</td>
+            </tr>
+            <tr>
+                <th>InfoTypeRelAni</th>
+                <td>{{ lot_exploitation.infoTypeRelAni }}</td>
+            </tr>
+            <tr>
+                <th>IdTest</th>
+                <td>{{ lot_exploitation.idTest }}</td>
+            </tr>
+            <tr>
+                <th>IdIndi</th>
+                <td>{{ lot_exploitation.idIndi }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('lot_exploitation_index') }}">back to list</a>
+
+    <a href="{{ path('lot_exploitation_edit', {'idLotExploitation': lot_exploitation.idLotExploitation}) }}">edit</a>
+
+    {{ include('lot_exploitation/_delete_form.html.twig') }}
+{% endblock %}

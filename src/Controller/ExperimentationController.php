@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ExperimentationExploitation;
+use App\Form\ExperimentationExploitationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,17 +22,19 @@ class ExperimentationController extends AbstractController
     public function index(ExperimentationExploitationRepository $experimentationExploitationRepository): Response
     {
         return $this->render('experimentation/index.html.twig', [
-            'experimentation_exploitations' => $experimentationExploitationRepository->findAll(), //BY UTILISATEUR
+            'experimentation_exploitations' => $experimentationExploitationRepository->findAll(), 
+            //BY UTILISATEUR
+            //on pourra enlever l'équivalent du DISTINCT sur le template en faisant la requete find DISTINCT
         ]);
     }
 
     /**
-     * @Route("/new", name="experimentation_exploitation_new", methods={"GET","POST"})
+     * @Route("/new", name="experimentation_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $experimentationExploitation = new ExperimentationExploitation();
-        $form = $this->createForm(ExperimentationExploitation1Type::class, $experimentationExploitation);
+        $form = $this->createForm(ExperimentationExploitationType::class, $experimentationExploitation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,23 +42,12 @@ class ExperimentationController extends AbstractController
             $entityManager->persist($experimentationExploitation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('experimentation_exploitation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('experimentation_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('experimentation_exploitation/new.html.twig', [
+        return $this->renderForm('experimentation/new.html.twig', [
             'experimentation_exploitation' => $experimentationExploitation,
             'form' => $form,
-        ]);
-    }
-
-    /**
-     * @Route("/{idExpe}/lots", name="experimentation_lots")
-     */
-    public function lots(IndividuExploitationRepository $individuExploitationRepository, ExperimentationExploitation $expe): Response
-    {
-        $indivs = $individuExploitationRepository->findByExpe($expe->getIdExpe());
-        return $this->render('individu/lots.html.twig', [
-            'indivs' => $indivs
         ]);
     }
 
