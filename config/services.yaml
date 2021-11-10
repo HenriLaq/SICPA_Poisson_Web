@@ -23,15 +23,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    Symfony\Component\Ldap\Ldap:
-        arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
-        tags:
-            - ldap
-    Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
-        arguments:
-            -   host: ldap-authentification.inra.fr
-                port: 636
-                # encryption: tls
-                options:
-                    protocol_version: 3
-                    referrals: false

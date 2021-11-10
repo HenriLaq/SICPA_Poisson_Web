@@ -3,17 +3,15 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\User:
+            algorithm: auto
+
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        my_ldap:
-            ldap:
-                service: Symfony\Component\Ldap\Ldap
-                base_dn: dc=inra,dc=fr
-                search_dn: "cn=read-only-admin,dc=inra,dc=fr"
-                search_password: password
-                default_roles: ROLE_USER
-                filter: (&(uid={0}))
-                uid_key: uid
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
                 # extra_fields: ['email']
     firewalls:
         dev:
@@ -21,10 +19,7 @@ security:
             security: false
         main:
             lazy: true
-            provider: my_ldap
-            # form_login_ldap:
-            #     service: Symfony\Component\Ldap\Ldap
-            #     dn_string: 'uid={username},dc=inra,dc=fr'
+            provider: app_user_provider
             custom_authenticator: App\Security\LdapFormAuthenticator
             logout:
                 path: app_logout
@@ -40,5 +35,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }

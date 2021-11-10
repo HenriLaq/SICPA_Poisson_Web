@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use Symfony\Component\Ldap\Ldap;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,29 +26,44 @@ class LdapFormAuthenticator extends AbstractLoginFormAuthenticator
 
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator, Ldap  $ldap)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
-        $this->ldap = $ldap;
     }
 
     public function authenticate(Request $request): PassportInterface
     {
         $username = $request->request->get('username', '');
+        $password = $request->request->get('password', '');
+        $uid = "uid=" . $username;
 
-        $request->getSession()->set(Security::LAST_USERNAME, $username);
+        $passwordCredential = new PasswordCredentials($request->request->get('password', ''));
+        $userBadge = new userBadge($username);
+        //Infos connexion ldap
+        $ldap_host = 'ldap-authentification.inra.fr';
+        $base_dn = 'dc=inra,dc=fr';
 
-        $passport = new Passport(
-            new UserBadge($username),
-            new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-            ]
-        );
+        $connect = ldap_connect($ldap_host);
+        ldap_set_option($connect, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($connect, LDAP_OPT_REFERRALS, 0);
 
-        //dd($passport);
+        $read = ldap_search($connect, $base_dn, $uid);
+        $info = ldap_get_entries($connect, $read);
 
-        return $passport;
+        if (count($info) > 1) {
+            $bind = false;
+            try {
+                $bind = ldap_bind($connect, $info[0]["dn"], $password);
+            } catch (Exception $e) {
+            }
+
+            if ($bind) {
+                $passwordCredential->markResolved(); //Connexion réussi
+            } else {
+                $userBadge = new UserBadge(-1);
+            }
+        }
+        return new Passport($userBadge, $passwordCredential, [new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token'))]);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
