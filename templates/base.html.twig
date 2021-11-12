@@ -1,32 +1,164 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>
-			{% block title %}Welcome!
-			{% endblock %}
-		</title>
-		{# Run `composer require symfony/webpack-encore-bundle` and uncomment the following Encore helpers to start using Symfony UX #}
-		{% block stylesheets %}
-			<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-			<link href="{{ asset('css/bootstrap-responsive.css') }}" rel="stylesheet">
-			<link href="{{ asset('css/iconFont.css') }}" rel="stylesheet">
-			<link href="{{ asset('css/docs.css') }}" rel="stylesheet">
-			<link href="{{ asset('css/amelioration.css') }}" rel="stylesheet">
-		{% endblock %}
+<html class="fixed sidebar-left-collapsed">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Mon appli INRAE{% endblock %}</title>
+            <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/magnific-popup/magnific-popup.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datepicker/css/datepicker3.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/plugins/datetimepicker-master/jquery.datetimepicker.css') }}">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta2/css/all.css">
 
-		{% block javascripts %}
-			<script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
-			<script src="{{ asset('js/jquery/jquery.widget.min.js') }}"></script>
-			<script src="{{ asset('js/jquery/jquery.mousewheel.js') }}"></script>
-			<script src="{{ asset('js/load-js.js') }}"></script>
-			<script src="{{ asset('js/docs.js') }}"></script>
-			<script src="{{ asset('js/github.info.js') }}"></script>
-		{% endblock %}
-	</head>
-	<body>
-		<div class="metro">
-			{% block body %}{% endblock %}
-		</div>
-	</body>
+            <!-- Specific Page Vendor CSS -->
+            <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/morris/morris.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/select2/select2.css') }}">
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/summernote/summernote.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/summernote/summernote-bs3.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css') }}">
+
+            <link href="{{ asset('main.css') }}" rel="stylesheet"></head>
+            <!-- Theme CSS -->
+            <link rel="stylesheet" href="{{ asset('assets/stylesheets/theme.css') }}">
+
+            <!-- Skin CSS -->
+            <link rel="stylesheet" href="{{ asset('assets/stylesheets/skins/default.css') }}">
+
+            <!-- Theme Custom CSS -->
+            <link rel="stylesheet" href="{{ asset('assets/stylesheets/theme-custom.css') }}">
+            <link rel="stylesheet" href="{{ asset('assets/stylesheets/perso.css') }}">
+
+            <!-- Head Libs -->
+            <script src="{{ asset('assets/dist/Chart.js')}}"></script>
+            <script src="{{ asset('assets/dist/Chart.css')}}"></script>
+            <script src="{{ asset('assets/vendor/modernizr/modernizr.js')}}"></script>
+            {# <link rel="stylesheet" href="{{ asset('bundles/bootstrap/css/bootstrap.min.css') }}"> #}
+        {% block stylesheets %}
+        {% endblock %}
+    </head>
+    <body>
+    <section class="body">
+        {% include ('header.html.twig') %}
+         <div class="inner-wrapper">
+            {% include('sidebar.html.twig') %}
+            <!-- MAIN CONTENT-->
+            <section role="main" class="content-body">
+                <header class="page-header">
+                    <h2>Mon appli INRAE</h2>
+                
+                    <div class="right-wrapper pull-right">
+                        <ol class="breadcrumbs">
+                            <li>
+                                <a href="{{ path('home') }}">
+                                    <i class="fa fa-home"></i>
+                                </a>
+                            </li>
+                        </ol>
+                
+                        <span class="sidebar-right-toggle"><i class="fa fa-chevron-left"></i></span>
+                    </div>
+                </header>
+                {% for msg in app.flashes('info') %}
+                    <div class="alert alert-success">{{ msg }}</div>
+                {% endfor %}
+                {% for msg in app.flashes('error') %}
+                    <div class="alert alert-danger">{{ msg }}</div>
+                {% endfor %}
+
+                {% block body %}{% endblock %}
+        
+            </section>
+        </div>
+                {% block body_sidebar %}{% endblock %}
+    </section>
+    <body>
+            <script src="{{ asset('assets/vendor/jquery/jquery.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js')}}"></script>
+            <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.js')}}"></script>
+            <script src="{{ asset('assets/vendor/nanoscroller/nanoscroller.js')}}"></script>
+            <script src="{{ asset('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+            <script src="{{ asset('assets/vendor/magnific-popup/magnific-popup.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-placeholder/jquery.placeholder.js')}}"></script>
+            
+            <!-- Specific Page Vendor -->
+            <script src="{{ asset('assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-appear/jquery.appear.js')}}"></script>
+            <script src="{{ asset('assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-easypiechart/jquery.easypiechart.js')}}"></script>
+            <script src="{{ asset('assets/vendor/flot/jquery.flot.js')}}"></script>
+            <script src="{{ asset('assets/vendor/flot-tooltip/jquery.flot.tooltip.js')}}"></script>
+            <script src="{{ asset('assets/vendor/flot/jquery.flot.pie.js')}}"></script>
+            <script src="{{ asset('assets/vendor/flot/jquery.flot.categories.js')}}"></script>
+            <script src="{{ asset('assets/vendor/flot/jquery.flot.resize.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-sparkline/jquery.sparkline.js')}}"></script>
+            <script src="{{ asset('assets/vendor/raphael/raphael.js')}}"></script>
+            <script src="{{ asset('assets/vendor/morris/morris.js')}}"></script>
+            <script src="{{ asset('assets/vendor/gauge/gauge.js')}}"></script>
+            <script src="{{ asset('assets/vendor/snap-svg/snap.svg.js')}}"></script>
+            <script src="{{ asset('assets/vendor/liquid-meter/liquid.meter.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-maskedinput/jquery.maskedinput.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/jquery.vmap.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/data/jquery.vmap.sampledata.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/jquery.vmap.world.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js')}}"></script>
+            <script src ="{{ asset('assets/plugins/datetimepicker-master/jquery.datetimepicker.js') }}"></script>
+            <script src="{{ asset('assets/vendor/select2/select2.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js')}}"></script>
+            <script src="{{ asset('assets/vendor/jquery-datatables-bs3/assets/js/datatables.js')}}"></script>
+            <script src="{{ asset('assets/vendor/summernote/summernote.js')}}"></script>
+            <script src="{{ asset('assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js')}}"></script>
+            
+            <!-- Theme Base, Components and Settings -->
+            <script src="{{ asset('assets/javascripts/theme.js')}}"></script>
+            
+            <!-- Theme Custom -->
+            <script src="{{ asset('assets/javascripts/theme.custom.js')}}"></script>
+            
+            <!-- Theme Initialization Files -->
+            <script src="{{ asset('assets/javascripts/theme.init.js')}}"></script>
+    {% include 'app/DatePicker/datepicker.html.twig' %}
+
+<script>
+(function() {
+    
+    var datatableInitExplo = function() {
+         $('#maTableExplo').dataTable( {
+            "scrollX"   : true,
+            "paging"    : false,
+            "ordering"  : false,
+            "info"      : false,
+            "searching" : false,
+        } );
+    };
+    $(function() {
+        datatableInitExplo();
+    });
+
+}).apply( this, [ jQuery ]);
+
+$(function(){
+    jQuery(document).ready(function() {
+            console.log("jQuery est prêt !"); 
+            $('.select2').select2();              
+        });
+      $("#fieldset1 legend").click(function(){
+        if ($("#fields").is(":visible")){$("#fields").slideUp(500);}
+        if ($("#fields").is(":hidden")){$("#fields").slideDown(500);}
+      });
+                 
+});
+</script>
+{% block javascripts %}
+{% endblock %}
+    </body>
 </html>
