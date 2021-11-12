@@ -29,31 +29,27 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% set newArray = [] %}
 				{% for individu in individus %}
-					{% if individu.identifiantIndi not in newArray %}
-						<tr>
-							<td>{{ individu.identifiantIndi }}</td>
-							<td>{{ individu.rfid }}</td>
-							<td>{{ individu.nouvelEffectif }}</td>
-							<td>{{ individu.dateMouvement ? individu.dateMouvement|date('Y-m-d') : '' }}</td>
-							<td>{{ individu.isentree }}</td>
-							<td>{{ individu.issortiedefinitive }}</td>
-							<td>{{ individu.nomEspece }}</td>
-							<td>{{ individu.libGenre }}</td>
-							<td>{{ individu.nomLot }}</td>
-							<td>{{ individu.dateDebLot ? individu.dateDebLot|date('Y-m-d') : '' }}</td>
-							<td>{{ individu.dateFinLot ? individu.dateFinLot|date('Y-m-d') : '' }}</td>
-							<td>{{ individu.nomTest }}</td>
-							<td>{{ individu.codeExpe }}</td>
-							<td>{{ individu.nomBassin }}</td>
-							<td>{{ individu.nomZone }}</td>
-							<td>
-								{# <a href="{{ path('individu_show', {'idIndividuExploitation': individu.idIndividuExploitation}) }}">Détails</a> #}
-							</td>
-						</tr>
-						{% set newArray = newArray|merge([individu.identifiantIndi]) %} {# distinct results by idIndi #}
-					{% endif %}
+					<tr>
+						<td>{{ individu.identifiantIndi }}</td>
+						<td>{{ individu.rfid }}</td>
+						<td>{{ individu.nouvelEffectif }}</td>
+						<td>{{ individu.dateMouvement ? individu.dateMouvement|date('Y-m-d') : '' }}</td>
+						<td>{{ individu.isentree }}</td>
+						<td>{{ individu.issortiedefinitive }}</td>
+						<td>{{ individu.nomEspece }}</td>
+						<td>{{ individu.libGenre }}</td>
+						<td>{{ individu.nomLot }}</td>
+						<td>{{ individu.dateDebLot ? individu.dateDebLot|date('Y-m-d') : '' }}</td>
+						<td>{{ individu.dateFinLot ? individu.dateFinLot|date('Y-m-d') : '' }}</td>
+						<td>{{ individu.nomTest }}</td>
+						<td>{{ individu.codeExpe }}</td>
+						<td>{{ individu.nomBassin }}</td>
+						<td>{{ individu.nomZone }}</td>
+						<td>
+							{# <a href="{{ path('individu_show', {'idIndividuExploitation': individu.idIndividuExploitation}) }}">Détails</a> #}
+						</td>
+					</tr>
 				{% else %}
 					<tr>
 						<td colspan="26">Aucun résultat</td>
