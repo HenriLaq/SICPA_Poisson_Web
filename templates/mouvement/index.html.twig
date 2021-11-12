@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mouvement index
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<h1>Mouvement index</h1>
+
+		<table class="table striped bordered">
+			<thead>
+				<tr>
+					<th>IdMouvement</th>
+					<th>LibMouv</th>
+					<th>InfoMouv</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set newArray = [] %}
+				{% for mouvement in mouvements %}
+					{% if mouvement.idLot not in newArray %}
+						<tr>
+							<td>{{ mouvement.idMouvement }}</td>
+							<td>{{ mouvement.libMouv }}</td>
+							<td>{{ mouvement.infoMouv }}</td>
+						</tr>
+						{% set newArray = newArray|merge([mouvement.idLot]) %}
+					{% endif %}
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

@@ -14,8 +14,6 @@
 					<th>NomLot</th>
 					<th>DateDebLot</th>
 					<th>DateFinLot</th>
-					<th>LibMouv</th>
-					<th>InfoMouv</th>
 					<th>DateRelAni</th>
 					<th>ValeurRelAni</th>
 					<th>LibTypeRelAni</th>
@@ -32,13 +30,12 @@
 							<td>{{ lot.nomLot }}</td>
 							<td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
 							<td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
-							<td>{{ lot.libMouv }}</td>
-							<td>{{ lot.infoMouv }}</td>
 							<td>{{ lot.dateRelAni ? lot.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
 							<td>{{ lot.valeurRelAni }}</td>
 							<td>{{ lot.libTypeRelAni }}</td>
 							<td>{{ lot.infoTypeRelAni }}</td>
 							<td>
+								<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="button">Voir les mouvements</a>
 								<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="button">Voir les individus</a>
 							</td>
 						</tr>

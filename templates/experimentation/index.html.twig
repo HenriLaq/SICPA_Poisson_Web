@@ -37,11 +37,11 @@
 							<td>{{ experimentation.infoDemandeOuv }}</td>
 							<td>{{ experimentation.codeExpe }}</td>
 							<td>
-								{# <a href="{{ path('experimentation_show', {'idExperimentationExploitation': experimentation_exploitation.idExperimentationExploitation}) }}">show</a> #}
 								<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="button">Voir les lots</a>
 							</td>
 						</tr>
-						{% set newArray = newArray|merge([experimentation.idExpe]) %} {# distinct results by idExpe #}
+						{% set newArray = newArray|merge([experimentation.idExpe]) %}
+						{# distinct results by idExpe #}
 					{% endif %}
 				{% else %}
 					<tr>
