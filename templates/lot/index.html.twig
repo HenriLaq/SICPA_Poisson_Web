@@ -11,16 +11,16 @@
 			<thead>
 				<tr>
 					<th>IdLot</th>
-                	<th>NomLot</th>
-                	<th>DateDebLot</th>
-                	<th>DateFinLot</th>
-                	<th>LibMouv</th>
-                	<th>InfoMouv</th>
-                	<th>DateRelAni</th>
-                	<th>ValeurRelAni</th>
-                	<th>LibTypeRelAni</th>
-                	<th>InfoTypeRelAni</th>
-                	<th>actions</th>
+					<th>NomLot</th>
+					<th>DateDebLot</th>
+					<th>DateFinLot</th>
+					<th>LibMouv</th>
+					<th>InfoMouv</th>
+					<th>DateRelAni</th>
+					<th>ValeurRelAni</th>
+					<th>LibTypeRelAni</th>
+					<th>InfoTypeRelAni</th>
+					<th>actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,20 +29,21 @@
 					{% if lot.idLot not in newArray %}
 						<tr>
 							<td>{{ lot.idLot }}</td>
-                            <td>{{ lot.nomLot }}</td>
-                            <td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
-                            <td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
+							<td>{{ lot.nomLot }}</td>
+							<td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
+							<td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
 							<td>{{ lot.libMouv }}</td>
-                			<td>{{ lot.infoMouv }}</td>
-                			<td>{{ lot.dateRelAni ? lot.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
-                			<td>{{ lot.valeurRelAni }}</td>
-                			<td>{{ lot.libTypeRelAni }}</td>
-                			<td>{{ lot.infoTypeRelAni }}</td>
+							<td>{{ lot.infoMouv }}</td>
+							<td>{{ lot.dateRelAni ? lot.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
+							<td>{{ lot.valeurRelAni }}</td>
+							<td>{{ lot.libTypeRelAni }}</td>
+							<td>{{ lot.infoTypeRelAni }}</td>
 							<td>
-								<a href="{{ path('individu_index', {'idLot': lot.idLot}) }}" class="button">Voir les individus</a>
+								<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="button">Voir les individus</a>
 							</td>
 						</tr>
-						{% set newArray = newArray|merge([lot.idLot]) %} {# distinct results by idExpe #}
+						{% set newArray = newArray|merge([lot.idLot]) %}
+						{# distinct results by idExpe #}
 					{% endif %}
 				{% else %}
 					<tr>

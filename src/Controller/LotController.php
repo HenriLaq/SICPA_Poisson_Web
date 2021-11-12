@@ -17,7 +17,8 @@ class LotController extends AbstractController
     {
         $lots = $lotExploitationRepository->findByExpe($expe->getIdExpe());
         return $this->render('lot/index.html.twig', [
-            'lots' => $lots
+            'lots' => $lots,
+            'idExpe' => $expe->getIdExpe()
         ]);
     }
 }

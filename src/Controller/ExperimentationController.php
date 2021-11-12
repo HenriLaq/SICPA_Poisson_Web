@@ -22,7 +22,7 @@ class ExperimentationController extends AbstractController
     public function index(ExperimentationExploitationRepository $experimentations): Response
     {
         return $this->render('experimentation/index.html.twig', [
-            'experimentations' => $experimentations->findAll(), 
+            'experimentations' => $experimentations->findAll(),
             //BY UTILISATEUR
             //on pourra enlever l'équivalent du DISTINCT sur le template en faisant la requete find DISTINCT
         ]);
@@ -60,5 +60,4 @@ class ExperimentationController extends AbstractController
             'experimentation_exploitation' => $experimentationExploitation,
         ]);
     }
-    
 }

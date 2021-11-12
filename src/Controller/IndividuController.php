@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\LotExploitation;
 use App\Entity\IndividuExploitation;
+use App\Entity\ExperimentationExploitation;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,14 +13,14 @@ use App\Repository\IndividuExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/experimentation/lot")
+ * @Route("/experimentation")
  */
 class IndividuController extends AbstractController
 {
     /**
-     * @Route("/{idLot}/individus", name="individu_index")
+     * @Route("/{idExpe}/lot/{idLot}/individus", name="individu_index")
      */
-    public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator): Response
+    public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator, ExperimentationExploitation $expe): Response
     {
         $individus = $individuExploitationRepository->findByLot($lot->getIdLot());
         $individus = $paginator->paginate(
@@ -33,7 +34,7 @@ class IndividuController extends AbstractController
     }
 
     /**
-     * @Route("/{idIndividuExploitation}", name="individu_show", methods={"GET"})
+     * @Route("/lot/{idIndividuExploitation}", name="individu_show", methods={"GET"})
      */
     public function show(IndividuExploitation $individuExploitation): Response
     {
