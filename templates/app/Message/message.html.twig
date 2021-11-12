@@ -1,0 +1,30 @@
+    <script src="{{ asset('bundles/app/js/metro/notify.js') }}"></script>
+    <script type="text/javascript">
+        function notifyError(description,type) //default type error
+        {
+                var data = {bgcolor:"black",color:"white",title:"Information"};
+                if(type=="err")
+                     data = {bgcolor:"red",color:"white",title:"Erreur"};
+                if(type=="del")
+                     data = {bgcolor:"red",color:"white",title:"Suppression"};
+
+                $.Notify({
+                    caption: data.title,
+                    content: description,
+                    style: {
+                        background: data.bgcolor, 
+                        color: data.color,
+                    }
+                });
+                $( ".metro.notify-container" ).draggable({live:true});
+        }
+        {% if (app.session.flashbag.keys|length)>0 %}
+        $(document).ready(function(){
+            {% for type, flashs in app.session.flashbag.all() %}
+                {% for message in flashs %}
+                    notifyError("{{message}}","{{type}}");
+                {% endfor %}
+            {%endfor%}
+        });
+        {%endif%}
+    </script>

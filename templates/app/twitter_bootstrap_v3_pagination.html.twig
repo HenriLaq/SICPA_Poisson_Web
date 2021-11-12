@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Twitter Bootstrap v3 Sliding pagination control implementation.
+ *
+ * View that can be used with the pagination module
+ * from the Twitter Bootstrap CSS Toolkit
+ * http://getbootstrap.com/components/#pagination
+ *
+ * @author Pablo Díez <pablodip@gmail.com>
+ * @author Jan Sorgalla <jsorgalla@gmail.com>
+ * @author Artem Ponomarenko <imenem@inbox.ru>
+ * @author Artem Zabelin <artjomzabelin@gmail.com>
+ */
+#}
+
+{% if pageCount > 1 %}
+    <div class="dataTables_wrapper no-footer"><div class="top"><div class="dataTables_paginate paging_full_numbers">
+
+    {% if previous is defined %}
+            <a class="paginate_button first" href="{{ path(route, query|merge({(pageParameterName): 1})) }}">First</a>
+            <a class="paginate_button " href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Previous</a>
+    {% else %}
+            <a class="paginate_button first disabled">First</a>
+            <a class="paginate_button disabled">Previous</a>
+    {% endif %}
+
+    {% if startPage > 1 %}
+            <a class="paginate_button " href="{{ path(route, query|merge({(pageParameterName): 1})) }}">1</a>
+        {% if startPage == 3 %}
+                <a class="paginate_button " href="{{ path(route, query|merge({(pageParameterName): 2})) }}">2</a>
+        {% elseif startPage != 2 %}
+            <a class="paginate_button  disabled">&hellip;</a>
+        {% endif %}
+    {% endif %}
+
+    {% for page in pagesInRange %}
+        {% if page != current %}
+                <a class="paginate_button " href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+        {% else %}
+                <a class="paginate_button current">{{ page }}</a>
+            </li>
+        {% endif %}
+
+    {% endfor %}
+
+    {% if pageCount > endPage %}
+        {% if pageCount > (endPage + 1) %}
+            {% if pageCount > (endPage + 2) %}
+                    <a class="paginate_button disabled">&hellip;</a>
+            {% else %}
+                    <a class="paginate_button " href="{{ path(route, query|merge({(pageParameterName): (pageCount - 1)})) }}">{{ pageCount -1 }}</a>
+            {% endif %}
+        {% endif %}
+            <a class="paginate_button " href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">{{ pageCount }}</a>
+    {% endif %}
+
+    {% if next is defined %}
+            <a class="paginate_button " rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Next</a>
+            <a class="paginate_button " rel="next" href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}">Last</a>
+    {% else %}
+            <a class="paginate_button  disabled">Next</a>
+            <a class="paginate_button disabled">Last</a>
+    {% endif %}
+</div></div></div>
+{% endif %}
