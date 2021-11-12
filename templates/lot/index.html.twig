@@ -19,29 +19,30 @@
 					<th>LibTypeRelAni</th>
 					<th>InfoTypeRelAni</th>
 					<th>actions</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				{% set newArray = [] %}
+
 				{% for lot in lots %}
-					{% if lot.idLot not in newArray %}
-						<tr>
-							<td>{{ lot.idLot }}</td>
-							<td>{{ lot.nomLot }}</td>
-							<td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
-							<td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
-							<td>{{ lot.dateRelAni ? lot.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
-							<td>{{ lot.valeurRelAni }}</td>
-							<td>{{ lot.libTypeRelAni }}</td>
-							<td>{{ lot.infoTypeRelAni }}</td>
-							<td>
-								<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="button">Voir les mouvements</a>
-								<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="button">Voir les individus</a>
-							</td>
-						</tr>
-						{% set newArray = newArray|merge([lot.idLot]) %}
-						{# distinct results by idExpe #}
-					{% endif %}
+
+					<tr>
+						<td>{{ lot.idLot }}</td>
+						<td>{{ lot.nomLot }}</td>
+						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
+						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
+						<td>{{ lot.dateRelAni ? lot.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ lot.valeurRelAni }}</td>
+						<td>{{ lot.libTypeRelAni }}</td>
+						<td>{{ lot.infoTypeRelAni }}</td>
+						<td>
+							<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les mouvements</a>
+						</td>
+						<td>
+							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
+						</td>
+					</tr>
+
 				{% else %}
 					<tr>
 						<td colspan="25">Aucun résultat</td>
@@ -49,5 +50,8 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<div class="navigation">
+			{{ knp_pagination_render(lots) }}
+		</div>
 	</div>
 {% endblock %}

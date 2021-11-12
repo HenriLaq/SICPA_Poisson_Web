@@ -15,23 +15,23 @@
 					<th>InfoMouv</th>
 				</tr>
 			</thead>
-			<tbody>
-				{% set newArray = [] %}
-				{% for mouvement in mouvements %}
-					{% if mouvement.idLot not in newArray %}
-						<tr>
-							<td>{{ mouvement.idMouvement }}</td>
-							<td>{{ mouvement.libMouv }}</td>
-							<td>{{ mouvement.infoMouv }}</td>
-						</tr>
-						{% set newArray = newArray|merge([mouvement.idLot]) %}
-					{% endif %}
-				{% else %}
-					<tr>
-						<td colspan="25">Aucun résultat</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+
+			{% for mouvement in mouvements %}
+
+				<tr>
+					<td>{{ mouvement.idMouvement }}</td>
+					<td>{{ mouvement.libMouv }}</td>
+					<td>{{ mouvement.infoMouv }}</td>
+				</tr>
+
+			{% else %}
+				<tr>
+					<td colspan="25">Aucun résultat</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="navigation">
+		{{ knp_pagination_render(mouvements) }}
 	</div>
-{% endblock %}
+</div>{% endblock %}

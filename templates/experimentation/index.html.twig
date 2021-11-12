@@ -23,26 +23,21 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% set newArray = [] %}
 				{% for experimentation in experimentations %}
-					{% if experimentation.idExpe not in newArray %}
-						<tr>
-							<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : '' }}</td>
-							<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : '' }}</td>
-							<td>{{ experimentation.numSaisine }}</td>
-							<td>{{ experimentation.nomExpe }}</td>
-							<td>{{ experimentation.infoExpe }}</td>
-							<td>{{ experimentation.lienProtoSidex }}</td>
-							<td>{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : '' }}</td>
-							<td>{{ experimentation.infoDemandeOuv }}</td>
-							<td>{{ experimentation.codeExpe }}</td>
-							<td>
-								<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="button">Voir les lots</a>
-							</td>
-						</tr>
-						{% set newArray = newArray|merge([experimentation.idExpe]) %}
-						{# distinct results by idExpe #}
-					{% endif %}
+					<tr>
+						<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : '' }}</td>
+						<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : '' }}</td>
+						<td>{{ experimentation.numSaisine }}</td>
+						<td>{{ experimentation.nomExpe }}</td>
+						<td>{{ experimentation.infoExpe }}</td>
+						<td>{{ experimentation.lienProtoSidex }}</td>
+						<td>{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : '' }}</td>
+						<td>{{ experimentation.infoDemandeOuv }}</td>
+						<td>{{ experimentation.codeExpe }}</td>
+						<td>
+							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
+						</td>
+					</tr>
 				{% else %}
 					<tr>
 						<td colspan="25">Aucun résultat</td>
@@ -50,6 +45,9 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		<div class="navigation">
+			{{ knp_pagination_render(experimentations) }}
+		</div>
 	</div>
 	<a href="{{ path('experimentation_new') }}" class="button">Créer une experimentation</a>
 

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\IndividuExploitationRepository;
 use App\Repository\ExperimentationExploitationRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -19,10 +20,16 @@ class ExperimentationController extends AbstractController
     /**
      * @Route("/", name="experimentation_index")
      */
-    public function index(ExperimentationExploitationRepository $experimentations): Response
+    public function index(ExperimentationExploitationRepository $experimentationExploitationRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $experimentations = $experimentationExploitationRepository->findAllCustom();
+        $experimentations = $paginator->paginate(
+            $experimentations,
+            $request->query->getInt('page', 1),
+            25
+        );
         return $this->render('experimentation/index.html.twig', [
-            'experimentations' => $experimentations->findAll(),
+            'experimentations' => $experimentations,
             //BY UTILISATEUR
             //on pourra enlever l'équivalent du DISTINCT sur le template en faisant la requete find DISTINCT
         ]);

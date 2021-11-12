@@ -25,7 +25,7 @@ class IndividuController extends AbstractController
         $individus = $paginator->paginate(
             $individus,
             $request->query->getInt('page', 1),
-            15
+            25
         );
         return $this->render('individu/index.html.twig', [
             'individus' => $individus,
