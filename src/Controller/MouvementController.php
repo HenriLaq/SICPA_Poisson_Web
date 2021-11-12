@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\LotExploitation;
+use App\Entity\IndividuExploitation;
 use App\Entity\ExperimentationExploitation;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\LotExploitationRepository;
@@ -19,6 +20,22 @@ class MouvementController extends AbstractController
     public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, Request $request, PaginatorInterface $paginator): Response
     {
         $mouvements = $lotExploitationRepository->findMouvByExpe($expe->getIdExpe());
+        $mouvements = $paginator->paginate(
+            $mouvements,
+            $request->query->getInt('page', 1),
+            25
+        );
+        return $this->render('mouvement/index.html.twig', [
+            'mouvements' => $mouvements,
+        ]);
+    }
+
+    /**
+     * @Route("/experimentation/{idExpe}/lots/{idLot}/individu/{idIndividu}/mouvement", name="mouvement_indi_index")
+     */
+    public function index_indi(LotExploitationRepository $lotExploitationRepository, IndividuExploitation $indi, Request $request, PaginatorInterface $paginator): Response
+    {
+        $mouvements = $lotExploitationRepository->findMouvByIndi($indi->getIdExpe());
         $mouvements = $paginator->paginate(
             $mouvements,
             $request->query->getInt('page', 1),

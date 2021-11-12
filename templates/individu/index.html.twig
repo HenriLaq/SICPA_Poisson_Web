@@ -47,7 +47,7 @@
 						<td>{{ individu.nomBassin }}</td>
 						<td>{{ individu.nomZone }}</td>
 						<td>
-							{# <a href="{{ path('individu_show', {'idIndividuExploitation': individu.idIndividuExploitation}) }}">Détails</a> #}
+							<a class="btn btn-primary" href="{{ path('mouvement_indi_index', {'idIndividu': individu.idIndi, 'idLot': individu.idLot, 'idExpe': idExpe}) }}">Voir les mouvements</a>
 						</td>
 					</tr>
 				{% else %}

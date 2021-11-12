@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ExperimentationExploitation;
 use App\Entity\LotExploitation;
 use App\Entity\IndividuExploitation;
 use Knp\Component\Pager\PaginatorInterface;
@@ -19,7 +20,7 @@ class IndividuController extends AbstractController
     /**
      * @Route("/{idExpe}/lot/{idLot}/individus", name="individu_index")
      */
-    public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator): Response
+    public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator, ExperimentationExploitation $expe): Response
     {
         $individus = $individuExploitationRepository->findByLot($lot->getIdLot());
         $individus = $paginator->paginate(
@@ -29,6 +30,7 @@ class IndividuController extends AbstractController
         );
         return $this->render('individu/index.html.twig', [
             'individus' => $individus,
+            'idExpe' => $expe->getIdExpe()
         ]);
     }
 
