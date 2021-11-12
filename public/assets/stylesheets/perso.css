@@ -1,0 +1,43 @@
+table.dataTable thead {background-color:rgb(39,86,98);color:white; }
+table.dataTable tfoot {background-color:rgb(39,86,98);color:white;}
+.fg-success {
+  color:rgb(39,86,98);
+}
+
+.fg-red {
+  color:#ce352c;
+}
+
+.bg-red {
+  color: #ce352c !important;
+}
+
+#fieldset1
+{
+    border:2px solid green;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;  
+    border-radius:8px;  
+    padding:10px;
+}
+
+legend {
+  padding: 0.2em 0.5em;
+  border:1px solid green;
+  color:green;
+  font-size:90%;
+  text-align:left;
+  margin-left:20px;
+  width:60px;
+  background-color: white;
+  }
+
+#fieldset1:hover {
+  background:white;
+  cursor: pointer;
+}
+
+.radiobox label { margin-right:20px;}
+.radiobox input {
+    margin-right:5px;
+}
