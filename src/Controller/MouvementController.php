@@ -14,9 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MouvementController extends AbstractController
 {
+
     /**
      * @Route("/experimentation/{idExpe}/lots/{idLot}/mouvement", name="mouvement_index")
      */
+    /*
     public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, Request $request, PaginatorInterface $paginator): Response
     {
         $mouvements = $lotExploitationRepository->findMouvByExpe($expe->getIdExpe());
@@ -29,11 +31,12 @@ class MouvementController extends AbstractController
             'mouvements' => $mouvements,
         ]);
     }
+    */
 
     /**
      * @Route("/experimentation/{idExpe}/lots/{idLot}/individu/{idIndividu}/mouvement", name="mouvement_indi_index")
      */
-    public function index_indi(LotExploitationRepository $lotExploitationRepository, IndividuExploitation $indi, Request $request, PaginatorInterface $paginator): Response
+    public function index_indi(LotExploitationRepository $lotExploitationRepository, IndividuExploitation $indi, Request $request, PaginatorInterface $paginator, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
         $mouvements = $lotExploitationRepository->findMouvByIndi($indi->getIdExpe());
         $mouvements = $paginator->paginate(
@@ -42,6 +45,8 @@ class MouvementController extends AbstractController
             25
         );
         return $this->render('mouvement/index.html.twig', [
+            'idExpe' => $expe->getIdExpe(),
+            'idLot' => $lot->getIdLot(),
             'mouvements' => $mouvements,
         ]);
     }

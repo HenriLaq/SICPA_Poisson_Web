@@ -27,9 +27,9 @@
 
 					<tr>
 						<td>{{ lot.nomLot }}</td>
-						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
-						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
-						<td>{{ lot.dateRelAni ? lot.dateRelAni|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
+						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
+						<td>{{ lot.dateRelAni ? lot.dateRelAni|date('d-m-Y H:i:s') : '' }}</td>
 						<td>{{ lot.valeurRelAni }}</td>
 						<td>{{ lot.libTypeRelAni }}</td>
 						<td>{{ lot.infoTypeRelAni }}</td>
@@ -45,8 +45,11 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		
 		<div class="navigation">
 			{{ knp_pagination_render(lots) }}
 		</div>
+		<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>
+		<a class="btn btn-primary" href="{{ path('lot_index_all', {'idExpe': idExpe}) }}" class="btn btn-primary">Afficher les lots fermés</a>
 	</div>
 {% endblock %}

@@ -30,7 +30,7 @@
 					<tr>
 						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nouvelEffectif }}</td>
-						<td>{{ individu.dateMouvement ? individu.dateMouvement|date('Y-m-d') : '' }}</td>
+						<td>{{ individu.dateMouvement ? individu.dateMouvement|date('d-m-Y') : '' }}</td>
 						<td>
 							{% if individu.isentree == 1 %}
 								Oui
@@ -53,7 +53,7 @@
 						<td>{{ individu.nomBassin }}</td>
 						<td>{{ individu.nomZone }}</td>
 						<td>
-							<a class="btn btn-primary" href="{{ path('mouvement_indi_index', {'idIndividu': individu.idIndi, 'idLot': individu.idLot, 'idExpe': idExpe}) }}">Voir les mouvements</a>
+							<a class="btn btn-primary" href="{{ path('mouvement_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les mouvements</a>
 						</td>
 					</tr>
 				{% else %}
@@ -66,5 +66,7 @@
 		<div class="navigation">
 			{{ knp_pagination_render(individus) }}
 		</div>
+		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+		<a class="btn btn-primary" href="{{ path('lot_index_all', {'idExpe': idExpe}) }}" class="btn btn-primary">Afficher les individus sortis</a>
 	</div>
 {% endblock %}

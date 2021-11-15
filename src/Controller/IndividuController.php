@@ -29,6 +29,7 @@ class IndividuController extends AbstractController
             25
         );
         return $this->render('individu/index.html.twig', [
+            'idLot' => $lot->getIdLot(),
             'individus' => $individus,
             'idExpe' => $expe->getIdExpe()
         ]);

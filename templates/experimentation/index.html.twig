@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid fadeInUp">
+	<div class="container-fluid">
 		<h1>Experimentation index</h1>
 
 		<table class="table table-bordered table-hover">
@@ -27,13 +27,13 @@
 				{% for experimentation in experimentations %}
 					<tr>
 						<td>{{ experimentation.codeExpe }}</td>
-						<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : '' }}</td>
-						<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : '' }}</td>
+						<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('d-m-Y') : '' }}</td>
+						<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : '' }}</td>
 						<td>{{ experimentation.numSaisine }}</td>
 						<td>{{ experimentation.nomExpe }}</td>
 						<td>{{ experimentation.infoExpe }}</td>
 						<td>{{ experimentation.lienProtoSidex }}</td>
-						<td>{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : '' }}</td>
+						<td>{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : '' }}</td>
 						<td>{{ experimentation.infoDemandeOuv }}</td>
 						<td>
 							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
