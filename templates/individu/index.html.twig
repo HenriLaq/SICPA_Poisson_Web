@@ -7,41 +7,47 @@
 	<div class="container-fluid">
 		<h1>Individu index</h1>
 
-		<table class="table striped bordered">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>IdentifiantIndi</th>
 					<th>Rfid</th>
-					<th>NouvelEffectif</th>
-					<th>DateMouvement</th>
-					<th>Isentree</th>
-					<th>Issortiedefinitive</th>
-					<th>NomEspece</th>
-					<th>LibGenre</th>
-					<th>NomLot</th>
-					<th>DateDebLot</th>
-					<th>DateFinLot</th>
-					<th>NomTest</th>
-					<th>CodeExpe</th>
-					<th>NomBassin</th>
-					<th>NomZone</th>
+					<th>Effectif</th>
+					<th>Date Mouvement</th>
+					<th>Entrée</th>
+					<th>Sortie</th>
+					<th>Espece</th>
+					<th>Genre</th>
+					<th>Lot</th>
+					<th>Nom Test</th>
+					<th>Code Expe</th>
+					<th>Nom Bassin</th>
+					<th>Nom Zone</th>
 					<th>actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for individu in individus %}
 					<tr>
-						<td>{{ individu.identifiantIndi }}</td>
 						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nouvelEffectif }}</td>
 						<td>{{ individu.dateMouvement ? individu.dateMouvement|date('Y-m-d') : '' }}</td>
-						<td>{{ individu.isentree }}</td>
-						<td>{{ individu.issortiedefinitive }}</td>
+						<td>
+							{% if individu.isentree == 1 %}
+								Oui
+							{% else %}
+								Non
+							{% endif %}
+						</td>
+						<td>
+							{% if individu.issortiedefinitive == 1 %}
+								Oui
+							{% else %}
+								Non
+							{% endif %}
+						</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
 						<td>{{ individu.nomLot }}</td>
-						<td>{{ individu.dateDebLot ? individu.dateDebLot|date('Y-m-d') : '' }}</td>
-						<td>{{ individu.dateFinLot ? individu.dateFinLot|date('Y-m-d') : '' }}</td>
 						<td>{{ individu.nomTest }}</td>
 						<td>{{ individu.codeExpe }}</td>
 						<td>{{ individu.nomBassin }}</td>

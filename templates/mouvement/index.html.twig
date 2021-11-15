@@ -7,19 +7,17 @@
 	<div class="container-fluid">
 		<h1>Mouvement index</h1>
 
-		<table class="table striped bordered">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>IdMouvement</th>
-					<th>LibMouv</th>
-					<th>InfoMouv</th>
+					<th>Libellé Mouvement</th>
+					<th>Information Mouvement</th>
 				</tr>
 			</thead>
 
 			{% for mouvement in mouvements %}
 
 				<tr>
-					<td>{{ mouvement.idMouvement }}</td>
 					<td>{{ mouvement.libMouv }}</td>
 					<td>{{ mouvement.infoMouv }}</td>
 				</tr>

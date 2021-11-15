@@ -7,17 +7,16 @@
 	<div class="container-fluid">
 		<h1>Lot index</h1>
 
-		<table class="table striped bordered">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>IdLot</th>
-					<th>NomLot</th>
-					<th>DateDebLot</th>
-					<th>DateFinLot</th>
-					<th>DateRelAni</th>
-					<th>ValeurRelAni</th>
-					<th>LibTypeRelAni</th>
-					<th>InfoTypeRelAni</th>
+					<th>Nom Lot</th>
+					<th>Debut Lot</th>
+					<th>Fin Lot</th>
+					<th>Date Releve Animal</th>
+					<th>Valeur Releve Animal</th>
+					<th>Type Releve Animal</th>
+					<th>Info Releve Animal</th>
 					<th>actions</th>
 					<th></th>
 				</tr>
@@ -27,7 +26,6 @@
 				{% for lot in lots %}
 
 					<tr>
-						<td>{{ lot.idLot }}</td>
 						<td>{{ lot.nomLot }}</td>
 						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : '' }}</td>
 						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : '' }}</td>
@@ -35,9 +33,6 @@
 						<td>{{ lot.valeurRelAni }}</td>
 						<td>{{ lot.libTypeRelAni }}</td>
 						<td>{{ lot.infoTypeRelAni }}</td>
-						<td>
-							<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les mouvements</a>
-						</td>
 						<td>
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
 						</td>

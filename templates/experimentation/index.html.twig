@@ -4,27 +4,29 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid">
+	<div class="container-fluid fadeInUp">
 		<h1>Experimentation index</h1>
 
-		<table class="table table-hover">
+		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>DateDebutExpe</th>
-					<th>DateFinExpe</th>
-					<th>NumSaisine</th>
-					<th>NomExpe</th>
-					<th>InfoExpe</th>
-					<th>LienProtoSidex</th>
-					<th>DateDemandeOuv</th>
-					<th>InfoDemandeOuv</th>
-					<th>CodeExpe</th>
-					<th>actions</th>
+					<th>Code Expe</th>
+					<th>Debut Expe</th>
+					<th>Fin Expe</th>
+					<th>Num Saisine</th>
+					<th>Nom Expe</th>
+					<th>Info Expe</th>
+					<th>Lien Proto Sidex</th>
+					<th>Demande Ouv</th>
+					<th>Information Ouv</th>
+
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for experimentation in experimentations %}
 					<tr>
+						<td>{{ experimentation.codeExpe }}</td>
 						<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : '' }}</td>
 						<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : '' }}</td>
 						<td>{{ experimentation.numSaisine }}</td>
@@ -33,7 +35,6 @@
 						<td>{{ experimentation.lienProtoSidex }}</td>
 						<td>{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : '' }}</td>
 						<td>{{ experimentation.infoDemandeOuv }}</td>
-						<td>{{ experimentation.codeExpe }}</td>
 						<td>
 							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
 						</td>
