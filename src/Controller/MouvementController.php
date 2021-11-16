@@ -38,7 +38,7 @@ class MouvementController extends AbstractController
      */
     public function index_indi(LotExploitationRepository $lotExploitationRepository, IndividuExploitation $indi, Request $request, PaginatorInterface $paginator, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
-        $mouvements = $lotExploitationRepository->findMouvByIndi($indi->getIdExpe());
+        $mouvements = $lotExploitationRepository->findMouvByIndi($indi->getIdIndi());
         $mouvements = $paginator->paginate(
             $mouvements,
             $request->query->getInt('page', 1),
