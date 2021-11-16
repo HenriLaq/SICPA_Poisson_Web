@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\ExperimentationExploitation;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Form\ExperimentationExploitationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\IndividuExploitationRepository;
 use App\Repository\ExperimentationExploitationRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -22,7 +22,10 @@ class ExperimentationController extends AbstractController
      */
     public function index(ExperimentationExploitationRepository $experimentationExploitationRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $experimentations = $experimentationExploitationRepository->findAllCustom();
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
+        $experimentations = $experimentationExploitationRepository->findByUser($user->getId(), $user->getRoles()[0]);
         $experimentations = $paginator->paginate(
             $experimentations,
             $request->query->getInt('page', 1),
@@ -30,8 +33,6 @@ class ExperimentationController extends AbstractController
         );
         return $this->render('experimentation/index.html.twig', [
             'experimentations' => $experimentations,
-            //BY UTILISATEUR
-            //on pourra enlever l'équivalent du DISTINCT sur le template en faisant la requete find DISTINCT
         ]);
     }
 
