@@ -25,7 +25,11 @@ class ExperimentationController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         //faut pas getId mais getIdutili, pour ca faut la colonne Utili dans table: demnader a sophie
-        $experimentations = $experimentationExploitationRepository->findByUser($user->getId(), $user->getRoles()[0]);
+        $experimentations = $experimentationExploitationRepository->findByUser(
+            $user->getId(),
+            $user->getRoles()[0],
+            $user->getNomUnite()
+        );
         $experimentations = $paginator->paginate(
             $experimentations,
             $request->query->getInt('page', 1),
