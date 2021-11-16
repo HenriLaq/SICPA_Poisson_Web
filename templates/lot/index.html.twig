@@ -4,6 +4,8 @@
 {% endblock %}
 
 {% block body %}
+
+
 	<div class="container-fluid">
 		<h1>Lot index</h1>
 
@@ -22,10 +24,10 @@
 				</tr>
 			</thead>
 			<tbody>
-
+				{% set i = 0 %}
 				{% for lot in lots %}
 
-					<tr>
+					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
 						<td>{{ lot.nomLot }}</td>
 						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
 						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
@@ -45,11 +47,20 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		
+
 		<div class="navigation">
 			{{ knp_pagination_render(lots) }}
 		</div>
+
+		{% if lots|length>1 %}
+			<div class="checkbox-custom chekbox-primary">
+				<input onchange="toggle_by_class({{ i }});" type="checkbox">
+				<label>Afficher les lots fermés</label>
+			</div>
+		{% endif %}
+
+		<br><br>
 		<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>
-		<a class="btn btn-primary" href="{{ path('lot_index_all', {'idExpe': idExpe}) }}" class="btn btn-primary">Afficher les lots fermés</a>
+
 	</div>
 {% endblock %}

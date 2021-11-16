@@ -26,8 +26,9 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% set i = 0 %}
 				{% for individu in individus %}
-					<tr>
+					<tr {% if individu.issortiedefinitive == 1 %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
 						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nouvelEffectif }}</td>
 						<td>{{ individu.dateMouvement ? individu.dateMouvement|date('d-m-Y') : '' }}</td>
@@ -66,7 +67,15 @@
 		<div class="navigation">
 			{{ knp_pagination_render(individus) }}
 		</div>
+
+		{% if individus|length>1 %}
+			<div class="checkbox-custom chekbox-primary">
+				<input onchange="toggle_by_class({{ i }});" type="checkbox">
+				<label>Afficher les individus sortis</label>
+			</div>
+		{% endif %}
+
+		<br><br>
 		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
-		<a class="btn btn-primary" href="{{ path('lot_index_all', {'idExpe': idExpe}) }}" class="btn btn-primary">Afficher les individus sortis</a>
 	</div>
 {% endblock %}

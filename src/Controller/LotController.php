@@ -17,23 +17,6 @@ class LotController extends AbstractController
      */
     public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, Request $request, PaginatorInterface $paginator): Response
     {
-        $lots = $lotExploitationRepository->findByExpe($expe->getIdExpe());
-        $lots = $paginator->paginate(
-            $lots,
-            $request->query->getInt('page', 1),
-            25
-        );
-        return $this->render('lot/index.html.twig', [
-            'lots' => $lots,
-            'idExpe' => $expe->getIdExpe()
-        ]);
-    }
-
-    /**
-     * @Route("/experimentation/{idExpe}/lots", name="lot_index_all")
-     */
-    public function indexAll(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, Request $request, PaginatorInterface $paginator): Response
-    {
         $lots = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
         $lots = $paginator->paginate(
             $lots,

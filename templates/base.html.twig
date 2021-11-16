@@ -129,6 +129,25 @@
     {% include 'app/DatePicker/datepicker.html.twig' %}
 
 <script>
+
+function toggle() {
+    if (document.getElementById("hide").style.display == 'none') {
+        document.getElementById("hide").style.display = '';
+    } else {
+        document.getElementById("hide").style.display = 'none';
+    }
+}
+
+function toggle_by_class(max) {
+    for(var i = 0; i < max; i++) {
+        if (document.getElementById("hide"+i).style.display == 'none') {
+            document.getElementById("hide"+i).style.display = '';
+        } else {
+            document.getElementById("hide"+i).style.display = 'none';
+        }
+    }
+}
+
 (function() {
     
     var datatableInitExplo = function() {
