@@ -4,12 +4,10 @@
 {% endblock %}
 
 {% block body %}
-
-
 	<div class="container-fluid">
 		<h1>Lot index</h1>
 
-		<table class="table table-bordered table-hover">
+		<table class="table table-bordered table-hover" id="maTable">
 			<thead>
 				<tr>
 					<th>Nom Lot</th>
@@ -47,10 +45,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
-		<div class="navigation">
-			{{ knp_pagination_render(lots) }}
-		</div>
 
 		{% if lots|length>1 %}
 			<div class="checkbox-custom chekbox-primary">

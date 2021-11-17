@@ -30,11 +30,6 @@ class ExperimentationController extends AbstractController
             $user->getRoles()[0],
             $user->getNomUnite()
         );
-        $experimentations = $paginator->paginate(
-            $experimentations,
-            $request->query->getInt('page', 1),
-            25
-        );
         return $this->render('experimentation/index.html.twig', [
             'experimentations' => $experimentations,
         ]);

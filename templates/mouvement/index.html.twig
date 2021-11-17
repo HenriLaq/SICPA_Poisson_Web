@@ -7,7 +7,7 @@
 	<div class="container-fluid">
 		<h1>Mouvement index</h1>
 
-		<table class="table table-bordered table-hover">
+		<table class="table table-bordered table-hover" id="maTable">
 			<thead>
 				<tr>
 					<th>Libellé Mouvement</th>
@@ -29,8 +29,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	<div class="navigation">
-		{{ knp_pagination_render(mouvements) }}
-	</div>
+
 	<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
 </div>{% endblock %}

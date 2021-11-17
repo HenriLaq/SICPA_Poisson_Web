@@ -1,0 +1,22 @@
+/* DATATABLES */
+thead{
+    color:#666!important;
+}
+
+.table.dataTable.no-footer{
+    border-bottom: #ddd;
+}
+
+.table.dataTable thead th, table.dataTable thead td{
+    border-bottom: #ddd;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: none;
+    color: red!important; /*change the hover text color*/
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    background: none;
+    color: red!important;
+}

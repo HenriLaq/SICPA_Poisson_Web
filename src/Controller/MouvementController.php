@@ -39,11 +39,6 @@ class MouvementController extends AbstractController
     public function index_indi(LotExploitationRepository $lotExploitationRepository, IndividuExploitation $indi, Request $request, PaginatorInterface $paginator, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
         $mouvements = $lotExploitationRepository->findMouvByIndi($indi->getIdIndi());
-        $mouvements = $paginator->paginate(
-            $mouvements,
-            $request->query->getInt('page', 1),
-            25
-        );
         return $this->render('mouvement/index.html.twig', [
             'idExpe' => $expe->getIdExpe(),
             'idLot' => $lot->getIdLot(),

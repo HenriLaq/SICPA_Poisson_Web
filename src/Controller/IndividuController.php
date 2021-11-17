@@ -23,11 +23,6 @@ class IndividuController extends AbstractController
     public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator, ExperimentationExploitation $expe): Response
     {
         $individus = $individuExploitationRepository->findByLot($lot->getIdLot());
-        $individus = $paginator->paginate(
-            $individus,
-            $request->query->getInt('page', 1),
-            25
-        );
         return $this->render('individu/index.html.twig', [
             'idLot' => $lot->getIdLot(),
             'individus' => $individus,
