@@ -73,6 +73,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $infoEquipe;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="ID_Utili", type="integer", nullable=false)
+     */
+    private $idUtili;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="ID_Equipe", type="integer", nullable=false)
+     */
+    private $idEquipe;
+
+    public function getIdUtili(): ?int
+    {
+        return $this->idUtili;
+    }
+    public function getIdEquipe(): ?int
+    {
+        return $this->idEquipe;
+    }
+
+    public function setIdUtili(int $idUtili): self
+    {
+        $this->idUtili = $idUtili;
+
+        return $this;
+    }
+    public function setIdEquipe(int $idEquipe): self
+    {
+        $this->idEquipe = $idEquipe;
+
+        return $this;
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface

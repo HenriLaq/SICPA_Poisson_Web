@@ -13,10 +13,6 @@
 					<th>Nom Lot</th>
 					<th>Debut Lot</th>
 					<th>Fin Lot</th>
-					<th>Date Releve Animal</th>
-					<th>Valeur Releve Animal</th>
-					<th>Type Releve Animal</th>
-					<th>Info Releve Animal</th>
 					<th>actions</th>
 					<th></th>
 				</tr>
@@ -29,10 +25,6 @@
 						<td>{{ lot.nomLot }}</td>
 						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
 						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
-						<td>{{ lot.dateRelAni ? lot.dateRelAni|date('d-m-Y H:i:s') : '' }}</td>
-						<td>{{ lot.valeurRelAni }}</td>
-						<td>{{ lot.libTypeRelAni }}</td>
-						<td>{{ lot.infoTypeRelAni }}</td>
 						<td>
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
 						</td>

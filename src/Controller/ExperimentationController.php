@@ -25,6 +25,7 @@ class ExperimentationController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser();
         //faut pas getId mais getIdutili, pour ca faut la colonne Utili dans table: demnader a sophie
+        //pas getnomunite mais getidunite
         $experimentations = $experimentationExploitationRepository->findByUser(
             $user->getId(),
             $user->getRoles()[0],
