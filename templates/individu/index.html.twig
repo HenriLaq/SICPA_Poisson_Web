@@ -12,16 +12,12 @@
 				<tr>
 					<th>Rfid</th>
 					<th>Effectif</th>
-					<th>Date Mouvement</th>
-					<th>Entrée</th>
 					<th>Sortie</th>
 					<th>Espece</th>
 					<th>Genre</th>
-					<th>Lot</th>
-					<th>Nom Test</th>
 					<th>Code Expe</th>
-					<th>Nom Bassin</th>
-					<th>Nom Zone</th>
+					<th>Bassin</th>
+					<th>Zone</th>
 					<th>actions</th>
 				</tr>
 			</thead>
@@ -31,14 +27,6 @@
 					<tr {% if individu.issortiedefinitive == 1 %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
 						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nouvelEffectif }}</td>
-						<td>{{ individu.dateMouvement ? individu.dateMouvement|date('d-m-Y') : '' }}</td>
-						<td>
-							{% if individu.isentree == 1 %}
-								Oui
-							{% else %}
-								Non
-							{% endif %}
-						</td>
 						<td>
 							{% if individu.issortiedefinitive == 1 %}
 								Oui
@@ -48,13 +36,12 @@
 						</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
-						<td>{{ individu.nomLot }}</td>
-						<td>{{ individu.nomTest }}</td>
 						<td>{{ individu.codeExpe }}</td>
 						<td>{{ individu.nomBassin }}</td>
 						<td>{{ individu.nomZone }}</td>
 						<td>
 							<a class="btn btn-primary" href="{{ path('mouvement_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les mouvements</a>
+							<a class="btn btn-primary" href="{{ path('releve_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les relevés</a>
 						</td>
 					</tr>
 				{% else %}

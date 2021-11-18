@@ -14,7 +14,6 @@
 					<th>Debut Lot</th>
 					<th>Fin Lot</th>
 					<th>actions</th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,11 +21,12 @@
 				{% for lot in lots %}
 
 					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
-						<td>{{ lot.nomLot }}</td>
-						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
-						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
-						<td>
+						<td class="col-sm-3">{{ lot.nomLot }}</td>
+						<td class="col-sm-3">{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
+						<td class="col-sm-3">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
+						<td class="col-sm-3">
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
+							<a href="{{ path('lot_historique', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'historique</a>
 						</td>
 					</tr>
 

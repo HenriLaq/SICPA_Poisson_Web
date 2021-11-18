@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\LotExploitation;
 use App\Entity\ExperimentationExploitation;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\LotExploitationRepository;
@@ -15,7 +16,7 @@ class LotController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lots", name="lot_index")
      */
-    public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, Request $request, PaginatorInterface $paginator): Response
+    public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe): Response
     {
         $lots = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
         return $this->render('lot/index.html.twig', [
@@ -23,4 +24,6 @@ class LotController extends AbstractController
             'idExpe' => $expe->getIdExpe()
         ]);
     }
+
+    
 }

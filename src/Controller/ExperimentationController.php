@@ -27,9 +27,10 @@ class ExperimentationController extends AbstractController
         //faut pas getId mais getIdutili, pour ca faut la colonne Utili dans table: demnader a sophie
         //pas getnomunite mais getidunite
         $experimentations = $experimentationExploitationRepository->findByUser(
-            $user->getId(),
+            $user->getIdUtili(),
             $user->getRoles()[0],
-            $user->getNomUnite()
+            $user->getIdEquipe(),
+            $user->getFinEstMembre()
         );
         return $this->render('experimentation/index.html.twig', [
             'experimentations' => $experimentations,

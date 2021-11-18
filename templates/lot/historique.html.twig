@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<h1>Historique</h1>
+
+		<table class="table table-bordered table-hover" id="maTable">
+			<thead>
+				<tr>
+					<th>Alpha</th>
+					<th>Beta</th>
+					<th>M</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for data in datas %}
+
+					<tr>
+						<td>{{ data.alpha }}</td>
+						<td>{{ data.beta }}</td>
+						<td>{{ data.m }}</td>
+					</tr>
+
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<br><br>
+		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+
+	</div>
+{% endblock %}
