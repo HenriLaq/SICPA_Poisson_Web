@@ -16,7 +16,7 @@ class MouvementController extends AbstractController
 {
 
     /**
-     * @Route("/experimentation/{idExpe}/lots/{idLot}/individu/{idIndividu}/mouvement", name="mouvement_indi_index")
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/individu/{idIndividu}/mouvement", name="mouvement_indi_index")
      */
     public function index_indi(LotExploitationRepository $lotExploitationRepository, IndividuExploitation $indi, Request $request, PaginatorInterface $paginator, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {

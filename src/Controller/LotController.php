@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LotController extends AbstractController
 {
     /**
-     * @Route("/experimentation/{idExpe}/lots", name="lot_index")
+     * @Route("/experimentation/{idExpe}/lot", name="lot_index")
      */
     public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe): Response
     {

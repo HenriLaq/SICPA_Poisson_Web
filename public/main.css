@@ -93,11 +93,13 @@
 .dataTables_wrapper .dataTables_paginate .paginate_button.link [class*="icon-"] {
   text-decoration: none !important;
 }
+/*
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {
-  background-color: #1d1d1d !important;
+  background-color: #1d1d1d!important;
   color: #ffffff !important;
   border-color: transparent;
 }
+*/
 .dataTables_wrapper .dataTables_paginate .paginate_button.large {
   padding: 11px 19px;
   font-size: 17.5px;

@@ -12,11 +12,20 @@ thead{
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: none;
-    color: red!important; /*change the hover text color*/
+    background: none!important;
+    border: none!important;
+    color: #333!important; 
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:active {
-    background: none;
-    color: red!important;
+    background: #ecedf0!important;
+    background-color: #ecedf0!important;
+    border: #ecedf0!important;
+    border-color: #ecedf0!important;
+    box-shadow:none!important;
+    color: #333!important;
 }
+
+
+
+

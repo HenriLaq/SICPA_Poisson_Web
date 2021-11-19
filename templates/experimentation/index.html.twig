@@ -11,10 +11,10 @@
 			<thead>
 				<tr>
 					<th>Code Expe</th>
+					<th>Nom Expe</th>
 					<th>Debut Expe</th>
 					<th>Fin Expe</th>
 					<th>Num Saisine</th>
-					<th>Nom Expe</th>
 					<th>Type Expe</th>
 					<th>Info Expe</th>
 					<th>Lien Proto Sidex</th>
@@ -28,10 +28,10 @@
 				{% for experimentation in experimentations %}
 					<tr>
 						<td>{{ experimentation.codeExpe }}</td>
+						<td>{{ experimentation.nomExpe }}</td>
 						<td>{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('d-m-Y') : '' }}</td>
 						<td>{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : '' }}</td>
 						<td>{{ experimentation.numSaisine }}</td>
-						<td>{{ experimentation.nomExpe }}</td>
 						<td>{{ experimentation.libTypeExperimentation }}</td>
 						<td class="col-sm-2">{{ experimentation.infoExpe }}</td>
 						<td class="col-sm-1">{{ experimentation.lienProtoSidex }}</td>
@@ -50,7 +50,5 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
-		<a href="{{ path('experimentation_new') }}" class="button">Créer une experimentation</a>
 
 	{% endblock %}

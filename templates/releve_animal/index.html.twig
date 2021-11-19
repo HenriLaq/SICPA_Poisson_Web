@@ -20,7 +20,7 @@
 			{% for releve in releves %}
 
 				<tr>
-					<td>{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
+					<td><span style="display:none;">{{ releve.dateRelAni ? releve.dateRelAni|date('Y-m-d') : ''}}</span>{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
 					<td>{{ releve.valeurRelAni }}</td>
                     <td>{{ releve.libTypeRelAni }}</td>
                     <td>{{ releve.infotypeRelAni }}</td>

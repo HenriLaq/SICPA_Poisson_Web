@@ -12,10 +12,8 @@
 				<tr>
 					<th>Rfid</th>
 					<th>Effectif</th>
-					<th>Sortie</th>
 					<th>Espece</th>
 					<th>Genre</th>
-					<th>Code Expe</th>
 					<th>Bassin</th>
 					<th>Zone</th>
 					<th>actions</th>
@@ -27,16 +25,8 @@
 					<tr {% if individu.issortiedefinitive == 1 %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
 						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nouvelEffectif }}</td>
-						<td>
-							{% if individu.issortiedefinitive == 1 %}
-								Oui
-							{% else %}
-								Non
-							{% endif %}
-						</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
-						<td>{{ individu.codeExpe }}</td>
 						<td>{{ individu.nomBassin }}</td>
 						<td>{{ individu.nomZone }}</td>
 						<td>

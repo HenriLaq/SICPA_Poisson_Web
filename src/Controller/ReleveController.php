@@ -14,7 +14,7 @@ class ReleveController extends AbstractController
 {
 
     /**
-     * @Route("/experimentation/{idExpe}/lots/{idLot}/individu/{idIndividu}/releve", name="releve_indi_index")
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/individu/{idIndividu}/releve", name="releve_indi_index")
      */
     public function index(IndividuExploitationRepository $individuExploitationRepository, IndividuExploitation $indi, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {

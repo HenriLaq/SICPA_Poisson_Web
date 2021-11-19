@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class IndividuController extends AbstractController
 {
     /**
-     * @Route("/{idExpe}/lot/{idLot}/individus", name="individu_index")
+     * @Route("/{idExpe}/lot/{idLot}/individu", name="individu_index")
      */
     public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator, ExperimentationExploitation $expe): Response
     {

@@ -38,29 +38,6 @@ class ExperimentationController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="experimentation_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $experimentationExploitation = new ExperimentationExploitation();
-        $form = $this->createForm(ExperimentationExploitationType::class, $experimentationExploitation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($experimentationExploitation);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('experimentation_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('experimentation/new.html.twig', [
-            'experimentation_exploitation' => $experimentationExploitation,
-            'form' => $form,
-        ]);
-    }
-
-    /**
      * @Route("/{idExperimentationExploitation}", name="experimentation_show", methods={"GET"})
      */
     public function show(ExperimentationExploitation $experimentationExploitation): Response
