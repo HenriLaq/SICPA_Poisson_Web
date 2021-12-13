@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\ExperimentationExploitation;
 use App\Entity\LotExploitation;
 use App\Entity\IndividuExploitation;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\IndividuExploitationRepository;
@@ -20,7 +18,7 @@ class IndividuController extends AbstractController
     /**
      * @Route("/{idExpe}/lot/{idLot}/individu", name="individu_index")
      */
-    public function index(Request $request, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, PaginatorInterface $paginator, ExperimentationExploitation $expe): Response
+    public function index(IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
         $individus = $individuExploitationRepository->findByLot($lot->getIdLot());
         return $this->render('individu/index.html.twig', [
