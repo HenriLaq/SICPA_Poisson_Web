@@ -5,23 +5,21 @@
 
 {% block body %}
 	<div class="container-fluid">
-		<h1>Historique</h1>
+		<h1>Bassin</h1>
 
 		<table class="table table-bordered table-hover" id="maTable">
 			<thead>
 				<tr>
-					<th>Lot</th>
-					<th>Espèce</th>
-					<th>Souche</th>
+					<th>Bassin</th>
+					<th>Type</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for data in datas %}
 
 					<tr>
-						<td>{{ data.nomLot }}</td>
-						<td>{{ data.nomEspece }}</td>
-						<td>{{ data.libSouche }}</td>
+						<td>{{ data.nomBassin }}</td>
+						<td>{{ data.nomTypeBassin }}</td>
 					</tr>
 
 				{% else %}

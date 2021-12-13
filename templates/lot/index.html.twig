@@ -13,6 +13,7 @@
 					<th>Nom Lot</th>
 					<th>Debut Lot</th>
 					<th>Fin Lot</th>
+					<th>Bassin</th>
 					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
 					<th>actions</th>
 				</tr>
@@ -25,6 +26,9 @@
 						<td class="col-sm-3">{{ lot.nomLot }}</td>
 						<td class="col-sm-3">{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
 						<td class="col-sm-3">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
+						<td>
+							<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe}) }}">{{ lot.nomBassin }}</a>
+						</td>
 						<td class="col-sm-3">
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
 							<a href="{{ path('lot_historique', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'historique</a>
