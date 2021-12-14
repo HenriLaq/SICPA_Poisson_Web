@@ -1,10 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lot index
+{% block title %}Lots
 {% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+  			<ol class="breadcrumb">
+    			<li class="breadcrumb-item"><a href="{{ path('experimentation_index') }}">Experimentations</a></li>
+    			<li class="breadcrumb-item active" aria-current="page">Lots</a></li>
+  			</ol>
+		</nav>
+
 		<h1>Lot index</h1>
 
 		<table class="table table-bordered table-hover" id="maTable">
@@ -14,6 +21,7 @@
 					<th>Debut Lot</th>
 					<th>Fin Lot</th>
 					<th>Bassin</th>
+					
 					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
 					<th>actions</th>
 				</tr>
@@ -23,11 +31,12 @@
 				{% for lot in lots %}
 
 					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
-						<td class="col-sm-3">{{ lot.nomLot }}</td>
-						<td class="col-sm-3">{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
-						<td class="col-sm-3">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
+						<td>{{ lot.nomLot }}</td>
+						<td>{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
+						<td>{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
+						
 						<td>
-							<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe}) }}">{{ lot.nomBassin }}</a>
+							<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe, 'bassin_nom': lot.nomBassin}) }}">{{ lot.nomBassin }}</a>
 						</td>
 						<td class="col-sm-3">
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>

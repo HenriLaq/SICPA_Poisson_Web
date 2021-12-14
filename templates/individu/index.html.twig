@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Individu index
+{% block title %}Individus
 {% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+  			<ol class="breadcrumb">
+    			<li class="breadcrumb-item"><a href="{{ path('experimentation_index') }}">Experimentations</a></li>
+				<li class="breadcrumb-item"><a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a></li>
+    			<li class="breadcrumb-item active" aria-current="page">Individus</a></li>
+  			</ol>
+		</nav>
+
 		<h1>Individu index</h1>
 
 		<table class="table table-bordered table-hover" id="maTable">

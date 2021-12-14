@@ -1,17 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Historique
+{% block title %}Bassins
 {% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
-		<h1>Bassin</h1>
+		<h1>Historique  Bassins</h1>
 
 		<table class="table table-bordered table-hover" id="maTable">
 			<thead>
 				<tr>
 					<th>Bassin</th>
 					<th>Type</th>
+					<th>Granulométrie Aliment</th>
+					<th>Coeff Aliment</th>
+					<th>Date Condition Aliment</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,6 +23,9 @@
 					<tr>
 						<td>{{ data.nomBassin }}</td>
 						<td>{{ data.nomTypeBassin }}</td>
+						<td>{{ data.granulometrieAliment }}</td>
+						<td>{{ data.coeffAlim }}</td>
+						<td>{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
 					</tr>
 
 				{% else %}
