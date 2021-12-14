@@ -5,7 +5,19 @@
 
 {% block body %}
 	<div class="container-fluid">
-		<h1>Historique  Bassins</h1>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Bassin</li>
+			</ol>
+		</nav>
+
+		<h1>Bassin</h1>
 
 		<table class="table table-bordered table-hover" id="maTable">
 			<thead>
@@ -25,7 +37,10 @@
 						<td>{{ data.nomTypeBassin }}</td>
 						<td>{{ data.granulometrieAliment }}</td>
 						<td>{{ data.coeffAlim }}</td>
-						<td>{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
+						<td>
+							<span style="display:none;">{{ data.dateConditionAlim ? data.dateConditionAlim|date('Y-m-d') : ''}}</span>
+							{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
+
 					</tr>
 
 				{% else %}

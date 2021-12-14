@@ -6,11 +6,15 @@
 {% block body %}
 	<div class="container-fluid">
 		<nav aria-label="breadcrumb">
-  			<ol class="breadcrumb">
-    			<li class="breadcrumb-item"><a href="{{ path('experimentation_index') }}">Experimentations</a></li>
-				<li class="breadcrumb-item"><a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a></li>
-    			<li class="breadcrumb-item active" aria-current="page">Historique</a></li>
-  			</ol>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Historique</li>
+			</ol>
 		</nav>
 
 		<h1>Historique</h1>
@@ -21,6 +25,9 @@
 					<th>Lot</th>
 					<th>Espèce</th>
 					<th>Souche</th>
+					<th>Bassin</th>
+					<th>Arrivée</th>
+					<th>Départ</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,6 +37,13 @@
 						<td>{{ data.nomLot }}</td>
 						<td>{{ data.nomEspece }}</td>
 						<td>{{ data.libSouche }}</td>
+						<td>{{ data.nomBassin }}</td>
+						<td>
+							<span style="display:none;">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('Y-m-d') : ''}}</span>
+							{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td>
+							<span style="display:none;">{{ data.finLocaliseLot ? data.finLocaliseLot|date('Y-m-d') : ''}}</span>
+							{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
 					</tr>
 
 				{% else %}
