@@ -13,21 +13,23 @@
 					<th>Libellé</th>
 					<th>Information</th>
 					<th>Effectif</th>
+					<th>Date</th>
 				</tr>
 			</thead>
 
 			{% for mouvement in mouvements %}
-
-				<tr>
-					<td>{{ mouvement.libMouv }}</td>
-					<td>{{ mouvement.infoMouv }}</td>
-					<td>{{ mouvement.effectifMouvement }}</td>
-				</tr>
-
+				
+					<tr>
+						<td>{{ mouvement.libMouv }}</td>
+						<td>{{ mouvement.infoMouv }}</td>
+						<td>{{ mouvement.effectifMouvement }}</td>
+						<td>{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</td>
+					</tr>
+				
 			{% else %}
 				<tr>
 					<td colspan="25">Aucun résultat</td>
-				</tr>
+				</tr>	
 			{% endfor %}
 		</tbody>
 	</table>
