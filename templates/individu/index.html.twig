@@ -14,6 +14,7 @@
 					<th>Effectif</th>
 					<th>Espece</th>
 					<th>Genre</th>
+					<th>Ploidie</th>
 					<th>actions</th>
 				</tr>
 			</thead>
@@ -25,6 +26,7 @@
 						<td>{{ individu.nouvelEffectif }}</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
+						<td>{{ individu.libPloidie }}</td>
 						<td>
 							<a class="btn btn-primary" href="{{ path('mouvement_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les mouvements</a>
 							<a class="btn btn-primary" href="{{ path('releve_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les relevés</a>
