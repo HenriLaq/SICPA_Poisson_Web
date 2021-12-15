@@ -6,42 +6,49 @@
 {% block body %}
 	<div class="container-fluid">
 		<nav aria-label="breadcrumb">
-  			<ol class="breadcrumb">
-    			<li class="breadcrumb-item"><a href="{{ path('experimentation_index') }}">Experimentations</a></li>
-				<li class="breadcrumb-item"><a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a></li>
-				<li class="breadcrumb-item"><a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}">Individus</a></li>
-    			<li class="breadcrumb-item active" aria-current="page">Mouvements</a></li>
-  			</ol>
-		</nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}">Individus</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Mouvements</li>
+			</li>
+		</ol>
+	</nav>
 
-		<h1>Mouvement index</h1>
+	<h1>Mouvements</h1>
 
-		<table class="table table-bordered table-hover" id="maTable">
-			<thead>
-				<tr>
-					<th>Libellé</th>
-					<th>Information</th>
-					<th>Effectif</th>
-					<th>Date</th>
-				</tr>
-			</thead>
+	<table class="table table-bordered table-hover" id="maTable">
+		<thead>
+			<tr>
+				<th>Libellé</th>
+				<th>Information</th>
+				<th>Effectif</th>
+				<th>Date</th>
+			</tr>
+		</thead>
 
-			{% for mouvement in mouvements %}
-				
-					<tr>
-						<td>{{ mouvement.libMouv }}</td>
-						<td>{{ mouvement.infoMouv }}</td>
-						<td>{{ mouvement.effectifMouvement }}</td>
-						<td><span style="display:none;">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
-					</tr>
-				
-			{% else %}
-				<tr>
-					<td colspan="25">Aucun résultat</td>
-				</tr>	
-			{% endfor %}
-		</tbody>
-	</table>
+		{% for mouvement in mouvements %}
 
-	<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
-</div>{% endblock %}
+			<tr>
+				<td>{{ mouvement.libMouv }}</td>
+				<td>{{ mouvement.infoMouv }}</td>
+				<td>{{ mouvement.effectifMouvement }}</td>
+				<td>
+					<span style="display:none;">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>
+					{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
+			</tr>
+
+		{% else %}
+			<tr>
+				<td colspan="25">Aucun résultat</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a></div>{% endblock %}
