@@ -25,7 +25,3 @@ thead{
     box-shadow:none!important;
     color: #333!important;
 }
-
-.dataTables_filter {
-    display:none!important;
- }
