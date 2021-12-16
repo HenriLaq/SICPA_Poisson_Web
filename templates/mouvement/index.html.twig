@@ -39,9 +39,7 @@
 				<td>{{ mouvement.libMouv }}</td>
 				<td>{{ mouvement.infoMouv }}</td>
 				<td>{{ mouvement.effectifMouvement }}</td>
-				<td>
-					<span style="display:none;">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>
-					{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
+				<td>{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
 			</tr>
 
 		{% else %}
