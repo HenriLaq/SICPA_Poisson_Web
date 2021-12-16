@@ -17,18 +17,18 @@
 
 	<h1>Lot index</h1>
 
-	<table class="table table-bordered table-hover" id="maTable">
+	<table class="table table-bordered table-hover" id="tableLot">
 		<thead>
 			<tr>
 				<th>Nom</th>
-				<th class="notexport">Debut</th>
+				<th class="notexport">Début</th>
 				<th class="hidden">Début</th>
 				<th class="notexport">Fin</th>
 				<th class="hidden">Fin</th>
 				<th>Bassin</th>
 
 				<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
-				<th>actions</th>
+				<th class="notexport">actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -50,7 +50,7 @@
 					</td>
 					<td class="col-sm-3">
 						<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
-						<a href="{{ path('lot_historique', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'historique</a>
+						<a href="{{ path('historique_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'historique</a>
 					</td>
 				</tr>
 

@@ -1,0 +1,118 @@
+<script>
+$(document).ready(function() {
+    $('.hidden').hide();
+    $('#tableExpe').DataTable({
+        select: true,
+        "responsive": true,
+        dom: "Q<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        buttons: [
+            {extend: 'copy', text:'Copier', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'csv', className: 'btn btn-primary', bom: true, exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'excel', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'pdf', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'print', text:'Imprimer', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+        ],
+        searchBuilder:{
+            columns: [0,1,3,5,6,7,8,9,11,12,13] //seul truc à changer
+        },
+        "search": {
+            "addClass": 'form-control input-lg col-xs-12'
+        },
+        "iDisplayLength": 15,
+        "language": {
+            "info": "Résultats _START_ à _END_ sur _TOTAL_.",
+            "infoEmpty": "Aucun résultat",
+            "emptyTable": "Aucune donnée dans la table",
+            "lengthMenu": "Entrées par page: _MENU_",
+            "search": "Recherche:",
+            searchPlaceholder: "Recherche",
+            "zeroRecords": "Aucun résultat",
+            "infoFiltered": "(filtrés sur _MAX_ résultats)",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent"
+            },
+            "select": {
+                "rows": {
+                    "_": " %d lignes sélectionnées",
+                    "1": " 1 ligne sélectionnée"
+                },
+            },
+            "buttons": {
+                "copyTitle": "Copié dans le presse-papier",
+                "copySuccess": {
+                    "1": "1 ligne copiée dans le presse-papier",
+                    "_": "%d lignes copiées dans le presse-papier"
+                },
+            },
+            "searchBuilder": {
+                "conditions": {
+                    "date": {
+                        "after": "Après le",
+                        "before": "Avant le",
+                        "between": "Entre",
+                        "empty": "Vide",
+                        "equals": "Egal à",
+                        "not": "Différent de",
+                        "notBetween": "Pas entre",
+                        "notEmpty": "Non vide"
+                    },
+                    "number": {
+                        "between": "Entre",
+                        "empty": "Vide",
+                        "equals": "Egal à",
+                        "gt": "Supérieur à",
+                        "gte": "Supérieur ou égal à",
+                        "lt": "Inférieur à",
+                        "lte": "Inférieur ou égal à",
+                        "not": "Différent de",
+                        "notBetween": "Pas entre",
+                        "notEmpty": "Non vide"
+                    },
+                    "string": {
+                        "contains": "Contient",
+                        "empty": "Vide",
+                        "endsWith": "Se termine par",
+                        "equals": "Egal à",
+                        "not": "Différent de",
+                        "notEmpty": "Non vide",
+                        "startsWith": "Commence par",
+                        "notStartsWith": "Ne commence pas par",
+                        "notEndsWith": "Ne termine pas par",
+                        "notContains": "Ne contient pas"
+                    },
+                    "array": {
+                        "equals": "Egal à",
+                        "empty": "Vide",
+                        "contains": "Contient",
+                        "not": "Différent de",
+                        "notEmpty": "Non vide",
+                        "without": "Sans"
+                    }
+                },
+                "add": "Ajouter une condition",
+                "button": {
+                    "0": "Recherche avancée",
+                    "_": "Recherche avancée (%d)"
+                },
+                "clearAll": "Effacer tout",
+                "condition": "Condition",
+                "data": "Donnée",
+                "deleteTitle": "Supprimer la règle de filtrage",
+                "logicAnd": "Et",
+                "logicOr": "Ou",
+                "title": {
+                    "0": "Recherche avancée",
+                    "_": "Recherche avancée (%d)"
+                },
+                "value": "Valeur"
+            },
+        },
+        
+    });
+} );
+</script>
