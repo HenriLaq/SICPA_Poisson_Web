@@ -29,7 +29,8 @@
 				<th>Libellé</th>
 				<th>Information</th>
 				<th>Effectif</th>
-				<th>Date</th>
+				<th class="notexport">Date</th>
+				<th class="hidden">Date</th>
 			</tr>
 		</thead>
 
@@ -39,7 +40,8 @@
 				<td>{{ mouvement.libMouv }}</td>
 				<td>{{ mouvement.infoMouv }}</td>
 				<td>{{ mouvement.effectifMouvement }}</td>
-				<td>{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
+				<td ><span style="display:none">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
+				<td class="hidden">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
 			</tr>
 
 		{% else %}

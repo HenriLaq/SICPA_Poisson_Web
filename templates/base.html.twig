@@ -162,8 +162,7 @@
 
 <script>
 $(document).ready(function() {
-    $.fn.dataTable.moment('DD/MM/YYYY');
-    moment("12-25-1995", "MM-DD-YYYY");
+    $('.hidden').hide();
     $('#maTable').DataTable({
         select: true,
         "responsive": true,
@@ -171,11 +170,11 @@ $(document).ready(function() {
         "<'row'<'col-sm-12'tr>>" +
         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
         buttons: [
-            {extend: 'copy', text:'Copier', className: 'btn btn-primary'},
-            {extend: 'csv', className: 'btn btn-primary', bom: true,},
-            {extend: 'excel', className: 'btn btn-primary'},
-            {extend: 'pdf', className: 'btn btn-primary'},
-            {extend: 'print', text:'Imprimer', className: 'btn btn-primary'},
+            {extend: 'copy', text:'Copier', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'csv', className: 'btn btn-primary', bom: true, exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'excel', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'pdf', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
+            {extend: 'print', text:'Imprimer', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
         ],
         searchBuilder:{
         

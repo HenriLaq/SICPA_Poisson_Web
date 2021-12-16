@@ -26,8 +26,10 @@
 					<th>Espèce</th>
 					<th>Souche</th>
 					<th>Bassin</th>
-					<th>Arrivée</th>
-					<th>Départ</th>
+					<th class="notexport">Arrivée</th>
+					<th class="hidden">Arrivée</th>
+					<th class="notexport">Départ</th>
+					<th class="hidden">Départ</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -41,9 +43,11 @@
 						<td>
 							<span style="display:none;">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('Y-m-d') : ''}}</span>
 							{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td class="hidden">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
 						<td>
 							<span style="display:none;">{{ data.finLocaliseLot ? data.finLocaliseLot|date('Y-m-d') : ''}}</span>
 							{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td class="hidden">{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
 					</tr>
 
 				{% else %}

@@ -20,9 +20,11 @@
 	<table class="table table-bordered table-hover" id="maTable">
 		<thead>
 			<tr>
-				<th>Nom Lot</th>
-				<th>Debut Lot</th>
-				<th>Fin Lot</th>
+				<th>Nom</th>
+				<th class="notexport">Debut</th>
+				<th class="hidden">Début</th>
+				<th class="notexport">Fin</th>
+				<th class="hidden">Fin</th>
 				<th>Bassin</th>
 
 				<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
@@ -38,10 +40,11 @@
 					<td>
 						<span style="display:none;">{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : ''}}</span>
 						{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
+					<td class="hidden">{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : ''}}</td>
 					<td>
 						<span style="display:none;">{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : ''}}</span>
 						{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
-
+					<td class="hidden">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : ''}}</td>
 					<td>
 						<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe, 'bassin_nom': lot.nomBassin}) }}">{{ lot.nomBassin }}</a>
 					</td>
