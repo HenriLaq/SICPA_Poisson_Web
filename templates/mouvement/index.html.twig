@@ -17,38 +17,40 @@
 					<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}">Individus</a>
 				</li>
 				<li class="breadcrumb-item active" aria-current="page">Mouvements</li>
-			</li>
-		</ol>
-	</nav>
+			</ol>
+		</nav>
 
-	<h1>Mouvements</h1>
+		<h1>Mouvements</h1>
 
-	<table class="table table-bordered table-hover" id="tableMouvement">
-		<thead>
-			<tr>
-				<th>Libellé</th>
-				<th>Information</th>
-				<th>Effectif</th>
-				<th class="notexport">Date</th>
-				<th class="hidden">Date</th>
-			</tr>
-		</thead>
+		<table class="table table-bordered table-hover" id="tableMouvement">
+			<thead>
+				<tr>
+					<th>Libellé</th>
+					<th>Information</th>
+					<th>Effectif</th>
+					<th class="notexport">Date</th>
+					<th class="hidden">Date</th>
+				</tr>
+			</thead>
 
-		{% for mouvement in mouvements %}
+			{% for mouvement in mouvements %}
 
-			<tr>
-				<td>{{ mouvement.libMouv }}</td>
-				<td>{{ mouvement.infoMouv }}</td>
-				<td>{{ mouvement.effectifMouvement }}</td>
-				<td ><span style="display:none">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
-				<td class="hidden">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
-			</tr>
+				<tr>
+					<td>{{ mouvement.libMouv }}</td>
+					<td>{{ mouvement.infoMouv }}</td>
+					<td>{{ mouvement.effectifMouvement }}</td>
+					<td>
+						<span style="display:none">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>
+						{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
+					<td class="hidden">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
+				</tr>
 
-		{% else %}
-			<tr>
-				<td colspan="25">Aucun résultat</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a></div>{% endblock %}
+			{% else %}
+				<tr>
+					<td colspan="25">Aucun résultat</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+</div>{% endblock %}

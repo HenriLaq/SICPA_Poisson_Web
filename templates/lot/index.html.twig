@@ -11,64 +11,64 @@
 					<a href="{{ path('experimentation_index') }}">Experimentations</a>
 				</li>
 				<li class="breadcrumb-item active" aria-current="page">Lots</li>
-			</li>
-		</ol>
-	</nav>
+			</ol>
+		</nav>
 
-	<h1>Lot index</h1>
+		<h1>Lot index</h1>
 
-	<table class="table table-bordered table-hover" id="tableLot">
-		<thead>
-			<tr>
-				<th>Nom</th>
-				<th class="notexport">Début</th>
-				<th class="hidden">Début</th>
-				<th class="notexport">Fin</th>
-				<th class="hidden">Fin</th>
-				<th>Bassin</th>
-
-				<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
-				<th class="notexport">actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% set i = 0 %}
-			{% for lot in lots %}
-
-				<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
-					<td>{{ lot.nomLot }}</td>
-					<td>
-						<span style="display:none;">{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : ''}}</span>
-						{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
-					<td class="hidden">{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : ''}}</td>
-					<td>
-						<span style="display:none;">{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : ''}}</span>
-						{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
-					<td class="hidden">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : ''}}</td>
-					<td>
-						<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe, 'bassin_nom': lot.nomBassin}) }}">{{ lot.nomBassin }}</a>
-					</td>
-					<td class="col-sm-3">
-						<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
-						<a href="{{ path('historique_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'historique</a>
-					</td>
-				</tr>
-
-			{% else %}
+		<table class="table table-bordered table-hover" id="tableLot">
+			<thead>
 				<tr>
-					<td colspan="25">Aucun résultat</td>
+					<th>Nom</th>
+					<th class="notexport">Début</th>
+					<th class="hidden">Début</th>
+					<th class="notexport">Fin</th>
+					<th class="hidden">Fin</th>
+					<th>Bassin</th>
+
+					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
+					<th class="notexport">actions</th>
 				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{% set i = 0 %}
+				{% for lot in lots %}
 
-	{% if lots|length>1 %}
-		<div class="checkbox-custom chekbox-primary">
-			<input onchange="toggle_by_class({{ i }});" type="checkbox">
-			<label>Afficher les lots fermés</label>
-		</div>
-	{% endif %}
+					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
+						<td>{{ lot.nomLot }}</td>
+						<td>
+							<span style="display:none;">{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : ''}}</span>
+							{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ lot.dateDebLot ? lot.dateDebLot|date('d-m-Y') : ''}}</td>
+						<td>
+							<span style="display:none;">{{ lot.dateFinLot ? lot.dateFinLot|date('Y-m-d') : ''}}</span>
+							{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : ''}}</td>
+						<td>
+							<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe, 'bassin_nom': lot.nomBassin}) }}">{{ lot.nomBassin }}</a>
+						</td>
+						<td class="col-sm-3">
+							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
+							<a href="{{ path('historique_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'historique</a>
+						</td>
+					</tr>
 
-	<br><br>
-	<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>
-</div>{% endblock %}
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		{% if lots|length>1 %}
+			<div class="checkbox-custom chekbox-primary">
+				<input onchange="toggle_by_class({{ i }});" type="checkbox">
+				<label>Afficher les lots fermés</label>
+			</div>
+		{% endif %}
+
+		<br><br>
+		<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>
+	</div>
+{% endblock %}

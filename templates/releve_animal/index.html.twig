@@ -7,12 +7,18 @@
 	<div class="container-fluid">
 
 		<nav aria-label="breadcrumb">
-  			<ol class="breadcrumb">
-    			<li class="breadcrumb-item"><a href="{{ path('experimentation_index') }}">Experimentations</a></li>
-				<li class="breadcrumb-item"><a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a></li>
-				<li class="breadcrumb-item"><a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}">Individus</a></li>
-    			<li class="breadcrumb-item active" aria-current="page">Relevé Animal</a></li>
-  			</ol>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}">Individus</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Relevé Animal</li>
+			</ol>
 		</nav>
 
 		<h1>Relevé Animal</h1>
@@ -23,19 +29,21 @@
 					<th class="notexport">Date</th>
 					<th class="hidden">Date</th>
 					<th>Valeur</th>
-                    <th>Libellé</th>
-                    <th>Info</th>
+					<th>Libellé</th>
+					<th>Info</th>
 				</tr>
 			</thead>
 
 			{% for releve in releves %}
 
 				<tr>
-					<td><span style="display:none;">{{ releve.dateRelAni ? releve.dateRelAni|date('Y-m-d') : ''}}</span>{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
+					<td>
+						<span style="display:none;">{{ releve.dateRelAni ? releve.dateRelAni|date('Y-m-d') : ''}}</span>
+						{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
 					<td class="hidden">{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
 					<td>{{ releve.valeurRelAni }}</td>
-                    <td>{{ releve.libTypeRelAni }}</td>
-                    <td>{{ releve.infotypeRelAni }}</td>
+					<td>{{ releve.libTypeRelAni }}</td>
+					<td>{{ releve.infotypeRelAni }}</td>
 				</tr>
 
 			{% else %}
@@ -45,6 +53,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
 	<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
 </div>{% endblock %}

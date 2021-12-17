@@ -17,14 +17,16 @@
 			</ol>
 		</nav>
 
-		<h1>Historique</h1>
+		<h1>Historique:
+			{{ datas[0].nomEspece }}, souche
+			{{ datas[0].libSouche }}</h1>
 
 		<table class="table table-bordered table-hover" id="tableHisto">
 			<thead>
 				<tr>
 					<th>Lot</th>
-					<th>Espèce</th>
-					<th>Souche</th>
+					<th>Granulométrie Aliment</th>
+					<th>Coeff Aliment</th>
 					<th>Bassin</th>
 					<th class="notexport">Arrivée</th>
 					<th class="hidden">Arrivée</th>
@@ -37,8 +39,8 @@
 
 					<tr>
 						<td>{{ data.nomLot }}</td>
-						<td>{{ data.nomEspece }}</td>
-						<td>{{ data.libSouche }}</td>
+						<td>{{ data.granulometrieAliment }}</td>
+						<td>{{ data.coeffAlim }}</td>
 						<td>{{ data.nomBassin }}</td>
 						<td>
 							<span style="display:none;">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('Y-m-d') : ''}}</span>
