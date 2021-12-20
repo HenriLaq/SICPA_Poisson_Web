@@ -16,7 +16,7 @@ class HistoriqueController extends AbstractController
      */
     public function historique(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
     {
-        $datas = $lotExploitationRepository->findLocaliseByLot($lot->getIdLot());
+        $datas = $lotExploitationRepository->findHistoByLot($lot->getIdLot());
         return $this->render('historique/index.html.twig', [
             'datas' => $datas,
             'idExpe' => $expe->getIdExpe()

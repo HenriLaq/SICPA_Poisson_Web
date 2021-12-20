@@ -8,63 +8,62 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item active" aria-current="page">Experimentations /</li>
-			</li>
-		</ol>
-	</nav>
+			</ol>
+		</nav>
 
-	<h1>Experimentations</h1>
+		<h1>Experimentations</h1>
 
-	<table class="table table-bordered table-hover" id="tableExpe">
-		<thead>
-			<tr>
-				<th>Code</th>
-				<th>Nom</th>
-				<th class="notexport">Debut</th>
-				<th class="hidden">Debut</th>
-				<th class="notexport">Fin</th>
-				<th class="hidden">Fin</th>
-				<th>Num Saisine</th>
-				<th>Type</th>
-				<th>Informations</th>
-				<th class="notexport">Demande Ouv</th>
-				<th class="hidden">Demande Ouv</th>
-				<th>Information Ouv</th>
-				<th>Unite</th>
-				<th class="notexport">Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for experimentation in experimentations %}
+		<table class="table table-bordered table-hover" id="tableExpe">
+			<thead>
 				<tr>
-					<td>{{ experimentation.codeExpe }}</td>
-					<td>{{ experimentation.nomExpe }}</td>
-					<td>
-						<span style="display:none;">{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : ''}}</span>
-						{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('d-m-Y') : '' }}</td>
-					<td class="hidden">{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('d-m-Y') : ''}}</td>
-					<td>
-						<span style="display:none;">{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : ''}}</span>
-						{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : '' }}</td>
-					<td class="hidden">{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : ''}}</td>
-					<td>{{ experimentation.numSaisine }}</td>
-					<td>{{ experimentation.libTypeExperimentation }}</td>
-					<td class="col-sm-2">{{ experimentation.infoExpe }}</td>
-					<td>
-						<span style="display:none;">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : ''}}</span>
-						{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : '' }}</td>
-					<td class="hidden">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : ''}}</td>
-					<td class="col-sm-1">{{ experimentation.infoDemandeOuv }}</td>
-					<td>{{ experimentation.nomUnite }}</td>
+					<th>Code</th>
+					<th>Nom</th>
+					<th class="notexport">Debut</th>
+					<th class="hidden">Debut</th>
+					<th class="notexport">Fin</th>
+					<th class="hidden">Fin</th>
+					<th>Num Saisine</th>
+					<th>Type</th>
+					<th>Informations</th>
+					<th class="notexport">Demande Ouv</th>
+					<th class="hidden">Demande Ouv</th>
+					<th>Information Ouv</th>
+					<th>Unite</th>
+					<th class="notexport">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for experimentation in experimentations %}
+					<tr>
+						<td>{{ experimentation.codeExpe }}</td>
+						<td>{{ experimentation.nomExpe }}</td>
+						<td>
+							<span style="display:none;">{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('Y-m-d') : ''}}</span>
+							{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ experimentation.dateDebutExpe ? experimentation.dateDebutExpe|date('d-m-Y') : ''}}</td>
+						<td>
+							<span style="display:none;">{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : ''}}</span>
+							{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : ''}}</td>
+						<td>{{ experimentation.numSaisine }}</td>
+						<td>{{ experimentation.libTypeExperimentation }}</td>
+						<td class="col-sm-2">{{ experimentation.infoExpe }}</td>
+						<td>
+							<span style="display:none;">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : ''}}</span>
+							{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : ''}}</td>
+						<td class="col-sm-1">{{ experimentation.infoDemandeOuv }}</td>
+						<td>{{ experimentation.nomUnite }}</td>
 
-					<td>
-						<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="25">Aucun résultat</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-{% endblock %}
+						<td>
+							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}

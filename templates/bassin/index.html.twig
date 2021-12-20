@@ -22,25 +22,24 @@
 		<table class="table table-bordered table-hover" id="tableBassin">
 			<thead>
 				<tr>
-					<th>Bassin</th>
 					<th>Type</th>
-					<th>Granulométrie Aliment</th>
-					<th>Coeff Aliment</th>
-					<th>Date Condition Aliment</th>
+					<th>debut</th>
+					<th>fin</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for data in datas %}
 
 					<tr>
-						<td>{{ data.nomBassin }}</td>
 						<td>{{ data.nomTypeBassin }}</td>
-						<td>{{ data.granulometrieAliment }}</td>
-						<td>{{ data.coeffAlim }}</td>
 						<td>
-							<span style="display:none;">{{ data.dateConditionAlim ? data.dateConditionAlim|date('Y-m-d') : ''}}</span>
-							{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
-
+							<span style="display:none;">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('Y-m-d') : ''}}</span>
+							{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td class="hidden">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td>
+							<span style="display:none;">{{ data.finLocaliseLot ? data.finLocaliseLot|date('Y-m-d') : ''}}</span>
+							{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td class="hidden">{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
 					</tr>
 
 				{% else %}

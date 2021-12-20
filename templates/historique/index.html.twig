@@ -17,39 +17,38 @@
 			</ol>
 		</nav>
 
-		<h1>Historique:
+		<h1>Historique: Lot
+			{{ datas[0].nomLot }},
 			{{ datas[0].nomEspece }}, souche
 			{{ datas[0].libSouche }}</h1>
 
 		<table class="table table-bordered table-hover" id="tableHisto">
 			<thead>
 				<tr>
-					<th>Lot</th>
+					<th>Date</th>
+					<th>Effectif Mouvement</th>
+					<th>Nouvel Effectif</th>
+					<th>Type d'intervention</th>
+					<th>Informations</th>
+
 					<th>Granulométrie Aliment</th>
 					<th>Coeff Aliment</th>
 					<th>Bassin</th>
-					<th class="notexport">Arrivée</th>
-					<th class="hidden">Arrivée</th>
-					<th class="notexport">Départ</th>
-					<th class="hidden">Départ</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for data in datas %}
 
 					<tr>
-						<td>{{ data.nomLot }}</td>
+						<td>{{ data.dateMouvement ? data.dateMouvement|date('d-m-Y') : '' }}</td>
+						<td>{{ data.effectifMouvement }}</td>
+						<td>{{ data.nouvelEffectif }}</td>
+						<td>{{ data.libMouv }}</td>
+						<td>{{ data.infoMouv }}</td>
+
 						<td>{{ data.granulometrieAliment }}</td>
 						<td>{{ data.coeffAlim }}</td>
 						<td>{{ data.nomBassin }}</td>
-						<td>
-							<span style="display:none;">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('Y-m-d') : ''}}</span>
-							{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
-						<td class="hidden">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
-						<td>
-							<span style="display:none;">{{ data.finLocaliseLot ? data.finLocaliseLot|date('Y-m-d') : ''}}</span>
-							{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
-						<td class="hidden">{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
 					</tr>
 
 				{% else %}
