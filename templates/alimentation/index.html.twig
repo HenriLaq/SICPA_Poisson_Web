@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique d'Alimentation
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Alimentation</li>
+			</ol>
+		</nav>
+
+		<h1>Historique d'Alimentation: Lot
+			{{ datas[0].nomLot }},
+			{{ datas[0].nomEspece }}, souche
+			{{ datas[0].libSouche }}</h1>
+
+		<table class="table table-bordered table-hover" id="tableAlim">
+			<thead>
+				<tr>
+					<th class="notexport">Date</th>
+					<th class="hidden">Date</th>
+					<th>Granulométrie Aliment</th>
+					<th>Coeff Aliment</th>
+					<th>Bassin</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for data in datas %}
+
+					<tr>
+						<td>
+							<span style="display:none;">{{ data.dateConditionAlim ? data.dateConditionAlim|date('Y-m-d') : '' }}</span>
+							{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
+						<td>{{ data.granulometrieAliment }}</td>
+						<td>{{ data.coeffAlim }}</td>
+						<td>{{ data.nomBassin }}</td>
+					</tr>
+
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</tr>
+	</tbody>
+</tbody></table><br><br><a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a></div>{% endblock %}

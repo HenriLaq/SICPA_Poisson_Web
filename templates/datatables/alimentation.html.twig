@@ -1,7 +1,7 @@
 <script>
 $(document).ready(function() {
     $('.hidden').hide();
-    $('#tableHisto').DataTable({
+    $('#tableAlim').DataTable({ //nom a changer
         select: true,
         "responsive": true,
         dom: "Q<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
@@ -15,7 +15,7 @@ $(document).ready(function() {
             {extend: 'print', text:'Imprimer', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
         ],
         searchBuilder:{
-            columns: [1,2,3,4,5,6] //seul truc à changer
+            columns: [1,2,3,4] //seul truc à changer
         },
         "search": {
             "addClass": 'form-control input-lg col-xs-12'

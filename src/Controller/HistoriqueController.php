@@ -14,7 +14,7 @@ class HistoriqueController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/historique", name="historique_index")
      */
-    public function historique(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
+    public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
     {
         $datas = $lotExploitationRepository->findHistoByLot($lot->getIdLot());
         return $this->render('historique/index.html.twig', [

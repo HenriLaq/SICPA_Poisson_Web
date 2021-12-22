@@ -25,14 +25,12 @@
 		<table class="table table-bordered table-hover" id="tableHisto">
 			<thead>
 				<tr>
-					<th>Date</th>
+					<th class="notexport">Date</th>
+					<th class="hidden">Date</th>
 					<th>Effectif Mouvement</th>
 					<th>Nouvel Effectif</th>
 					<th>Type d'intervention</th>
 					<th>Informations</th>
-
-					<th>Granulométrie Aliment</th>
-					<th>Coeff Aliment</th>
 					<th>Bassin</th>
 				</tr>
 			</thead>
@@ -40,14 +38,14 @@
 				{% for data in datas %}
 
 					<tr>
-						<td>{{ data.dateMouvement ? data.dateMouvement|date('d-m-Y') : '' }}</td>
+						<td>
+							<span style="display:none;">{{ data.dateMouvement ? data.dateMouvement|date('Y-m-d') : '' }}</span>
+							{{ data.dateMouvement ? data.dateMouvement|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ data.dateMouvement ? data.dateMouvement|date('d-m-Y') : '' }}</td>
 						<td>{{ data.effectifMouvement }}</td>
 						<td>{{ data.nouvelEffectif }}</td>
 						<td>{{ data.libMouv }}</td>
 						<td>{{ data.infoMouv }}</td>
-
-						<td>{{ data.granulometrieAliment }}</td>
-						<td>{{ data.coeffAlim }}</td>
 						<td>{{ data.nomBassin }}</td>
 					</tr>
 
