@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Historique d'Alimentation
+{% block title %}Alimentation
 {% endblock %}
 
 {% block body %}
@@ -17,7 +17,7 @@
 			</ol>
 		</nav>
 
-		<h1>Historique d'Alimentation: Lot
+		<h1>Alimentation: Lot
 			{{ datas[0].nomLot }},
 			{{ datas[0].nomEspece }}, souche
 			{{ datas[0].libSouche }}</h1>
@@ -27,6 +27,7 @@
 				<tr>
 					<th class="notexport">Date</th>
 					<th class="hidden">Date</th>
+					<th>ID Aliment</th>
 					<th>Granulométrie Aliment</th>
 					<th>Coeff Aliment</th>
 					<th>Bassin</th>
@@ -40,6 +41,7 @@
 							<span style="display:none;">{{ data.dateConditionAlim ? data.dateConditionAlim|date('Y-m-d') : '' }}</span>
 							{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
 						<td class="hidden">{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
+						<td>{{ data.idAliment }}</td>
 						<td>{{ data.granulometrieAliment }}</td>
 						<td>{{ data.coeffAlim }}</td>
 						<td>{{ data.nomBassin }}</td>
@@ -50,7 +52,31 @@
 						<td colspan="25">Aucun résultat</td>
 					</tr>
 				{% endfor %}
+
+
 			</tbody>
-		</tr>
-	</tbody>
-</tbody></table><br><br><a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a></div>{% endblock %}
+		</table>
+
+		<h3>Compteur de jours de jeune</h3>
+		{{ form(form) }}
+			{% if dates is defined %}
+				{% set jours = 0 %}
+				{% for data in datas %}
+					{% if (date(data.dateConditionAlim) > date(dates.Debut)) and (date(data.dateConditionAlim) <= date(dates.Fin)) %}
+						{% set jours = jours + 1 %}
+					{% endif %}
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+				<p>Il y a eu
+					{{ dateDiff - jours }}
+					jours de jeûne durant cette période.</p>
+			{% endif %}
+			<br><br>
+			<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+
+
+		</div>
+	{% endblock %}
