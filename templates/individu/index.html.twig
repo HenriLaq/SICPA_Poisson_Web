@@ -27,6 +27,7 @@
 					<th>Espece</th>
 					<th>Genre</th>
 					<th>Ploidie</th>
+					<th>Stade evolution</th>
 					<th class="notexport">Actions</th>
 				</tr>
 			</thead>
@@ -39,6 +40,7 @@
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
 						<td>{{ individu.libPloidie }}</td>
+						<td>{{ individu.libTypeStadeEvolution }}</td>
 						<td>
 							<a class="btn btn-primary" href="{{ path('mouvement_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les mouvements</a>
 							<a class="btn btn-primary" href="{{ path('releve_indi_index', {'idIndividu': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les relevés</a>
