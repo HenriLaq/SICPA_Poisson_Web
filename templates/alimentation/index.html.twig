@@ -27,7 +27,7 @@
 				<tr>
 					<th class="notexport">Date</th>
 					<th class="hidden">Date</th>
-					<th>ID Aliment</th>
+					<th>Nom Aliment</th>
 					<th>Granulométrie Aliment</th>
 					<th>Coeff Aliment</th>
 					<th>Bassin</th>
@@ -41,7 +41,7 @@
 							<span style="display:none;">{{ data.dateConditionAlim ? data.dateConditionAlim|date('Y-m-d') : '' }}</span>
 							{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
 						<td class="hidden">{{ data.dateConditionAlim ? data.dateConditionAlim|date('d-m-Y') : '' }}</td>
-						<td>{{ data.idAliment }}</td>
+						<td>{{ data.nomAliment }}</td>
 						<td>{{ data.granulometrieAliment }}</td>
 						<td>{{ data.coeffAlim }}</td>
 						<td>{{ data.nomBassin }}</td>
@@ -57,6 +57,7 @@
 			</tbody>
 		</table>
 
+		<!-- Compteurs jours de jeune -->
 		<div>
 			<h3>Compteur de jours de jeune</h3>
 			{{ form(form) }}
