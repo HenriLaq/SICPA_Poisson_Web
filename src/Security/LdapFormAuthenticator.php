@@ -24,7 +24,7 @@ class LdapFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    private $urlGenerator;
+    private $urlGenerator; //Type en UrlGeneratorInterface pour php 7.4+
 
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
