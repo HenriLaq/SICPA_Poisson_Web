@@ -48,9 +48,9 @@
 							<a href="{{ path('index_bassin', {'idLot': lot.idLot, 'idExpe': idExpe, 'bassin_nom': lot.nomBassin}) }}">{{ lot.nomBassin }}</a>
 						</td>
 						<td class="col-sm-3">
-							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les individus</a>
-							<a href="{{ path('historique_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir les mouvements</a>
-							<a href="{{ path('alimentation_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Voir l'alimentation</a>
+							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les individus</a>
+							<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les mouvements</a>
+							<a href="{{ path('alimentation_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir l'alimentation</a>
 						</td>
 					</tr>
 

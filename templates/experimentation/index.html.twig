@@ -33,8 +33,9 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% set i = 0 %}
 				{% for experimentation in experimentations %}
-					<tr>
+					<tr {% if experimentation.dateFinExpe is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
 						<td>{{ experimentation.codeExpe }}</td>
 						<td>{{ experimentation.nomExpe }}</td>
 						<td>
@@ -45,7 +46,11 @@
 							<span style="display:none;">{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('Y-m-d') : ''}}</span>
 							{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : '' }}</td>
 						<td class="hidden">{{ experimentation.dateFinExpe ? experimentation.dateFinExpe|date('d-m-Y') : ''}}</td>
-						<td>{{ experimentation.numSaisine }}</td>
+						<td>
+							{% if experimentation.numSaisine != 0 %}
+								{{ experimentation.numSaisine }}
+							{% endif %}
+						</td>
 						<td>{{ experimentation.libTypeExperimentation }}</td>
 						<td class="col-sm-2">{{ experimentation.infoExpe }}</td>
 						<td>
@@ -66,4 +71,12 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
+		{% if experimentations|length>1 %}
+			<div class="checkbox-custom chekbox-primary">
+				<input onchange="toggle_by_class({{ i }});" type="checkbox">
+				<label>Afficher les experimentations fermées</label>
+			</div>
+		{% endif %}
+
 	{% endblock %}

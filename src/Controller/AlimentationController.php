@@ -20,25 +20,9 @@ class AlimentationController extends AbstractController
     {
         $datas = $alimentationExploitationRepository->findAlimByLot($lot->getIdLot());
 
-        //compter les jours de jeune
-        $form = $this->createForm(JoursDeJeuneType::class);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $dates = $form->getData();
-            $dateDiff = $dates['Fin']->diff($dates['Debut'])->format("%a");
-            return $this->render('alimentation/index.html.twig', [
-                'datas' => $datas,
-                'idExpe' => $expe->getIdExpe(),
-                'form' => $form->createView(),
-                'dates' => $dates,
-                'dateDiff' => $dateDiff,
-            ]);
-        }
-
         return $this->render('alimentation/index.html.twig', [
             'datas' => $datas,
-            'idExpe' => $expe->getIdExpe(),
-            'form' => $form->createView(),
+            'idExpe' => $expe->getIdExpe()
         ]);
     }
 }

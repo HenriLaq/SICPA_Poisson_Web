@@ -20,37 +20,53 @@
 			</ol>
 		</nav>
 
-		<h1>Mouvements</h1>
+		<h1>Mouvements: Lot
+			{{ mouvements[0].nomLot }},
+			{{ mouvements[0].nomEspece }}, souche
+			{{ mouvements[0].libSouche }}</h1>
 
-		<table class="table table-bordered table-hover" id="tableMouvement">
+		<table class="table table-bordered table-hover" id="tableHisto">
 			<thead>
 				<tr>
-					<th>Libellé</th>
-					<th>Information</th>
-					<th>Effectif</th>
 					<th class="notexport">Date</th>
 					<th class="hidden">Date</th>
+					<th>Effectif Mouvement</th>
+					<th>Nouvel Effectif</th>
+					<th>Type d'intervention</th>
+					<th>Informations</th>
+					<th>Bassin</th>
+					<th>Relevé</th>
 				</tr>
 			</thead>
+			<tbody>
+				{% for mouvement in mouvements %}
 
-			{% for mouvement in mouvements %}
+					<tr>
+						<td>
+							<span style="display:none;">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : '' }}</span>
+							{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : '' }}</td>
+						<td>{{ mouvement.effectifMouvement }}</td>
+						<td>{{ mouvement.nouvelEffectif }}</td>
+						<td>{{ mouvement.libMouv }}</td>
+						<td>{{ mouvement.infoMouv }}</td>
+						<td>{{ mouvement.nomBassin }}</td>
+						<td>
+							{% for releve in releves %}
+								{% if releve.idMouvement == mouvement.idMouvement %}
+									{{ releve.libTypeRelAni }}
+								{% endif %}
+							{% endfor %}
+						</td>
+					</tr>
 
-				<tr>
-					<td>{{ mouvement.libMouv }}</td>
-					<td>{{ mouvement.infoMouv }}</td>
-					<td>{{ mouvement.effectifMouvement }}</td>
-					<td>
-						<span style="display:none">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : ''}}</span>
-						{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
-					<td class="hidden">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('d-m-Y') : ''}}</td>
-				</tr>
-
-			{% else %}
-				<tr>
-					<td colspan="25">Aucun résultat</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
-</div>{% endblock %}
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+	</div>
+{% endblock %}

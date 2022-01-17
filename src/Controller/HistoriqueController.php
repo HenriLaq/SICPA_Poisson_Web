@@ -17,9 +17,11 @@ class HistoriqueController extends AbstractController
     public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
     {
         $datas = $lotExploitationRepository->findHistoByLot($lot->getIdLot());
+        //$releves = $individuExploitationRepository->findRelByIndi($indi->getIdIndi());
         return $this->render('historique/index.html.twig', [
             'datas' => $datas,
-            'idExpe' => $expe->getIdExpe()
+            'idExpe' => $expe->getIdExpe(),
+            //'releves' => $releves,
         ]);
     }
 }
