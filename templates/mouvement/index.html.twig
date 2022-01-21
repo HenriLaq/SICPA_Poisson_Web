@@ -13,9 +13,6 @@
 				<li class="breadcrumb-item">
 					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
 				</li>
-				<li class="breadcrumb-item">
-					<a href="{{ path('individu_index', {'idLot': idLot, 'idExpe': idExpe}) }}">Individus</a>
-				</li>
 				<li class="breadcrumb-item active" aria-current="page">Mouvements</li>
 			</ol>
 		</nav>
@@ -35,7 +32,6 @@
 					<th>Type d'intervention</th>
 					<th>Informations</th>
 					<th>Bassin</th>
-					<th>Relevé</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,13 +47,6 @@
 						<td>{{ mouvement.libMouv }}</td>
 						<td>{{ mouvement.infoMouv }}</td>
 						<td>{{ mouvement.nomBassin }}</td>
-						<td>
-							{% for releve in releves %}
-								{% if releve.idMouvement == mouvement.idMouvement %}
-									{{ releve.libTypeRelAni }}
-								{% endif %}
-							{% endfor %}
-						</td>
 					</tr>
 
 				{% else %}

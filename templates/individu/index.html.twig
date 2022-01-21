@@ -23,7 +23,6 @@
 			<thead>
 				<tr>
 					<th>Rfid</th>
-					<th>Effectif</th>
 					<th>Espece</th>
 					<th>Genre</th>
 					<th>Ploidie</th>
@@ -32,11 +31,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% set i = 0 %}
 				{% for individu in individus %}
-					<tr {% if individu.issortiedefinitive == 1 %} {% set i = i + 1 %} {% endif %}>
+					<tr>
 						<td>{{ individu.rfid }}</td>
-						<td>{{ individu.nouvelEffectif }}</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
 						<td>{{ individu.libPloidie }}</td>
@@ -53,12 +50,6 @@
 			</tbody>
 		</table>
 
-		{% if individus|length>1 %}
-			<div class="checkbox-custom chekbox-primary">
-				<input onchange="toggle_by_class({{ i }});" type="checkbox">
-				<label>Afficher les individus sortis</label>
-			</div>
-		{% endif %}
 
 		<br><br>
 		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>

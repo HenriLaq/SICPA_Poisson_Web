@@ -20,7 +20,7 @@ class IndividuController extends AbstractController
      */
     public function index(IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
-        $individus = $individuExploitationRepository->findByLot($lot->getIdLot());
+        $individus = $individuExploitationRepository->findAllByLot($lot->getIdLot());
         return $this->render('individu/index.html.twig', [
             'idLot' => $lot->getIdLot(),
             'individus' => $individus,
