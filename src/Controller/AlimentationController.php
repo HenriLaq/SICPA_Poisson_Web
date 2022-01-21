@@ -18,21 +18,17 @@ class AlimentationController extends AbstractController
     public function index(AlimentationExploitationRepository $alimentationExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
     {
         $alimentations = $alimentationExploitationRepository->findAlimByLot($lot->getIdLot());
-        $semaines = [];
-        $jeunes = [];
+
+        //Compteur de jours de jeunes
+        $jeunes = [$alimentations[0]->getDateConditionAlim()->format("W-Y") => 0];
         $enCours = 0;
         $i = 0;
-        $j = 0;
         foreach ($alimentations as $alimentation) {
-            $semaines[$i] = $alimentation->getDateConditionAlim()->format("W");
-            //Si on commence
-            if ($i == 0) {
-                $enCours = $semaines[$i];
-                $jeunes += [$semaines[$i] => 0];
-            }
+            $semaines[$i] = $alimentation->getDateConditionAlim()->format("W-Y");
+            $semainesAffiche[$i] = $alimentation->getDateConditionAlim()->format("W");
+
             //Si on change de semaine
             if ($enCours != $semaines[$i]) {
-                $j++;
                 $enCours = $semaines[$i];
                 $jeunes += [$semaines[$i] => 0];
                 //Si on  ne change pas de semaine
@@ -41,9 +37,10 @@ class AlimentationController extends AbstractController
             }
             $i = $i + 1;
         }
-        //dd($jeunes);
+
         return $this->render('alimentation/index.html.twig', [
             'alimentations' => $alimentations,
+            'semainesAffiche' => $semainesAffiche,
             'semaines' => $semaines,
             'jeunes' => $jeunes,
             'idExpe' => $expe->getIdExpe()
