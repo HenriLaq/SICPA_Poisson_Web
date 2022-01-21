@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bassin
+{% endblock %}
+
+{% block body %}
+	<h1>Bassin</h1>
+
+	<table class="table">
+		<tbody>
+
+			<tr>
+				<th>NomBassin</th>
+				<td>{{ bassin.nomBassin }}</td>
+			</tr>
+			<tr>
+				<th>NumeroBassin</th>
+				<td>{{ bassin.numeroBassin }}</td>
+			</tr>
+			<tr>
+				<th>Volume</th>
+				<td>{{ bassin.volume }}</td>
+			</tr>
+			<tr>
+				<th>DebutUv</th>
+				<td>{{ bassin.debutUv ? bassin.debutUv|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>FinUv</th>
+				<td>{{ bassin.finUv ? bassin.finUv|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>TagRfid</th>
+				<td>{{ bassin.tagRfid }}</td>
+			</tr>
+			<tr>
+				<th>NomTypeBassin</th>
+				<td>{{ bassin.nomTypeBassin }}</td>
+			</tr>
+			<tr>
+				<th>NomAlimEau</th>
+				<td>{{ bassin.nomAlimEau }}</td>
+			</tr>
+			<tr>
+				<th>DebutUvAlim</th>
+				<td>{{ bassin.debutUvAlim ? bassin.debutUvAlim|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>FinUvAlim</th>
+				<td>{{ bassin.finUvAlim ? bassin.finUvAlim|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>ReleveTempDefaut</th>
+				<td>{{ bassin.releveTempDefaut }}</td>
+			</tr>
+			<tr>
+				<th>LibTypeAlim</th>
+				<td>{{ bassin.libTypeAlim }}</td>
+			</tr>
+			<tr>
+				<th>DebutAlimente</th>
+				<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>FinAlimente</th>
+				<td>{{ bassin.finAlimente ? bassin.finAlimente|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>DebitAlimEau</th>
+				<td>{{ bassin.debitAlimEau }}</td>
+			</tr>
+			<tr>
+				<th>IssortieBassin</th>
+				<td>{{ bassin.issortieBassin }}</td>
+			</tr>
+			<tr>
+				<th>DateRelBassin</th>
+				<td>{{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>ValeurRelBassin</th>
+				<td>{{ bassin.valeurRelBassin }}</td>
+			</tr>
+			<tr>
+				<th>LibTypeRelBassin</th>
+				<td>{{ bassin.libTypeRelBassin }}</td>
+			</tr>
+		</tbody>
+	</table>
+{% endblock %}

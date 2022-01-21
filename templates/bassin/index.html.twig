@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+    
 	<div class="container-fluid">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
@@ -13,33 +14,61 @@
 				<li class="breadcrumb-item">
 					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
 				</li>
-				<li class="breadcrumb-item active" aria-current="page">Bassin</li>
+				<li class="breadcrumb-item active" aria-current="page">Bassins</li>
 			</ol>
 		</nav>
 
-		<h1>Bassin</h1>
+		<h1>Bassin
+			{{ bassins[0].nomBassin }}, Type
+			{{ bassins[0].nomTypeBassin }}, Numéro
+			{{ bassins[0].numeroBassin }}, Rfid
+			{{ bassins[0].tagRfid }}
+			:</h1>
 
-		<table class="table table-bordered table-hover" id="tableBassin">
+		<table class="table table-bordered table-hover" id="tableLot">
 			<thead>
 				<tr>
-					<th>Type</th>
-					<th>debut</th>
-					<th>fin</th>
+					<th>Volume</th>
+					<th>Debut UV</th>
+					<th>Fin Uv</th>
+					<th>Nom Alim Eau</th>
+					<th>Température</th>
+					<th>Type Alim</th>
+					<th>Debut Alimente</th>
+					<th>Fin Alimente</th>
+					<th>Debit Alim Eau</th>
+					<th>Est sorti</th>
+					<th>Date Relevé</th>
+					<th>Valeur Relelvé</th>
+					<th>LibTypeRelBassin</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for data in datas %}
+				<script>
+					const temps = new Array();
+					const dates = new Array();
+				</script>
+				{% for bassin in bassins %}
 
 					<tr>
-						<td>{{ data.nomTypeBassin }}</td>
-						<td>
-							<span style="display:none;">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('Y-m-d') : ''}}</span>
-							{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
-						<td class="hidden">{{ data.debutLocaliseLot ? data.debutLocaliseLot|date('d-m-Y') : ''}}</td>
-						<td>
-							<span style="display:none;">{{ data.finLocaliseLot ? data.finLocaliseLot|date('Y-m-d') : ''}}</span>
-							{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
-						<td class="hidden">{{ data.finLocaliseLot ? data.finLocaliseLot|date('d-m-Y') : ''}}</td>
+						<td>{{ bassin.volume }}</td>
+						<td>{{ bassin.debutUv ? bassin.debutUv|date('Y-m-d') : '' }}</td>
+						<td>{{ bassin.finUv ? bassin.finUv|date('Y-m-d') : '' }}</td>
+						<td>{{ bassin.nomAlimEau }}</td>
+						<td>{{ bassin.releveTempDefaut }}</td>
+						<td>{{ bassin.libTypeAlim }}</td>
+						<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('Y-m-d') : '' }}</td>
+						<td>{{ bassin.finAlimente ? bassin.finAlimente|date('Y-m-d') : '' }}</td>
+						<td>{{ bassin.debitAlimEau }}</td>
+						<td>{{ bassin.issortieBassin }}</td>
+						<td>{{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y-m-d') : '' }}</td>
+						<td>{{ bassin.valeurRelBassin }}</td>
+						<td>{{ bassin.libTypeRelBassin }}</td>
+						<script>
+							temps.push({{ bassin.releveTempDefaut }})
+							dates.push(({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('d-m-Y') : '' }}).toString())
+							console.log(({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('d-m-Y') : '' }}).toString())
+						</script>
 					</tr>
 
 				{% else %}
@@ -50,8 +79,39 @@
 			</tbody>
 		</table>
 
+		<div><canvas id="myChart" style="max-width:300px; max-height:300px;"></canvas></div>
+		<script>
+			console.log(temps)
+			console.log(dates)
+				
+			const ctx = document.getElementById('myChart').getContext('2d');
+			const myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: dates,
+					datasets: [{
+						label: 'Températures',
+						data: temps,
+						backgroundColor: [
+							'rgba(255, 0, 0, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 0, 0, 1)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			});
+		</script>
+
 		<br><br>
 		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
-
 	</div>
 {% endblock %}
