@@ -25,6 +25,7 @@
 					<th class="notexport">Fin</th>
 					<th class="hidden">Fin</th>
 					<th>Bassin</th>
+					<th>Zone</th>
 
 					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
 					<th class="notexport">actions</th>
@@ -47,6 +48,7 @@
 						<td>
 							<a href="{{ path('bassin_index', {'idLot': lot.idLot, 'idExpe': idExpe, 'idBassin': lot.idBassin}) }}">{{ lot.nomBassin }}</a>
 						</td>
+						<td>{{ lot.planZone }}</td>
 						<td class="col-sm-3">
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les individus</a>
 							<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les mouvements</a>
