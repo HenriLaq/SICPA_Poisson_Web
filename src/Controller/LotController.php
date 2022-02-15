@@ -35,4 +35,24 @@ class LotController extends AbstractController
             'idExpe' => $expe->getIdExpe()
         ]);
     }
+
+    /**
+     * @Route("/experimentation/{idExpe}/lot/zone", name="lot_zone")
+     */
+    public function showZone(LotExploitationRepository $lotExploitationRepository, LotExploitation $lot): Response
+    {
+        $lots = $lotExploitationRepository->findZoneByBassin($lot->getIdBassin());
+        $plan = $lots[0]->getPlanZone();
+
+        $data = stream_get_contents($plan);
+
+        $response = new Response($data, 200, array('Content-Type' => 'application/pdf'));
+        return $response;
+
+        return $this->render('lot/show.html.twig', [
+            'lots' => $lots,
+            'plan' => $plan,
+            'data' => $data
+        ]);
+    }
 }
