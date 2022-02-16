@@ -25,7 +25,6 @@
 					<th class="notexport">Fin</th>
 					<th class="hidden">Fin</th>
 					<th>Bassin</th>
-					<th>Zone</th>
 
 					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
 					<th class="notexport">actions</th>
@@ -47,9 +46,6 @@
 						<td class="hidden">{{ lot.dateFinLot ? lot.dateFinLot|date('d-m-Y') : ''}}</td>
 						<td>
 							<a href="{{ path('bassin_index', {'idLot': lot.idLot, 'idExpe': idExpe, 'idBassin': lot.idBassin}) }}">{{ lot.nomBassin }}</a>
-						</td>
-						<td>
-							<a target="_blank" href="{{ path('lot_zone', {'idLot': lot.idLot, 'idExpe': idExpe, 'idBassin': lot.idBassin}) }}">{{ lot.nomZone }}</a>
 						</td>
 						<td class="col-sm-3">
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les individus</a>

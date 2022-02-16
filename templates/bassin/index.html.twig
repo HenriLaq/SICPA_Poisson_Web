@@ -4,6 +4,12 @@
 {% endblock %}
 
 {% block body %}
+
+	<style>
+		#text{
+			display:none!important;
+		}
+	</style>
     
 	<div class="container-fluid">
 		<nav aria-label="breadcrumb">
@@ -18,12 +24,13 @@
 			</ol>
 		</nav>
 
-		<h1>Bassin
-			{{ bassins[0].nomBassin }}, Type
-			{{ bassins[0].nomTypeBassin }}, Numéro
-			{{ bassins[0].numeroBassin }}, Rfid
-			{{ bassins[0].tagRfid }}
-			:</h1>
+		<h1>
+			Bassin {{ bassins[0].nomBassin }}, 
+			Type {{ bassins[0].nomTypeBassin }}, 
+			Numéro {{ bassins[0].numeroBassin }}, 
+			Rfid {{ bassins[0].tagRfid }}, 
+			Zone <a target="_blank" href="{{ path('bassin_zone', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassins[0].idBassin}) }}">{{ bassins[0].nomZone }}</a>:
+		</h1>
 
 		<table class="table table-bordered table-hover" id="tableLot">
 			<thead>
@@ -31,13 +38,6 @@
 					<th>Volume</th>
 					<th>Debut UV</th>
 					<th>Fin Uv</th>
-					<th>Nom Alim Eau</th>
-					<th>Température</th>
-					<th>Type Alim</th>
-					<th>Debut Alimente</th>
-					<th>Fin Alimente</th>
-					<th>Debit Alim Eau</th>
-					<th>Est sorti</th>
 					<th>Date Relevé</th>
 					<th>Valeur Relelvé</th>
 					<th>LibTypeRelBassin</th>
@@ -54,24 +54,17 @@
 						<td>{{ bassin.volume }}</td>
 						<td>{{ bassin.debutUv ? bassin.debutUv|date('Y-m-d') : '' }}</td>
 						<td>{{ bassin.finUv ? bassin.finUv|date('Y-m-d') : '' }}</td>
-						<td>{{ bassin.nomAlimEau }}</td>
-						<td>{{ bassin.releveTempDefaut }}</td>
-						<td>{{ bassin.libTypeAlim }}</td>
-						<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('Y-m-d') : '' }}</td>
-						<td>{{ bassin.finAlimente ? bassin.finAlimente|date('Y-m-d') : '' }}</td>
-						<td>{{ bassin.debitAlimEau }}</td>
-						<td>{{ bassin.issortieBassin }}</td>
 						<td>{{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y-m-d') : '' }}</td>
 						<td>{{ bassin.valeurRelBassin }}</td>
 						<td>{{ bassin.libTypeRelBassin }}</td>
-						<script>
+						{# <script>
 							temps.push({{ bassin.releveTempDefaut }})
 							
 							var year = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y') : '' }}).toString() )
 							var month = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('m') : '' }}).toString() )
 							var day = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('d') : '' }}).toString() )
 							dates.push(day.concat('/',month,'/',year))
-						</script>
+						</script> #}
 }					</tr>
 
 				{% else %}
@@ -81,7 +74,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
+		{#
 		<div><canvas id="chartBassin" style="max-width:100%; max-height:500px;"></canvas></div>
 		<script>
 			const ctx = document.getElementById('chartBassin').getContext('2d');
@@ -110,7 +103,7 @@
 				}
 			});
 		</script>
-
+		#}
 		<br><br>
 		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
 	</div>
