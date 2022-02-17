@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bassin
+{% block title %}Sources
 {% endblock %}
 
 {% block body %}
@@ -24,14 +24,30 @@
 		<table class="table table-bordered table-hover" id="tableLot">
 			<thead>
 				<tr>
-
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Debut</th>
+                    <th>Fin</th>
+                    <th>Debit</th>
+                    <th>Valeur</th>
+                    <th>Info</th>
+                    <th>Date</th>
+                    <th>Type</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for source in sources %}
 
 					<tr>
-
+                        <td>{{ source.nomAlimEau }}</td>
+                        <td>{{ source.libTypeAlim }}</td>
+                        <td>{{ source.debutAlimente }}</td>
+                        <td>{{ source.finAlimente }}</td>
+                        <td>{{ source.debitAlimEau }}</td>
+                        <td>{{ source.reveleAlimentation }}</td>
+                        <td>{{ source.infoReleveAlimentation }}</td>
+                        <td>{{ source.dateReleveAlimentation }}</td>
+                        <td>{{ source.libTypeReleveAlimentation }}</td>
 					</tr>
 
 				{% else %}
