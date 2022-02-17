@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bassin
+{% endblock %}
+
+{% block body %}
+    
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+                <li class="breadcrumb-item">
+					<a href="{{ path('bassin_index', {'idExpe': idExpe, 'idLot': idLot}) }}">Bassin</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Source</li>
+			</ol>
+		</nav>
+
+		<table class="table table-bordered table-hover" id="tableLot">
+			<thead>
+				<tr>
+
+				</tr>
+			</thead>
+			<tbody>
+				{% for source in sources %}
+
+					<tr>
+
+					</tr>
+
+				{% else %}
+					<tr>
+						<td colspan="25">Aucun résultat</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<br><br>
+		<a href="{{ path('bassin_index', {'idExpe': idExpe, 'idLot': idLot}) }}" class="btn btn-danger">Retour</a>
+	</div>
+{% endblock %}

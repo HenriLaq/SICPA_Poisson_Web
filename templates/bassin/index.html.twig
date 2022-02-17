@@ -39,8 +39,9 @@
 					<th>Debut UV</th>
 					<th>Fin Uv</th>
 					<th>Date Relevé</th>
-					<th>Valeur Relelvé</th>
+					<th>Valeur Relevé</th>
 					<th>LibTypeRelBassin</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,6 +58,7 @@
 						<td>{{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y-m-d') : '' }}</td>
 						<td>{{ bassin.valeurRelBassin }}</td>
 						<td>{{ bassin.libTypeRelBassin }}</td>
+						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin}) }}" style="margin:3px;" class="btn btn-primary">Voir la source</a>
 						{# <script>
 							temps.push({{ bassin.releveTempDefaut }})
 							
@@ -65,7 +67,7 @@
 							var day = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('d') : '' }}).toString() )
 							dates.push(day.concat('/',month,'/',year))
 						</script> #}
-}					</tr>
+					</tr>
 
 				{% else %}
 					<tr>
