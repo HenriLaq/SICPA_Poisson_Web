@@ -20,7 +20,7 @@ class BassinController extends AbstractController
      */
     public function index(BassinExploitationRepository $bassinExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
     {
-        $bassins = $bassinExploitationRepository->findOneById($lot->getIdBassin());
+        $bassins = $bassinExploitationRepository->findBassinById($lot->getIdBassin());
         return $this->render('bassin/index.html.twig', [
             'idLot' => $lot->getIdLot(),
             'bassins' => $bassins,

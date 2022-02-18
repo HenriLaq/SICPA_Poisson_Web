@@ -41,6 +41,8 @@
 					<th>Date Relevé</th>
 					<th>Valeur Relevé</th>
 					<th>LibTypeRelBassin</th>
+					<th>Debut Alimente</th>
+					<th>Fin Alimente</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -58,6 +60,8 @@
 						<td>{{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y-m-d') : '' }}</td>
 						<td>{{ bassin.valeurRelBassin }}</td>
 						<td>{{ bassin.libTypeRelBassin }}</td>
+						<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('d-m-Y') : '' }}</td>
+						<td>{{ bassin.finAlimente ? bassin.finAlimente|date('d-m-Y') : '' }}</td>
 						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin}) }}" style="margin:3px;" class="btn btn-primary">Voir la source</a>
 						{# <script>
 							temps.push({{ bassin.releveTempDefaut }})

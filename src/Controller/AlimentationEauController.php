@@ -17,7 +17,7 @@ class AlimentationEauController extends AbstractController
      */
     public function index(AlimentationEauExploitationRepository $AlimentationEauExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot, BassinExploitation $bassin): Response
     {
-        $sources = $AlimentationEauExploitationRepository->findSourceByAlim($bassin->getIdAlimente());
+        $sources = $AlimentationEauExploitationRepository->findSourceByAlim($bassin->getIdAlimEau());
         //dd($bassin);
         return $this->render('alimentation_eau/index.html.twig', [
             'idLot' => $lot->getIdLot(),
