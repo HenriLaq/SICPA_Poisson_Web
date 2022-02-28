@@ -8,17 +8,17 @@ use App\Entity\ExperimentationExploitation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\IndividuExploitationRepository;
+use App\Repository\ReleveAnimalExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class ReleveController extends AbstractController
+class ReleveAnimalController extends AbstractController
 {
-
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/individu/{idIndividu}/releve", name="releve_indi_index")
      */
-    public function index(IndividuExploitationRepository $individuExploitationRepository, IndividuExploitation $indi, LotExploitation $lot, ExperimentationExploitation $expe): Response
+    public function index(ReleveAnimalExploitationRepository $releveAnimalExploitationRepository, IndividuExploitation $indi, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
-        $releves = $individuExploitationRepository->findRelByIndi($indi->getIdIndi());
+        $releves = $releveAnimalExploitationRepository->findRelByIndi($indi->getIdIndi());
         return $this->render('releve_animal/index.html.twig', [
             'idExpe' => $expe->getIdExpe(),
             'idLot' => $lot->getIdLot(),
