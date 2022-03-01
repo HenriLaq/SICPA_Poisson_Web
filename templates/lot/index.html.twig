@@ -33,7 +33,6 @@
 			<tbody>
 				{% set i = 0 %}
 				{% for lot in lots %}
-
 					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
 						<td>{{ lot.nomLot }}</td>
 						<td>

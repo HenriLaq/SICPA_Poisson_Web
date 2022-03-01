@@ -185,10 +185,14 @@ function toggle() {
 
 function toggle_by_class(max) {
     for(var i = 0; i < max; i++) {
-        if (document.getElementById("hide"+i).style.display == 'none') {
-            document.getElementById("hide"+i).style.display = '';
-        } else {
-            document.getElementById("hide"+i).style.display = 'none';
+        if (document.getElementById("hide"+i) !== null){
+            console.log(document.getElementById("hide"+i));
+            console.log("hide"+i);
+            if (document.getElementById("hide"+i).style.display == 'none') {
+                document.getElementById("hide"+i).style.display = '';
+            } else {
+                document.getElementById("hide"+i).style.display = 'none';
+            }
         }
     }
 }
