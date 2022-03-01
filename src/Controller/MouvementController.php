@@ -17,16 +17,14 @@ class MouvementController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/mouvements", name="mouvement_index")
      */
-    public function index(LotExploitationRepository $lotExploitationRepository, IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, IndividuExploitation $indi, ExperimentationExploitation $expe): Response
+    public function index(LotExploitationRepository $lotExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
         $mouvements = $lotExploitationRepository->findHistoByLot($lot->getIdLot());
-        $releves = $individuExploitationRepository->findRelByIndi($indi->getIdIndi());
 
         return $this->render('mouvement/index.html.twig', [
             'idExpe' => $expe->getIdExpe(),
             'idLot' => $lot->getIdLot(),
             'mouvements' => $mouvements,
-            'releves' => $releves,
         ]);
     }
 }

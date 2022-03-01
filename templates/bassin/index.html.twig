@@ -40,17 +40,13 @@
 					<th>Fin Uv</th>
 					<th>Date Relevé</th>
 					<th>Valeur Relevé</th>
-					<th>LibTypeRelBassin</th>
+					<th>Type</th>
 					<th>Debut Alimente</th>
 					<th>Fin Alimente</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				<script>
-					const temps = new Array();
-					const dates = new Array();
-				</script>
 				{% for bassin in bassins %}
 
 					<tr>
@@ -63,14 +59,6 @@
 						<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('d-m-Y') : '' }}</td>
 						<td>{{ bassin.finAlimente ? bassin.finAlimente|date('d-m-Y') : '' }}</td>
 						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin}) }}" style="margin:3px;" class="btn btn-primary">Voir la source</a>
-						{# <script>
-							temps.push({{ bassin.releveTempDefaut }})
-							
-							var year = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y') : '' }}).toString() )
-							var month = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('m') : '' }}).toString() )
-							var day = ( ({{ bassin.dateRelBassin ? bassin.dateRelBassin|date('d') : '' }}).toString() )
-							dates.push(day.concat('/',month,'/',year))
-						</script> #}
 					</tr>
 
 				{% else %}
@@ -80,36 +68,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		{#
-		<div><canvas id="chartBassin" style="max-width:100%; max-height:500px;"></canvas></div>
-		<script>
-			const ctx = document.getElementById('chartBassin').getContext('2d');
-			const myChart = new Chart(ctx, {
-				type: 'line',
-				data: {
-					labels: dates,
-					datasets: [{
-						label: 'Température',
-						data: temps,
-						backgroundColor: [
-							'rgba(255, 0, 0, 0.2)'
-						],
-						borderColor: [
-							'rgba(255, 0, 0, 1)',
-						],
-						borderWidth: 1
-					}]
-				},
-				options: {
-					scales: {
-						y: {
-							beginAtZero: true
-						}
-					}
-				}
-			});
-		</script>
-		#}
+
 		<br><br>
 		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
 	</div>
