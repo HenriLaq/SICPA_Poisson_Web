@@ -43,7 +43,7 @@ class BassinController extends AbstractController
             return $response;
         }
             
-        $data = "Pas de Plan pour cette zone.".$bassin->getIdZone();
+        $data = "Pas de Plan pour cette zone.";
 
         return $this->render('bassin/show.html.twig', [
             'data' => $data

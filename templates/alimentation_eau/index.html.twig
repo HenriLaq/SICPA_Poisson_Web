@@ -29,9 +29,10 @@
 		<table class="table table-bordered table-hover" id="tableLot">
 			<thead>
 				<tr>
+					<th class="notexport">Date</th>
+					<th class="hidden">Date</th>
                     <th>Valeur</th>
                     <th>Info</th>
-                    <th>Date</th>
                     <th>Type</th>
 				</tr>
 			</thead>
@@ -43,18 +44,22 @@
 				{% for source in sources %}
 
 					<tr>
+						<td><span style="display:none;">{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('Y-m-d') : '' }}</span>
+						{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d-m-Y') : '' }}</td>
                         <td>{{ source.releveAlimentation }}</td>
                         <td>{{ source.infoReleveAlimentation }}</td>
-                        <td>{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d-m-Y') : '' }}</td>
                         <td>{{ source.libTypeReleveAlimentation }}</td>
 						{% if source.idTypeReleveAlimentation == 1 %}
 							<script>
-								temperatures.push({{ source.releveAlimentation }})
-								
 								var year = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('Y') : '' }}).toString() )
 								var month = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('m') : '' }}).toString() )
 								var day = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d') : '' }}).toString() )
-								dates.push(day.concat('/',month,'/',year))
+
+								{% if (source.dateReleveAlimentation|date('Y')) > ("now" | date('Y'))-3 %}
+									temperatures.push({{ source.releveAlimentation }})
+									dates.push(day.concat('/',month,'/',year))
+								{% endif %}
 							</script> 
 						{% endif %}
 					</tr>

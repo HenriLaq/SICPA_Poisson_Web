@@ -33,13 +33,4 @@ class ExperimentationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{idExperimentationExploitation}", name="experimentation_show", methods={"GET"})
-     */
-    public function show(ExperimentationExploitation $experimentationExploitation): Response
-    {
-        return $this->render('experimentation/show.html.twig', [
-            'experimentation_exploitation' => $experimentationExploitation,
-        ]);
-    }
 }

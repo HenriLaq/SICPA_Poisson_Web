@@ -15,7 +15,6 @@ class HomeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
         ]);
     }
 }
