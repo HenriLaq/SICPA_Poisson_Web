@@ -32,11 +32,11 @@
 					<th>Type d'intervention</th>
 					<th>Informations</th>
 					<th>Bassin</th>
+					<th>Relevé associé</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for mouvement in mouvements %}
-
 					<tr>
 						<td>
 							<span style="display:none;">{{ mouvement.dateMouvement ? mouvement.dateMouvement|date('Y-m-d') : '' }}</span>
@@ -47,6 +47,14 @@
 						<td>{{ mouvement.libMouv }}</td>
 						<td>{{ mouvement.infoMouv }}</td>
 						<td>{{ mouvement.nomBassin }}</td>
+						<td>
+							{% for releve in releves %}
+								{% if releve.idMouvement == mouvement.idMouvement %}
+									{{ releve.libTypeRelAni }}: {{ releve.valeurRelAni|round(2) }}
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>{{ mouvement.idMouvement }}</td>
 					</tr>
 
 				{% else %}
