@@ -32,8 +32,7 @@
 			</thead>
 			<tbody>
 				<script>
-						const ordonnee = new Array();
-						const abscisse = new Array();
+					var donnees = new Array();
 				</script>
 
 				{% set i = 0 %}
@@ -60,8 +59,7 @@
 					</tr>
 
 					<script>
-						var ordonneeTemp = new Array();
-						var abscisseTemp = new Array();
+						var donneesTemp= {};
 						var rangee = 0;
 					</script>
 					{# Pour les indivs de ces lots #}
@@ -75,12 +73,23 @@
 										{# Si c'est le bon indiv ET le bon type de releve #}
 										{% if releve.idIndi == individu.idIndi and releve.idTypeRelAni == 4 %}
 											<script>
-												{# SI deja la date ALORS faire la moyenne des valeurs #}
 												var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() )
 												var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() )
 												var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() )
-												abscisseTemp.push(day.concat('/',month,'/',year));
-												ordonneeTemp.push({{ releve.valeurRelAni }});
+												
+												donneesTemp[(day.concat('/',month,'/',year))] = {{ releve.valeurRelAni }};
+
+												{# SI deja la date ALORS faire la moyenne des valeurs
+												if(donnees[(day.concat('/',month,'/',year))]){
+													for (){
+
+													}
+												}else{
+													donneesTemp[(day.concat('/',month,'/',year))] = {{ releve.valeurRelAni }};
+												}
+												#}
+												
+
 											</script>
 										{% endif %}
 									{% endfor %}
@@ -88,8 +97,8 @@
 							{% endif %}
 						{% endfor %}
 					<script>
-						ordonnee.push(ordonneeTemp);
-						abscisse.push(abscisseTemp);
+						donnees.push(donneesTemp);
+						
 					</script>
 					{% set i = i + 1 %}
 				{% else %}
@@ -109,14 +118,15 @@
 
 		<div><canvas id="chartLot" style="max-width:100%; max-height:500px;"></canvas></div>
 		<script>
+			console.log(donnees);
 			const ctx = document.getElementById('chartLot').getContext('2d');
 			const data = {
 				type: 'line',
 				data: {
-					labels: abscisse[rangee],
+					labels: Object.keys(donnees[rangee]),
 					datasets: [{
 						label: 'Poids moyen',
-						data: ordonnee[rangee],
+						data: Object.values(donnees[rangee]),
 						backgroundColor: [
 							'rgba(255, 0, 0, 0.2)'
 						],
