@@ -31,9 +31,14 @@
 				</tr>
 			</thead>
 			<tbody>
+				<script>
+						const ordonnee = new Array();
+						const abscisse = new Array();
+				</script>
+
 				{% set i = 0 %}
 				{% for lot in lots %}
-					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% set i = i + 1 %} {% endif %}>
+					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% endif %} onclick="test(this)">
 						<td>{{ lot.nomLot }}</td>
 						<td>
 							<span style="display:none;">{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : ''}}</span>
@@ -54,6 +59,39 @@
 						</td>
 					</tr>
 
+					<script>
+						var ordonneeTemp = new Array();
+						var abscisseTemp = new Array();
+						var rangee = 0;
+					</script>
+					{# Pour les indivs de ces lots #}
+						{% for individu in individus %}
+							{# Si c'est le bon lot #}
+							{% if individu.idLot == lot.idLot %}
+								{# Pour les releves des indivs de ces lots par lots #}
+								{% for releves in releveParIndi %}
+									{# Pour les releves de ces lots #}
+									{% for releve in releves %}
+										{# Si c'est le bon indiv ET le bon type de releve #}
+										{% if releve.idIndi == individu.idIndi and releve.idTypeRelAni == 4 %}
+											<script>
+												{# SI deja la date ALORS faire la moyenne des valeurs #}
+												var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() )
+												var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() )
+												var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() )
+												abscisseTemp.push(day.concat('/',month,'/',year));
+												ordonneeTemp.push({{ releve.valeurRelAni }});
+											</script>
+										{% endif %}
+									{% endfor %}
+								{% endfor %}
+							{% endif %}
+						{% endfor %}
+					<script>
+						ordonnee.push(ordonneeTemp);
+						abscisse.push(abscisseTemp);
+					</script>
+					{% set i = i + 1 %}
 				{% else %}
 					<tr>
 						<td colspan="25">Aucun résultat</td>
@@ -68,6 +106,39 @@
 				<label>Afficher les lots fermés</label>
 			</div>
 		{% endif %}
+
+		<div><canvas id="chartLot" style="max-width:100%; max-height:500px;"></canvas></div>
+		<script>
+			const ctx = document.getElementById('chartLot').getContext('2d');
+			const data = {
+				type: 'line',
+				data: {
+					labels: abscisse[rangee],
+					datasets: [{
+						label: 'Poids moyen',
+						data: ordonnee[rangee],
+						backgroundColor: [
+							'rgba(255, 0, 0, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 0, 0, 1)',
+						],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						y: {
+							beginAtZero: true
+						}
+					}
+				}
+			}
+			const myChart = new Chart(ctx, data);
+		</script>
+
+		
+
 
 		<br><br>
 		<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>

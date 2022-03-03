@@ -183,11 +183,10 @@ function toggle() {
     }
 }
 
+//Cacher/Afficher les elements fermes
 function toggle_by_class(max) {
     for(var i = 0; i < max; i++) {
         if (document.getElementById("hide"+i) !== null){
-            console.log(document.getElementById("hide"+i));
-            console.log("hide"+i);
             if (document.getElementById("hide"+i).style.display == 'none') {
                 document.getElementById("hide"+i).style.display = '';
             } else {
@@ -195,6 +194,16 @@ function toggle_by_class(max) {
             }
         }
     }
+}
+
+//Gerer les courbes de la page lot
+function test(x) {
+	rangee = x.rowIndex-1;
+	myChart.data.datasets[0].data = ordonnee[rangee];
+	myChart.data.labels = abscisse[rangee];
+	myChart.update();
+	console.log(abscisse[rangee]);
+    console.log(ordonnee[rangee]);
 }
 
 // (function() {

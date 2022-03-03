@@ -75,6 +75,7 @@
 		
 		<div><canvas id="chartTemperature" style="max-width:100%; max-height:500px;"></canvas></div>
 		<script>
+			console.log(rangee);
 			const ctx = document.getElementById('chartTemperature').getContext('2d');
 			const myChart = new Chart(ctx, {
 				type: 'line',
