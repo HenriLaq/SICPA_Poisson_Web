@@ -199,8 +199,9 @@ function toggle_by_class(max) {
 //Gerer les courbes de la page lot
 function test(x) {
 	rangee = x.rowIndex-1;
-	myChart.data.datasets[0].data = Object.values(donnees[rangee]);
-	myChart.data.labels = Object.keys(donnees[rangee]);
+    id = x.querySelector("td").innerHTML;
+	myChart.data.datasets[0].data = Object.values(donnees[id]);
+	myChart.data.labels = Object.keys(donnees[id]);
 	myChart.update();
 }
 

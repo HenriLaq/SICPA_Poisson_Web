@@ -19,6 +19,7 @@
 		<table class="table table-bordered table-hover" id="tableLot">
 			<thead>
 				<tr>
+					<th class="notexport hidden">idLot</th>
 					<th>Nom</th>
 					<th class="notexport">Début</th>
 					<th class="hidden">Début</th>
@@ -32,12 +33,14 @@
 			</thead>
 			<tbody>
 				<script>
-					var donnees = new Array();
+					var donnees = {};
+					var rangee = 0;
 				</script>
 
 				{% set i = 0 %}
 				{% for lot in lots %}
 					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% endif %} onclick="test(this)">
+						<td class="hidden">{{ lot.idLot }}</td>
 						<td>{{ lot.nomLot }}</td>
 						<td>
 							<span style="display:none;">{{ lot.dateDebLot ? lot.dateDebLot|date('Y-m-d') : ''}}</span>
@@ -60,7 +63,6 @@
 
 					<script>
 						var donneesTemp= {};
-						var rangee = 0;
 					</script>
 					{# Pour les indivs de ces lots #}
 						{% for individu in individus %}
@@ -97,8 +99,8 @@
 							{% endif %}
 						{% endfor %}
 					<script>
-						donnees.push(donneesTemp);
-						
+						donnees[{{ lot.idLot }}] = donneesTemp;
+						{# donnees[{{ lot.idLot }}] = donneesTemp; #}
 					</script>
 					{% set i = i + 1 %}
 				{% else %}
@@ -123,10 +125,10 @@
 			const data = {
 				type: 'line',
 				data: {
-					labels: Object.keys(donnees[rangee]),
+					labels: Object.keys(donnees[{{ lots[0].idLot }}]),
 					datasets: [{
 						label: 'Poids moyen',
-						data: Object.values(donnees[rangee]),
+						data: Object.values(donnees[{{ lots[0].idLot }}]),
 						backgroundColor: [
 							'rgba(255, 0, 0, 0.2)'
 						],
