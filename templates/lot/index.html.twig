@@ -62,7 +62,8 @@
 					</tr>
 
 					<script>
-						var donneesTemp= {};
+						var donneesTemp = {};
+						var relAni = new Array();
 					</script>
 					{# Pour les indivs de ces lots #}
 						{% for individu in individus %}
@@ -75,21 +76,24 @@
 										{# Si c'est le bon indiv ET le bon type de releve #}
 										{% if releve.idIndi == individu.idIndi and releve.idTypeRelAni == 4 %}
 											<script>
-												var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() )
-												var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() )
-												var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() )
+												var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() );
+												var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() );
+												var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() );
+
+												{# donnesTemp est en clef => tableau, on fait la moyenne du tableau avant de l'ajouter a donnees #}
 												
-												donneesTemp[(day.concat('/',month,'/',year))] = {{ releve.valeurRelAni }};
-
-												{# SI deja la date ALORS faire la moyenne des valeurs
-												if(donnees[(day.concat('/',month,'/',year))]){
-													for (){
-
+												
+												if (donneesTemp[(day.concat('/',month,'/',year))]){
+													if (!(relAni.includes({{releve.idRelAni}}))){
+														donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
+														relAni.push({{releve.idRelAni}})
 													}
 												}else{
-													donneesTemp[(day.concat('/',month,'/',year))] = {{ releve.valeurRelAni }};
+													donneesTemp[(day.concat('/',month,'/',year))] = new Array();
+													donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
 												}
-												#}
+												
+												
 												
 
 											</script>
@@ -99,8 +103,15 @@
 							{% endif %}
 						{% endfor %}
 					<script>
+						var iterator = Object.keys(donneesTemp);
+						for (const key of iterator){
+							var total = 0;
+							for (const value of donneesTemp[key]){
+								total += value;
+							}
+							donneesTemp[key] = total/donneesTemp[key].length;
+						}
 						donnees[{{ lot.idLot }}] = donneesTemp;
-						{# donnees[{{ lot.idLot }}] = donneesTemp; #}
 					</script>
 					{% set i = i + 1 %}
 				{% else %}
@@ -118,6 +129,8 @@
 			</div>
 		{% endif %}
 
+		<hr>
+
 		<div><canvas id="chartLot" style="max-width:100%; max-height:500px;"></canvas></div>
 		<script>
 			console.log(donnees);
@@ -125,10 +138,10 @@
 			const data = {
 				type: 'line',
 				data: {
-					labels: Object.keys(donnees[{{ lots[0].idLot }}]),
+					labels: null,
 					datasets: [{
 						label: 'Poids moyen',
-						data: Object.values(donnees[{{ lots[0].idLot }}]),
+						data: null,
 						backgroundColor: [
 							'rgba(255, 0, 0, 0.2)'
 						],
@@ -148,9 +161,6 @@
 			}
 			const myChart = new Chart(ctx, data);
 		</script>
-
-		
-
 
 		<br><br>
 		<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>
