@@ -56,7 +56,7 @@
 								var month = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('m') : '' }}).toString() )
 								var day = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d') : '' }}).toString() )
 
-								{% if (source.dateReleveAlimentation|date('Y')) > ("now" | date('Y'))-3 and source.dateReleveAlimentation|date('d') is divisible by 2 %}
+								{% if (source.dateReleveAlimentation|date('Y')) > ("now" | date('Y'))-6 and source.dateReleveAlimentation|date('d') is divisible by 5 %}
 									temperatures.push({{ source.releveAlimentation }})
 									dates.push(day.concat('/',month,'/',year))
 								{% endif %}

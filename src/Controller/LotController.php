@@ -33,9 +33,9 @@ class LotController extends AbstractController
         $bassins = [];
         $releveParBassin = [];
 
-        //Pour tous les lots
+        //Pour tous les lots de l'expe
         foreach($lots as $lot) {
-            array_push($indiParLot, $indiRepo->findAllByLot($lot->getIdLot()));
+            array_push($indiParLot, $indiRepo->findIndiByLot($lot->getIdLot()));
             array_push($bassins, ($bassinRepo->findBassinById($lot->getIdBassin()))[0]);
         }
         
@@ -44,15 +44,17 @@ class LotController extends AbstractController
         foreach ($indiParLot as $indi){
             //Pour tous les indis
             foreach ($indi as $i){
-                array_push($releveParIndi, $relAniRepo->findRelByIndi($i->getIdIndi()));
+                array_push($releveParIndi, $relAniRepo->findRelByIndiDuLot($i->getIdIndi()));
                 array_push($individus, $i);
             }
         }
 
         //Pour tous les bassins
+        /*
         foreach($bassins as $bassin){
             array_push($releveParBassin, $alimRepo->findSourceByAlim($bassin->getIdAlimEau()));
         }
+        */
         
         return $this->render('lot/index.html.twig', [
             'lots' => $lots,

@@ -65,43 +65,32 @@
 						var donneesTemp = {};
 						var relAni = new Array();
 					</script>
-					{# Pour les indivs de ces lots #}
-						{% for individu in individus %}
-							{# Si c'est le bon lot #}
-							{% if individu.idLot == lot.idLot %}
-								{# Pour les releves des indivs de ces lots par lots #}
-								{% for releves in releveParIndi %}
-									{# Pour les releves de ces lots #}
-									{% for releve in releves %}
-										{# Si c'est le bon indiv ET le bon type de releve #}
-										{% if releve.idIndi == individu.idIndi and releve.idTypeRelAni == 4 %}
-											<script>
-												var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() );
-												var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() );
-												var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() );
-
-												{# donnesTemp est en clef => tableau, on fait la moyenne du tableau avant de l'ajouter a donnees #}
-												
-												
-												if (donneesTemp[(day.concat('/',month,'/',year))]){
-													if (!(relAni.includes({{releve.idRelAni}}))){
-														donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
-														relAni.push({{releve.idRelAni}})
-													}
-												}else{
-													donneesTemp[(day.concat('/',month,'/',year))] = new Array();
-													donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
-												}
-												
-												
-												
-
-											</script>
-										{% endif %}
-									{% endfor %}
-								{% endfor %}
-							{% endif %}
+					{# Pour les indivs de ces lots, Si c'est le bon lot #}
+					{% for individu in individus|filter(individu => individu.idLot == lot.idLot) %}
+						{# Pour les releves des indivs de ces lots par Indi #}
+						{% for releves in releveParIndi %}
+							{# Pour les releves de ces lots, Si c'est le bon indiv ET le bon type de releve #}
+							{% for releve in releves|filter(releve => releve.idIndi == individu.idIndi)|filter(releve => releve.idTypeRelAni == 4) %}
+								<script>
+									var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() );
+									var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() );
+									var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() );
+									
+									{# donnesTemp est en clef => tableau (date => valeurs), on fait la moyenne du tableau avant de l'ajouter a donnees #}
+									if (donneesTemp[(day.concat('/',month,'/',year))]){
+										if (!(relAni.includes({{releve.idRelAni}}))){
+											donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
+											relAni.push({{releve.idRelAni}})
+										}
+									}else{
+										donneesTemp[(day.concat('/',month,'/',year))] = new Array();
+										donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
+									}
+								</script>
+							{% endfor %}
 						{% endfor %}
+					{% endfor %}
+
 					<script>
 						var iterator = Object.keys(donneesTemp);
 						for (const key of iterator){
@@ -112,7 +101,13 @@
 							donneesTemp[key] = total/donneesTemp[key].length;
 						}
 						donnees[{{ lot.idLot }}] = donneesTemp;
+						
+						{# plus petite date de releve (pour choisir la date minimum) #}
+						var minDate=new Date(Math.min.apply(null,iterator));
 					</script>
+
+					
+						
 					{% set i = i + 1 %}
 				{% else %}
 					<tr>
@@ -149,12 +144,29 @@
 							'rgba(255, 0, 0, 1)',
 						],
 						borderWidth: 1
+					},{
+						label: 'Température',
+						data: null,
+						backgroundColor: [
+							'rgba(0, 255, 0, 0.2)'
+						],
+						borderColor: [
+							'rgba(, 255, 0, 1)',
+						],
+						borderWidth: 1
 					}]
 				},
 				options: {
 					scales: {
 						y: {
 							beginAtZero: true
+						},
+						y1: {
+							beginAtZero: true,
+							position: 'right',
+							grid: {
+          						drawOnChartArea: false, // only want the grid lines for one axis to show up
+        					},
 						}
 					}
 				}

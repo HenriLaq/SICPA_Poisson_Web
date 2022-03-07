@@ -16,11 +16,12 @@
 				<li class="breadcrumb-item active" aria-current="page">Alimentation</li>
 			</ol>
 		</nav>
-
+		{% if alimentations|length > 0 %}
 		<h1>Alimentation: Lot
 			{{ alimentations[0].nomLot }},
 			{{ alimentations[0].nomEspece }}, souche
 			{{ alimentations[0].libSouche }}</h1>
+		{% endif %}
 
 		<table class="table table-bordered table-hover" id="tableAlim">
 			<thead>
