@@ -10,9 +10,6 @@ use App\Repository\IndividuExploitationRepository;
 use App\Repository\ExperimentationExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/experimentation")
- */
 class ExperimentationController extends AbstractController
 {
     /**
