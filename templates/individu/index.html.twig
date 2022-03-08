@@ -22,22 +22,32 @@
 		<table class="table table-bordered table-hover" id="tableIndiv">
 			<thead>
 				<tr>
+					<th>Identifiant</th>
 					<th>Rfid</th>
 					<th>Espece</th>
 					<th>Genre</th>
 					<th>Ploidie</th>
 					<th>Stade evolution</th>
+					<th>Effectif</th>
 					<th class="notexport">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for individu in individus %}
 					<tr>
+						<td>{{ individu.identifiantIndi }}</td>
 						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
 						<td>{{ individu.libPloidie }}</td>
 						<td>{{ individu.libTypeStadeEvolution }}</td>
+						<td>
+						{% for key, value in effectifParIndi %}
+							{% if key == individu.idIndi %}
+    							{{ value }}
+							{% endif %}
+						{% endfor %}
+						</td>
 						<td>
 							<a class="btn btn-primary" href="{{ path('releve_indi_index', {'idIndi': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les relevés</a>
 						</td>

@@ -89,7 +89,7 @@ class SecurityController extends AbstractController
         if (isset($user)) {
             $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
             $this->get("security.token_storage")->setToken($token);
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('experimentation_index');
         }
 
 

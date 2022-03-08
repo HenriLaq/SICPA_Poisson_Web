@@ -26,13 +26,13 @@
 					<th class="notexport">Fin</th>
 					<th class="hidden">Fin</th>
 					<th>Bassin</th>
-
 					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
 					<th class="notexport">actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<script>
+					var temperatures = {}
 					var donnees = {};
 					var rangee = 0;
 				</script>
@@ -101,7 +101,7 @@
 							donneesTemp[key] = total/donneesTemp[key].length;
 						}
 						donnees[{{ lot.idLot }}] = donneesTemp;
-						
+
 						{# plus petite date de releve (pour choisir la date minimum) #}
 						var minDate=new Date(Math.min.apply(null,iterator));
 					</script>

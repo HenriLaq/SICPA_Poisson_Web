@@ -26,7 +26,7 @@
 
 		<h1>
 			Bassin {{ bassins[0].nomBassin }}, 
-			Type {{ bassins[0].nomTypeBassin }}, 
+			Type "{{ bassins[0].nomTypeBassin }}",
 			Numéro {{ bassins[0].numeroBassin }}, 
 			Rfid {{ bassins[0].tagRfid }}, 
 			Zone <a target="_blank" href="{{ path('bassin_zone', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassins[0].idBassin}) }}">{{ bassins[0].nomZone }}</a>:
@@ -40,10 +40,10 @@
 					<th>Fin Uv</th>
 					<th>Date Relevé</th>
 					<th>Valeur Relevé</th>
-					<th>Type</th>
+					<th>Type de relevé</th>
 					<th>Debut Alimente</th>
 					<th>Fin Alimente</th>
-					<th>Actions</th>
+					<th>Source</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -58,7 +58,7 @@
 						<td>{{ bassin.libTypeRelBassin }}</td>
 						<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('d-m-Y') : '' }}</td>
 						<td>{{ bassin.finAlimente ? bassin.finAlimente|date('d-m-Y') : '' }}</td>
-						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin}) }}" style="margin:3px;" class="btn btn-primary">Voir la source</a>
+						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin}) }}">{{ bassin.nomAlimEau }}</a>
 					</tr>
 
 				{% else %}

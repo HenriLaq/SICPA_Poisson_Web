@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\BassinExploitationRepository;
 use App\Repository\IndividuExploitationRepository;
+use App\Repository\MouvementExploitationRepository;
 use App\Repository\ReleveAnimalExploitationRepository;
 use App\Repository\AlimentationEauExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +22,8 @@ class LotController extends AbstractController
      */
     public function index(LotExploitationRepository $lotExploitationRepository, IndividuExploitationRepository $indiRepo, 
     ReleveAnimalExploitationRepository $relAniRepo, BassinExploitationRepository $bassinRepo,
-    AlimentationEauExploitationRepository $alimRepo, ExperimentationExploitation $expe): Response
+    AlimentationEauExploitationRepository $alimRepo, ExperimentationExploitation $expe,
+    MouvementExploitationRepository $mvmtRepo): Response
     {
         $lots = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
 
@@ -55,6 +57,12 @@ class LotController extends AbstractController
             array_push($releveParBassin, $alimRepo->findSourceByAlim($bassin->getIdAlimEau()));
         }
         */
+
+        //GetEffectifs
+        $effectifParLot = [];
+        foreach ($lots as $lot){
+            $effectifParLot[$lot->getIdLot()] = ($mvmtRepo->findEffectifByLot($lot->getIdLot()))[0]->getNouvelEffectif();
+        }
         
         return $this->render('lot/index.html.twig', [
             'lots' => $lots,
@@ -63,6 +71,7 @@ class LotController extends AbstractController
             'individus' => $individus,
             'releveParBassin' => $releveParBassin,
             'bassins' => $bassins,
+            'effectifParLot' => $effectifParLot,
         ]);
     }
 }

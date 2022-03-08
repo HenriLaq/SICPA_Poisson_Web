@@ -11,6 +11,7 @@ use App\Repository\ZoneExploitationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\BassinExploitationRepository;
+use App\Repository\AlimentationEauExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BassinController extends AbstractController
@@ -18,9 +19,13 @@ class BassinController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/bassin", name="bassin_index")
      */
-    public function index(BassinExploitationRepository $bassinExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
+    public function index(BassinExploitationRepository $bassinExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot, AlimentationEauExploitationRepository $alimRepo): Response
     {
         $bassins = $bassinExploitationRepository->findBassinById($lot->getIdBassin());
+
+        //afficher nom source
+
+
         return $this->render('bassin/index.html.twig', [
             'idLot' => $lot->getIdLot(),
             'bassins' => $bassins,
