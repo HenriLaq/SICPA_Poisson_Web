@@ -61,7 +61,9 @@ class LotController extends AbstractController
         //GetEffectifs
         $effectifParLot = [];
         foreach ($lots as $lot){
-            $effectifParLot[$lot->getIdLot()] = ($mvmtRepo->findEffectifByLot($lot->getIdLot()))[0]->getNouvelEffectif();
+            if (count($mvmtRepo->findEffectifByLot($lot->getIdLot())) > 0){
+                $effectifParLot[$lot->getIdLot()] = ($mvmtRepo->findEffectifByLot($lot->getIdLot()))[0]->getNouvelEffectif();
+            }
         }
         
         return $this->render('lot/index.html.twig', [

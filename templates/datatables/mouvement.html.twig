@@ -15,8 +15,9 @@ $(document).ready(function() {
             {extend: 'print', text:'Imprimer', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
         ],
         searchBuilder:{
-            columns: [0,1,2,4] //seul truc à changer
+            columns: [1,2,3,4,5,6] //seul truc à changer
         },
+        "order": [[ 0, "desc" ]],
         "search": {
             "addClass": 'form-control input-lg col-xs-12'
         },
