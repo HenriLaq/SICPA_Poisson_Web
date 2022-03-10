@@ -29,6 +29,8 @@
 					<th class="hidden">Demande Ouv</th>
 					<th>Information Ouv</th>
 					<th>Unite</th>
+					<th>Nombre de bassins</th>
+					<th>Poids Moyen</th>
 					<th class="notexport">Actions</th>
 				</tr>
 			</thead>
@@ -59,7 +61,14 @@
 						<td class="hidden">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : ''}}</td>
 						<td class="col-sm-1">{{ experimentation.infoDemandeOuv }}</td>
 						<td>{{ experimentation.nomUnite }}</td>
-
+						<td>
+							{% for key, value in lotsParExpe %}
+								{% if (key == experimentation.idExpe) %}
+									{{ value }}
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>{{ experimentation.poidsMoyen }}</td>
 						<td>
 							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
 						</td>

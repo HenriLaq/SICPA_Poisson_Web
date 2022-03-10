@@ -37,7 +37,7 @@ class BassinController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/bassin/{idBassin}/zone", name="bassin_zone")
      */
-    public function showZone(BassinExploitationRepository $bassinExploitationRepository, BassinExploitation $bassin, ZoneExploitationRepository $zoneExploitationRepository): Response
+    public function showZone(BassinExploitation $bassin, ZoneExploitationRepository $zoneExploitationRepository): Response
     {
         $zone = $zoneExploitationRepository->findOneZone($bassin->getIdZone());
         

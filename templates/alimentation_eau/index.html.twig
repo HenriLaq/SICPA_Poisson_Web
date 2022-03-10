@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+	<script type="text/javascript">
+            var timerStart = Date.now();
+    </script>
     
 	<div class="container-fluid">
 		<nav aria-label="breadcrumb">
@@ -46,13 +49,14 @@
 					const temperatures = new Array();
 					const dates = new Array();
 				</script>
+				{% set i = 0 %}
 				{% for source in sources %}
-
+					{% set i = i + 1 %}
 					<tr>
 						<td><span style="display:none;">{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('Y-m-d') : '' }}</span>
 						{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d-m-Y') : '' }}</td>
 						<td class="hidden">{{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d-m-Y') : '' }}</td>
-                        <td>{{ source.releveAlimentation }}</td>
+                        <td id="{{ i }}"><script>document.getElementById({{ i }}).innerHTML = Math.round({{ source.releveAlimentation }}*100)/100</script></td>
                         <td>{{ source.infoReleveAlimentation }}</td>
                         <td>{{ source.libTypeReleveAlimentation }}</td>
 						{% if source.idTypeReleveAlimentation == 1 %}
@@ -61,7 +65,7 @@
 								var month = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('m') : '' }}).toString() )
 								var day = ( ({{ source.dateReleveAlimentation ? source.dateReleveAlimentation|date('d') : '' }}).toString() )
 
-								{% if (source.dateReleveAlimentation|date('Y')) > ("now" | date('Y'))-6 and source.dateReleveAlimentation|date('d') is divisible by 5 %}
+								{% if (source.dateReleveAlimentation|date('Y')) > ("now" | date('Y'))-6 and source.dateReleveAlimentation|date('d') is divisible by 2 %}
 									temperatures.push({{ source.releveAlimentation }})
 									dates.push(day.concat('/',month,'/',year))
 								{% endif %}
@@ -111,4 +115,11 @@
 		<br><br>
 		<a href="{{ path('bassin_index', {'idExpe': idExpe, 'idLot': idLot}) }}" class="btn btn-danger">Retour</a>
 	</div>
+
+	<script>
+
+
+        console.log("Time until everything loaded: ", Date.now()-timerStart);
+
+    </script>
 {% endblock %}
