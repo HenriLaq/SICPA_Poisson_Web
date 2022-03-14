@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\BassinExploitationRepository;
+use App\Repository\CourbePrevisionnelleRepository;
 use App\Repository\IndividuExploitationRepository;
 use App\Repository\MouvementExploitationRepository;
 use App\Repository\ReleveAnimalExploitationRepository;
@@ -23,7 +24,7 @@ class LotController extends AbstractController
     public function index(LotExploitationRepository $lotExploitationRepository, IndividuExploitationRepository $indiRepo, 
     ReleveAnimalExploitationRepository $relAniRepo, BassinExploitationRepository $bassinRepo,
     AlimentationEauExploitationRepository $alimRepo, ExperimentationExploitation $expe,
-    MouvementExploitationRepository $mvmtRepo): Response
+    MouvementExploitationRepository $mvmtRepo, CourbePrevisionnelleRepository $courbeRepo): Response
     {
         $lots = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
 
@@ -51,12 +52,8 @@ class LotController extends AbstractController
             }
         }
 
-        //Pour tous les bassins
-        /*
-        foreach($bassins as $bassin){
-            array_push($releveParBassin, $alimRepo->findSourceByAlim($bassin->getIdAlimEau()));
-        }
-        */
+        //GetCourbePrevisionnelle
+        $courbe = [];
 
         //GetEffectifs
         $effectifParLot = [];
