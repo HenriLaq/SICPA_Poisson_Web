@@ -66,32 +66,31 @@
 
 					<script>
 						var donneesTemp = {};
-						var relAni = new Array();
+						
 					</script>
-					{# Pour les indivs de ces lots, Si c'est le bon lot #}
-					{% for individu in individus|filter(individu => individu.idLot == lot.idLot) %}
-						{# Pour les releves des indivs de ces lots par Indi #}
-						{% for releves in releveParIndi %}
-							{# Pour les releves de ces lots, Si c'est le bon indiv ET le bon type de releve #}
-							{% for releve in releves|filter(releve => releve.idIndi == individu.idIndi)|filter(releve => releve.idTypeRelAni == 4) %}
-								<script>
-									var year = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('Y') : '' }}).toString() );
-									var month = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('m') : '' }}).toString() );
-									var day = ( ({{ releve.dateRelAni ? releve.dateRelAni|date('d') : '' }}).toString() );
-									
-									{# donnesTemp est en clef => tableau (date => valeurs), on fait la moyenne du tableau avant de l'ajouter a donnees #}
-									if (donneesTemp[(day.concat('/',month,'/',year))]){
-										if (!(relAni.includes({{releve.idRelAni}}))){
-											donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
-											relAni.push({{releve.idRelAni}})
-										}
-									}else{
-										donneesTemp[(day.concat('/',month,'/',year))] = new Array();
-										donneesTemp[(day.concat('/',month,'/',year))].push({{ releve.valeurRelAni }});
-									}
-								</script>
-							{% endfor %}
-						{% endfor %}
+					{# Pour les courbes du bon lot #}
+					{% for courbe in courbes|filter(courbe => courbe.idLot == lot.idLot) %}
+						<script>
+							var year = ( ({{ courbe.datePoint ? courbe.datePoint|date('Y') : '' }}).toString() );
+							var month = ( ({{ courbe.datePoint ? courbe.datePoint|date('m') : '' }}).toString() );
+							var day = ( ({{ courbe.datePoint ? courbe.datePoint|date('d') : '' }}).toString() );
+
+							if (month.length < 2){
+								month = '0' + month;
+							}
+
+							var date = (year.concat('-',month,'-',day));
+							
+							{# donnesTemp est en clef => tableau (date => valeurs), on fait la moyenne du tableau avant de l'ajouter a donnees #}
+							if (donneesTemp[date]){
+								donneesTemp[date].push({{ courbe.poidsReel }});
+							}else{
+								donneesTemp[date] = new Array();
+								donneesTemp[date].push({{ courbe.poidsReel }});
+							}
+							
+						</script>
+
 					{% endfor %}
 
 					<script>
@@ -103,10 +102,13 @@
 							}
 							donneesTemp[key] = total/donneesTemp[key].length;
 						}
-						donnees[{{ lot.idLot }}] = donneesTemp;
-
-						{# plus petite date de releve (pour choisir la date minimum) #}
-						var minDate=new Date(Math.min.apply(null,iterator));
+						var donneesTempRangees = Object.keys(donneesTemp).sort().reduce(
+						(obj, key) => {
+							obj[key] = donneesTemp[key];
+							return obj;
+						}, {}
+						);
+						donnees[{{ lot.idLot }}] = donneesTempRangees;
 					</script>
 
 					

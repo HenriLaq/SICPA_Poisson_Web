@@ -28,49 +28,26 @@ class LotController extends AbstractController
     {
         $lots = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
 
-        /* Courbe des releves */
-        $indiParLot = [];
-        $individus = [];
-        $releveParIndi = [];
-
-        $bassins = [];
-        $releveParBassin = [];
-
-        //Pour tous les lots de l'expe
+        //GetCourbeBDD
+        $courbesByLot = [];
+        $courbes = [];
         foreach($lots as $lot) {
-            array_push($indiParLot, $indiRepo->findIndiByLot($lot->getIdLot()));
-            array_push($bassins, ($bassinRepo->findBassinById($lot->getIdBassin()))[0]);
+            array_push($courbesByLot, $courbeRepo->findCourbeByLot($lot->getIdLot()));
         }
         
-
-        //Pour tous les grp d'indis par lots
-        foreach ($indiParLot as $indi){
-            //Pour tous les indis
-            foreach ($indi as $i){
-                array_push($releveParIndi, $relAniRepo->findRelByIndiDuLot($i->getIdIndi()));
-                array_push($individus, $i);
+        foreach($courbesByLot as $courbeByLot){
+            foreach($courbeByLot as $courbe){
+                array_push($courbes, $courbe);
             }
         }
 
-        //GetCourbePrevisionnelle
-        $courbe = [];
 
-        //GetEffectifs
-        $effectifParLot = [];
-        foreach ($lots as $lot){
-            if (count($mvmtRepo->findEffectifByLot($lot->getIdLot())) > 0){
-                $effectifParLot[$lot->getIdLot()] = ($mvmtRepo->findEffectifByLot($lot->getIdLot()))[0]->getNouvelEffectif();
-            }
-        }
-        
+        //dd($courbes);
+
         return $this->render('lot/index.html.twig', [
             'lots' => $lots,
             'idExpe' => $expe->getIdExpe(),
-            'releveParIndi' => $releveParIndi,
-            'individus' => $individus,
-            'releveParBassin' => $releveParBassin,
-            'bassins' => $bassins,
-            'effectifParLot' => $effectifParLot,
+            'courbes' => $courbes,
         ]);
     }
 }
