@@ -140,7 +140,7 @@
 			</tbody>
 		</table>
 
-		{% if lots|length>1 %}
+		{% if lots|length>=1 %}
 			<div class="checkbox-custom chekbox-primary">
 				<input onchange="toggle_by_class({{ i }});" type="checkbox">
 				<label>Afficher les lots fermés</label>
@@ -150,66 +150,7 @@
 		<hr>
 
 		<div><canvas id="chartLot" style="max-width:100%; max-height:500px;"></canvas></div>
-		<script>
-			const ctx = document.getElementById('chartLot').getContext('2d');
-			const data = {
-				type: 'line',
-				data: {
-					labels: null,
-					datasets: [{
-						label: 'Poids moyen',
-						data: null,
-						backgroundColor: [
-							'rgba(255, 0, 0, 0.2)'
-						],
-						borderColor: [
-							'rgba(255, 0, 0, 1)',
-						],
-						borderWidth: 1
-					},{
-						label: 'Poids Théorique',
-						data: null,
-						backgroundColor: [
-							'rgba(0, 0, 255, 0.2)'
-						],
-						borderColor: [
-							'rgba(0, 0, 255, 1)',
-						],
-						borderWidth: 1
-					},{
-						label: 'Température',
-						data: null,
-						backgroundColor: [
-							'rgba(0, 255, 0, 0.2)'
-						],
-						borderColor: [
-							'rgba(0, 255, 0, 1)',
-						],
-						borderWidth: 1,
-						yAxisID: 'y2',
-					}]
-				},
-				options: {
-					scales: {
-						y: {
-							beginAtZero: true,
-						},
-						y1: {
-							beginAtZero: true,
-							display: false,
-						},
-						y2: {
-							beginAtZero: true,
-							position: 'right',
-							grid: {
-          						drawOnChartArea: false, // only want the grid lines for one axis to show up
-        					},
-						}
-					}
-				}
-			}
-			const myChart = new Chart(ctx, data);
-		</script>
+		{% include 'lot/chart.html.twig' %}
 
 		<br><br>
 		<a href="{{ path('experimentation_index') }}" class="btn btn-danger">Retour</a>

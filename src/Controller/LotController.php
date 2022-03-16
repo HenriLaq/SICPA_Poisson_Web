@@ -21,33 +21,30 @@ class LotController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot", name="lot_index")
      */
-    public function index(LotExploitationRepository $lotExploitationRepository, IndividuExploitationRepository $indiRepo, 
-    ReleveAnimalExploitationRepository $relAniRepo, BassinExploitationRepository $bassinRepo,
-    AlimentationEauExploitationRepository $alimRepo, ExperimentationExploitation $expe,
-    MouvementExploitationRepository $mvmtRepo, CourbePrevisionnelleRepository $courbeRepo): Response
+    public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, CourbePrevisionnelleRepository $courbeRepo): Response
     {
-        $lots = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
+        $lots = [];
+        $lotsExploitation = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
 
-        //GetCourbeBDD
+        $courbes = $this->getCourbesBDD($lotsExploitation, $courbeRepo);
+        return $this->render('lot/index.html.twig', [
+            'lots' => $lotsExploitation,
+            'idExpe' => $expe->getIdExpe(),
+            'courbes' => $courbes,
+        ]);
+    }
+
+    private function getCourbesBDD($lotsExploitation, $courbeRepo){
         $courbesByLot = [];
         $courbes = [];
-        foreach($lots as $lot) {
+        foreach($lotsExploitation as $lot) {
             array_push($courbesByLot, $courbeRepo->findCourbeByLot($lot->getIdLot()));
         }
-        
         foreach($courbesByLot as $courbeByLot){
             foreach($courbeByLot as $courbe){
                 array_push($courbes, $courbe);
             }
         }
-
-
-        //dd($courbes);
-
-        return $this->render('lot/index.html.twig', [
-            'lots' => $lots,
-            'idExpe' => $expe->getIdExpe(),
-            'courbes' => $courbes,
-        ]);
+        return $courbes;
     }
 }
