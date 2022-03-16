@@ -33,7 +33,8 @@
 			<tbody>
 				<script>
 					var temperatures = {}
-					var donnees = {};
+					var donneesR = {};
+					var donneesP = {};
 					var rangee = 0;
 				</script>
 
@@ -65,8 +66,9 @@
 					</tr>
 
 					<script>
-						var donneesTemp = {};
-						
+						var donneesRTemp = {};
+						var donneesPTemp = {};
+						var temperatureTemp = {};
 					</script>
 					{# Pour les courbes du bon lot #}
 					{% for courbe in courbes|filter(courbe => courbe.idLot == lot.idLot) %}
@@ -74,41 +76,57 @@
 							var year = ( ({{ courbe.datePoint ? courbe.datePoint|date('Y') : '' }}).toString() );
 							var month = ( ({{ courbe.datePoint ? courbe.datePoint|date('m') : '' }}).toString() );
 							var day = ( ({{ courbe.datePoint ? courbe.datePoint|date('d') : '' }}).toString() );
-
 							if (month.length < 2){
 								month = '0' + month;
 							}
-
 							var date = (year.concat('-',month,'-',day));
 							
 							{# donnesTemp est en clef => tableau (date => valeurs), on fait la moyenne du tableau avant de l'ajouter a donnees #}
-							if (donneesTemp[date]){
-								donneesTemp[date].push({{ courbe.poidsReel }});
+							if (donneesRTemp[date]){
+								donneesRTemp[date].push({{ courbe.poidsReel }});
+								donneesPTemp[date].push({{ courbe.poidsPrevu }});
 							}else{
-								donneesTemp[date] = new Array();
-								donneesTemp[date].push({{ courbe.poidsReel }});
+								donneesRTemp[date] = new Array();
+								donneesRTemp[date].push({{ courbe.poidsReel }});
+								donneesPTemp[date] = new Array();
+								donneesPTemp[date].push({{ courbe.poidsPrevu }});
 							}
+
+							temperatureTemp[date] = {{ courbe.temperature }};
 							
 						</script>
 
 					{% endfor %}
 
 					<script>
-						var iterator = Object.keys(donneesTemp);
+						var iterator = Object.keys(donneesRTemp);
 						for (const key of iterator){
-							var total = 0;
-							for (const value of donneesTemp[key]){
-								total += value;
+							var totalR = 0;
+							var totalP = 0;
+							for (const value of donneesRTemp[key]){
+								totalR += value;
 							}
-							donneesTemp[key] = total/donneesTemp[key].length;
+							for (const value of donneesPTemp[key]){
+								totalP += value;
+							}
+							donneesRTemp[key] = totalR/donneesRTemp[key].length;
+							donneesPTemp[key] = totalP/donneesPTemp[key].length;
 						}
-						var donneesTempRangees = Object.keys(donneesTemp).sort().reduce(
+						var donneesRTempRangees = Object.keys(donneesRTemp).sort().reduce(
 						(obj, key) => {
-							obj[key] = donneesTemp[key];
+							obj[key] = donneesRTemp[key];
 							return obj;
 						}, {}
 						);
-						donnees[{{ lot.idLot }}] = donneesTempRangees;
+						var donneesPTempRangees = Object.keys(donneesPTemp).sort().reduce(
+						(obj, key) => {
+							obj[key] = donneesPTemp[key];
+							return obj;
+						}, {}
+						);
+						donneesR[{{ lot.idLot }}] = donneesRTempRangees;
+						donneesP[{{ lot.idLot }}] = donneesPTempRangees;
+						temperatures[{{ lot.idLot }}] = temperatureTemp;
 					</script>
 
 					
@@ -133,7 +151,6 @@
 
 		<div><canvas id="chartLot" style="max-width:100%; max-height:500px;"></canvas></div>
 		<script>
-			console.log(donnees);
 			const ctx = document.getElementById('chartLot').getContext('2d');
 			const data = {
 				type: 'line',
@@ -150,23 +167,38 @@
 						],
 						borderWidth: 1
 					},{
+						label: 'Poids Théorique',
+						data: null,
+						backgroundColor: [
+							'rgba(0, 0, 255, 0.2)'
+						],
+						borderColor: [
+							'rgba(0, 0, 255, 1)',
+						],
+						borderWidth: 1
+					},{
 						label: 'Température',
 						data: null,
 						backgroundColor: [
 							'rgba(0, 255, 0, 0.2)'
 						],
 						borderColor: [
-							'rgba(, 255, 0, 1)',
+							'rgba(0, 255, 0, 1)',
 						],
-						borderWidth: 1
+						borderWidth: 1,
+						yAxisID: 'y2',
 					}]
 				},
 				options: {
 					scales: {
 						y: {
-							beginAtZero: true
+							beginAtZero: true,
 						},
 						y1: {
+							beginAtZero: true,
+							display: false,
+						},
+						y2: {
 							beginAtZero: true,
 							position: 'right',
 							grid: {

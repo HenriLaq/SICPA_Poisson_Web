@@ -56,13 +56,6 @@ class CourbePrevisionnelle
      */
     private $poidsReel;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_Rel_Ani", type="integer", nullable=false)
-     */
-    private $idRelAni;
-
     public function getIdCourbePrevisionnelle(): ?int
     {
         return $this->idCourbePrevisionnelle;
@@ -124,18 +117,6 @@ class CourbePrevisionnelle
     public function setPoidsReel(?float $poidsReel): self
     {
         $this->poidsReel = $poidsReel;
-
-        return $this;
-    }
-
-    public function getIdRelAni(): ?int
-    {
-        return $this->idRelAni;
-    }
-
-    public function setIdRelAni(int $idRelAni): self
-    {
-        $this->idRelAni = $idRelAni;
 
         return $this;
     }

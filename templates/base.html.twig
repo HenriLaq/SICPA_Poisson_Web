@@ -201,8 +201,10 @@ function toggle_by_class(max) {
 function test(x) {
 	rangee = x.rowIndex-1;
     id = x.querySelector("td").innerHTML;
-	myChart.data.datasets[0].data = Object.values(donnees[id]);
-	myChart.data.labels = Object.keys(donnees[id]);
+	myChart.data.datasets[0].data = Object.values(donneesR[id]);
+    myChart.data.datasets[1].data = Object.values(donneesP[id]);
+    myChart.data.datasets[2].data = Object.values(temperatures[id]);
+	myChart.data.labels = Object.keys(donneesR[id]);
 	myChart.update();
 }
 
