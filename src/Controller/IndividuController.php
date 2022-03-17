@@ -26,8 +26,12 @@ class IndividuController extends AbstractController
         //GetEffectifs
         $effectifParIndi = [];
         foreach ($individus as $individu){
-            $effectifParIndi[$individu->getIdIndi()] = ($mvmtRepo->findEffectifByIndi($individu->getIdIndi()))[0]->getNouvelEffectif();
+            $mvmts = $mvmtRepo->findEffectifByIndi($individu->getIdIndi());
+            if (sizeof($mvmts)>0){
+                $effectifParIndi[$individu->getIdIndividuExploitation()] = $mvmts[0]->getNouvelEffectif();
+            }
         }
+            
 
         return $this->render('individu/index.html.twig', [
             'idLot' => $lot->getIdLot(),

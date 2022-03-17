@@ -27,7 +27,7 @@ class MouvementController extends AbstractController
         }
         return $this->render('mouvement/index.html.twig', [
             'idExpe' => $expe->getIdExpe(),
-            'Lot' => $lot,
+            'lot' => $lot,
             'mouvements' => $mouvements,
             'releves' => $releves
         ]);

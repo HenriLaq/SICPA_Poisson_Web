@@ -18,9 +18,9 @@
 		</nav>
 
 		<h1>Mouvements: Lot
-			{{ Lot.nomLot }},
-			{{ Lot.nomEspece }}, souche
-			{{ Lot.libSouche }}</h1>
+			{{ lot.nomLot }},
+			{{ lot.nomEspece }}, souche
+			{{ lot.libSouche }}</h1>
 
 		<table class="table table-bordered table-hover" id="tableMouvement">
 			<thead>
@@ -33,7 +33,7 @@
 					<th>Informations</th>
 					<th>Bassin</th>
 					<th>Relevé associé</th>
-					<th>Id Individu</th>
+					<th>Individu</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -55,7 +55,7 @@
 								{% endif %}
 							{% endfor %}
 						</td>
-						<td>{{ mouvement.idIndi }}</td>
+						<td>{#<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}">{{ mouvement.identifiantIndi }}</a>#}{{ mouvement.identifiantIndi }}</td>
 					</tr>
 
 				{% else %}
@@ -65,6 +65,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		<a href="{{ path('individu_index', {'idLot': Lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+		<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
 	</div>
 {% endblock %}

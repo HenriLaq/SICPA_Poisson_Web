@@ -23,7 +23,6 @@
 			<thead>
 				<tr>
 					<th>Identifiant</th>
-					<th>Rfid</th>
 					<th>Espece</th>
 					<th>Genre</th>
 					<th>Ploidie</th>
@@ -36,14 +35,13 @@
 				{% for individu in individus %}
 					<tr>
 						<td>{{ individu.identifiantIndi }}</td>
-						<td>{{ individu.rfid }}</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>
 						<td>{{ individu.libPloidie }}</td>
 						<td>{{ individu.libTypeStadeEvolution }}</td>
 						<td>
 						{% for key, value in effectifParIndi %}
-							{% if key == individu.idIndi %}
+							{% if key == individu.idIndividuExploitation %}
     							{{ value }}
 							{% endif %}
 						{% endfor %}
