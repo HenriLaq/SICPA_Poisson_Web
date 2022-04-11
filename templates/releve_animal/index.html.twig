@@ -35,18 +35,15 @@
 			</thead>
 
 			{% for releve in releves %}
-				{% if releve.libTypeRelAni != "Biomasse théorique de sortie" %}
-					<tr>
-						<td>
-							<span style="display:none;">{{ releve.dateRelAni ? releve.dateRelAni|date('Y-m-d') : ''}}</span>
-							{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
-						<td class="hidden">{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
-						<td>{{ releve.valeurRelAni|round(2) }}</td>
-						<td>{{ releve.libTypeRelAni }}</td>
-						<td>{{ releve.infotypeRelAni }}</td>
-					</tr>
-				{% endif %}
-
+				<tr>
+					<td>
+						<span style="display:none;">{{ releve.dateRelAni ? releve.dateRelAni|date('Y-m-d') : ''}}</span>
+						{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
+					<td class="hidden">{{ releve.dateRelAni ? releve.dateRelAni|date('d-m-Y') : ''}}</td>
+					<td>{{ releve.valeurRelAni|round(2) }} {% if releve.idTypeRelAni == 1 or releve.idTypeRelAni == 4 %}g{% elseif releve.idTypeRelAni == 12 %}cm{% endif %}</td>
+					<td>{{ releve.libTypeRelAni }}</td>
+					<td>{{ releve.infotypeRelAni }}</td>
+				</tr>
 			{% else %}
 				<tr>
 					<td colspan="25">Aucun résultat</td>

@@ -41,10 +41,11 @@
 					scales: {
 						y: {
 							beginAtZero: true,
-							scaleLabel: {
-        						display: true,
-        						labelString: 'probability'
-      						},
+							ticks: {
+                    		callback: function(value, index, ticks) {
+                       			return value + ' g';
+                   			}
+                		}
 						},
 						y1: {
 							beginAtZero: true,

@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\ExperimentationExploitation;
-use App\Form\ExperimentationExploitationType;
 use App\Repository\LotExploitationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\IndividuExploitationRepository;
 use App\Repository\ExperimentationExploitationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

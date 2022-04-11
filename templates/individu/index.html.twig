@@ -33,7 +33,7 @@
 			</thead>
 			<tbody>
 				{% for individu in individus %}
-					<tr>
+					<tr {% if individu.isReforme == 1 %}class="gris"{% endif %}>
 						<td>{{ individu.identifiantIndi }}</td>
 						<td>{{ individu.nomEspece }}</td>
 						<td>{{ individu.libGenre }}</td>

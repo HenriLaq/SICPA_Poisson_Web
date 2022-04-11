@@ -25,3 +25,8 @@ thead{
     box-shadow:none!important;
     color: #333!important;
 }
+
+/* Griser les fermes */
+tr[class^="gris"]{
+    background-color: #C8C8C8!important;
+}
