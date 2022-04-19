@@ -27,8 +27,8 @@
 		<h1>
 			Bassin {{ bassins[0].nomBassin }}, 
 			Type "{{ bassins[0].nomTypeBassin }}",
-			Numéro {{ bassins[0].numeroBassin }}
-			Zone <a target="_blank" href="{{ path('bassin_zone', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassins[0].idBassin}) }}">{{ bassins[0].nomZone }}</a>:
+			Numéro {{ bassins[0].numeroBassin }},
+			Zone <a target="_blank" href="{{ path('bassin_zone', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassins[0].idBassin}) }}">{{ bassins[0].nomZone }}</a>
 		</h1>
 
 		<table class="table table-bordered table-hover" id="tableBassin">
@@ -40,8 +40,10 @@
 					<th>Date Relevé</th>
 					<th>Valeur Relevé</th>
 					<th>Type de relevé</th>
-					<th>Debut Alimente</th>
-					<th>Fin Alimente</th>
+					<th class="notexport">Debut Alimente</th>
+					<th class="hidden">Debut Alimente</th>
+					<th class="notexport">Fin Alimente</th>
+					<th class="hidden">Fin Alimente</th>
 					<th>Source</th>
 				</tr>
 			</thead>
@@ -55,9 +57,13 @@
 						<td>{{ bassin.dateRelBassin ? bassin.dateRelBassin|date('Y-m-d') : '' }}</td>
 						<td>{{ bassin.valeurRelBassin }}</td>
 						<td>{{ bassin.libTypeRelBassin }}</td>
-						<td>{{ bassin.debutAlimente ? bassin.debutAlimente|date('d-m-Y') : '' }}</td>
-						<td>{{ bassin.finAlimente ? bassin.finAlimente|date('d-m-Y') : '' }}</td>
-						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin}) }}">{{ bassin.nomAlimEau }}</a>
+						<td><span style="display:none;">{{ bassin.debutAlimente ? bassin.debutAlimente|date('Y-m-d') : '' }}</span>
+							{{ bassin.debutAlimente ? bassin.debutAlimente|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ bassin.debutAlimente ? bassin.debutAlimente|date('d-m-Y') : '' }}</td>
+						<td><span style="display:none;">{{ bassin.finAlimente ? bassin.finAlimente|date('Y-m-d') : '' }}</span>
+							{{ bassin.finAlimente ? bassin.finAlimente|date('d-m-Y') : '' }}</td>
+						<td class="hidden">{{ bassin.finAlimente ? bassin.finAlimente|date('d-m-Y') : '' }}</td>
+						<td><a href="{{ path('alimentation_eau_index', {'idLot': idLot, 'idExpe': idExpe, 'idBassin': bassin.idBassin, 'idAlimEau': bassin.idAlimEau}) }}">{{ bassin.nomAlimEau }}</a>
 					</tr>
 
 				{% else %}

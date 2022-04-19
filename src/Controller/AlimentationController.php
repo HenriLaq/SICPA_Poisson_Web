@@ -23,6 +23,7 @@ class AlimentationController extends AbstractController
             //Compteur de jours de jeunes
             $jeunes = [$alimentations[0]->getDateConditionAlim()->format("W-Y") => 0];
             $enCours = 0;
+            $qtt = [$alimentations[0]->getDateConditionAlim()->format("W-Y") => 0];
             $i = 0;
             foreach ($alimentations as $alimentation) {
                 $semaines[$i] = $alimentation->getDateConditionAlim()->format("W-Y");
@@ -32,9 +33,13 @@ class AlimentationController extends AbstractController
                 if ($enCours != $semaines[$i]) {
                     $enCours = $semaines[$i];
                     $jeunes += [$semaines[$i] => 0];
+                    $qtt += [$semaines[$i] => $alimentation->getIngere()];
                     //Si on  ne change pas de semaine
                 } else if ($alimentation->getCoeffAlim() == 0) {
                     $jeunes[$semaines[$i]]++;
+                    $qtt[$semaines[$i]] = $qtt[$semaines[$i]] + $alimentation->getIngere();
+                }else{
+                    $qtt[$semaines[$i]] = $qtt[$semaines[$i]] + $alimentation->getIngere();
                 }
                 $i = $i + 1;
             }
@@ -50,7 +55,8 @@ class AlimentationController extends AbstractController
             'semainesAffiche' => $semainesAffiche,
             'semaines' => $semaines,
             'jeunes' => $jeunes,
-            'idExpe' => $expe->getIdExpe()
+            'idExpe' => $expe->getIdExpe(),
+            'qtt' => $qtt,
         ]);
     }
 }

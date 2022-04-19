@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.hidden').hide();
     $('#tableBassin').DataTable({
         select: true,
+        "order": [[ 6, "desc" ]],
         "responsive": true,
         dom: "Q<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
         "<'row'<'col-sm-12'tr>>" +
@@ -15,7 +16,7 @@ $(document).ready(function() {
             {extend: 'print', text:'Imprimer', className: 'btn btn-primary', exportOptions: {columns: ':not(.notexport)'}},
         ],
         searchBuilder:{
-            columns: [0,1,2,3,4] //seul truc à changer
+            columns: [0,1,2,3,4,5,7,9,10] //seul truc à changer
         },
         "search": {
             "addClass": 'form-control input-lg col-xs-12'

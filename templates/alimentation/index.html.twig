@@ -17,8 +17,8 @@
 			</ol>
 		</nav>
 		{% if alimentations|length > 0 %}
-		<h1>Alimentation: Lot
-			{{ alimentations[0].nomLot }},
+		<h1>Alimentation du Lot
+			{{ alimentations[0].nomLot }} de
 			{{ alimentations[0].nomEspece }}, souche
 			{{ alimentations[0].libSouche }}</h1>
 		{% endif %}
@@ -33,6 +33,7 @@
 					<th>Nom Aliment</th>
 					<th>Granulométrie Aliment</th>
 					<th>Coeff Aliment</th>
+					<th>Qtt Ingérée</th>
 					<th>Changement</th>
 				</tr>
 			</thead>
@@ -52,6 +53,7 @@
 							<td>{{ alimentation.nomAliment }}</td>
 							<td>{{ alimentation.granulometrieAliment }}</td>
 							<td>{{ alimentation.coeffAlim }}</td>
+							<td>{{ qtt[semaines[i]] }}</td>
 							<td>
 								{% if alimentation.nomAliment != last.nomAliment or alimentation.coeffAlim != last.coeffAlim %}
 									Oui
@@ -70,6 +72,7 @@
 								<td>{{ alimentation.nomAliment }}</td>
 								<td>{{ alimentation.granulometrieAliment }}</td>
 								<td>{{ alimentation.coeffAlim }}</td>
+								<td>{{ qtt[semaines[i]] }}</td>
 								<td>
 									{% if alimentation.nomAliment != last.nomAliment or alimentation.coeffAlim != last.coeffAlim %}
 										Oui

@@ -25,10 +25,8 @@
 					<th>Num Saisine</th>
 					<th>Type</th>
 					<th>Informations</th>
-					<th class="notexport">Demande Ouv</th>
-					<th class="hidden">Demande Ouv</th>
-					<th>Information Ouv</th>
 					<th>Unite</th>
+					<th>Resp Techn</th>
 					<th>Nombre de bassins</th>
 					<th>Poids Moyen</th>
 					<th class="notexport">Actions</th>
@@ -55,12 +53,8 @@
 						</td>
 						<td>{{ experimentation.libTypeExperimentation }}</td>
 						<td class="col-sm-2">{{ experimentation.infoExpe }}</td>
-						<td>
-							<span style="display:none;">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('Y-m-d') : ''}}</span>
-							{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : '' }}</td>
-						<td class="hidden">{{ experimentation.dateDemandeOuv ? experimentation.dateDemandeOuv|date('d-m-Y') : ''}}</td>
-						<td class="col-sm-1">{{ experimentation.infoDemandeOuv }}</td>
 						<td>{{ experimentation.nomUnite }}</td>
+						<td>{{ experimentation.prenomUti }} {{ experimentation.nomUti}}</td>
 						<td>
 							{% for key, value in lotsParExpe %}
 								{% if (key == experimentation.idExpe) %}
@@ -68,7 +62,7 @@
 								{% endif %}
 							{% endfor %}
 						</td>
-						<td>{{ experimentation.poidsMoyen }}</td>
+						<td>{{ experimentation.poidsMoyen|round(2, 'common') }}</td>
 						<td>
 							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
 						</td>
