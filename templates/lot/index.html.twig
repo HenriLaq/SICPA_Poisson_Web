@@ -40,7 +40,7 @@
 
 				{% set i = 0 %}
 				{% for lot in lots %}
-					<tr {% if lot.dateFinLot is not null %} id="hide{{ i }}" style="display:none;" {% endif %} onclick="test(this)">
+					<tr {% if lot.dateFinLot is not null %} ferme="1" style="background-color: #C8C8C8;" {% else %} ferme="0" {% endif %} onclick="test(this)">
 						<td class="hidden">{{ lot.idLot }}</td>
 						<td>{{ lot.nomLot }}</td>
 						<td>
@@ -141,10 +141,8 @@
 		</table>
 
 		{% if lots|length>=1 %}
-			<div class="checkbox-custom chekbox-primary">
-				<input onchange="toggle_by_class({{ i }});" type="checkbox">
-				<label>Afficher les lots fermés</label>
-			</div>
+			<button id="displayLot">Afficher les lots fermées</button>
+			<button id="hideLot">Cacher les lots fermées</button>
 		{% endif %}
 
 		<hr>

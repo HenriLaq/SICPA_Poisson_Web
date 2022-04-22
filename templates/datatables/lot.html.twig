@@ -115,5 +115,29 @@ $(document).ready(function() {
         },
         
     });
+
+    $("#hideLot").click();
 } );
+
+$("#hideLot").click(function() {
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var table = $('#tableLot').DataTable();
+            return $(table.row(dataIndex).node()).attr('ferme') == 0;
+            
+        }
+    );
+    var table = $('#tableLot').DataTable();
+    table.draw();
+    document.getElementById("hideLot").style.display = 'none';
+    document.getElementById("displayLot").style.display = '';
+});    
+
+$("#displayLot").click(function() {
+    var table = $('#tableLot').DataTable();
+    $.fn.dataTable.ext.search.pop();
+    table.draw();
+    document.getElementById("hideLot").style.display = '';
+    document.getElementById("displayLot").style.display = 'none';
+});
 </script>

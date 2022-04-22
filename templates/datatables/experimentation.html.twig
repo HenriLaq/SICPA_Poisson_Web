@@ -114,6 +114,28 @@ $(document).ready(function() {
         },
         
     });
-    $("#hide").click();
+    $("#hideExpe").click();
 } );
+
+$("#hideExpe").click(function() {
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var table = $('#tableExpe').DataTable();
+            return $(table.row(dataIndex).node()).attr('ferme') == 0;
+            
+        }
+    );
+    var table = $('#tableExpe').DataTable();
+    table.draw();
+    document.getElementById("hideExpe").style.display = 'none';
+    document.getElementById("displayExpe").style.display = '';
+});    
+
+$("#displayExpe").click(function() {
+    var table = $('#tableExpe').DataTable();
+    $.fn.dataTable.ext.search.pop();
+    table.draw();
+    document.getElementById("hideExpe").style.display = '';
+    document.getElementById("displayExpe").style.display = 'none';
+});
 </script>
