@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.hidden').hide();
     $('#tableReleve').DataTable({
         select: true,
+        "order": [[ 0, "desc" ]],
         "responsive": true,
         dom: "Q<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
         "<'row'<'col-sm-12'tr>>" +

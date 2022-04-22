@@ -33,8 +33,8 @@
 					<th>Nom Aliment</th>
 					<th>Granulométrie Aliment</th>
 					<th>Coeff Aliment</th>
-					<th>Qtt Ingérée</th>
-					<th>Changement</th>
+					<th>Qtt Ingérée par semaine</th>
+					<th>Changement d'aliment</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,7 +53,11 @@
 							<td>{{ alimentation.nomAliment }}</td>
 							<td>{{ alimentation.granulometrieAliment }}</td>
 							<td>{{ alimentation.coeffAlim }}</td>
-							<td>{{ qtt[semaines[i]] }}</td>
+							<td>
+								{% if qtt[semaines[i]] != 0 %}
+									{{ qtt[semaines[i]]|round(2) }}g
+								{% endif %}
+							</td>
 							<td>
 								{% if alimentation.nomAliment != last.nomAliment or alimentation.coeffAlim != last.coeffAlim %}
 									Oui
@@ -72,7 +76,10 @@
 								<td>{{ alimentation.nomAliment }}</td>
 								<td>{{ alimentation.granulometrieAliment }}</td>
 								<td>{{ alimentation.coeffAlim }}</td>
-								<td>{{ qtt[semaines[i]] }}</td>
+								<td>
+									{% if qtt[semaines[i]] != 0 %}
+										{{ qtt[semaines[i]]|round(2) }}g
+									{% endif %}</td>
 								<td>
 									{% if alimentation.nomAliment != last.nomAliment or alimentation.coeffAlim != last.coeffAlim %}
 										Oui
