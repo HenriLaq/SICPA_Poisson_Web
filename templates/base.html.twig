@@ -198,6 +198,24 @@ function toggle_by_class(max) {
     }
 }
 
+
+$("#hide").click(function() {
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var table = $('#tableExpe').DataTable();
+            console.log("AAAAAAAAAAA");
+            return $(table.row(dataIndex).node()).attr('ferme') == 0;
+        }
+    );
+    var table = $('#tableExpe').DataTable();
+    table.draw();
+});    
+$("#display").click(function() {
+    var table = $('#tableExpe').DataTable();
+    $.fn.dataTable.ext.search.pop();
+    table.draw();
+});
+
 //Gerer les courbes de la page lot
 function test(x) {
 	rangee = x.rowIndex-1;
