@@ -25,24 +25,29 @@
 		<table class="table table-bordered table-hover" id="tableSan">
 			<thead>
 				<tr>
-					<th>Nom Produit</th>
-					<th>Quantite Administree</th>
-                    <th>Substances Actives</th>
+                    <th>Évènement</th>
+					<th>Produit</th>
+					<th>Quantité Administrée</th>
 					<th>Voie Administration</th>
-                    <th class="notexport">Date</th>
-                    <th class="hidden">Date</th>
+                    <th class="notexport">Début</th>
+                    <th class="hidden">Début</th>
+                    <th class="notexport">Fin</th>
+                    <th class="hidden">Fin</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for sanitaire in sanitaires %}
 					<tr>
-						<td>{{ sanitaire.traitementNomProduit }}</td>
-						<td>{{ sanitaire.traitementQuantiteAdministree }}</td>
-						<td>{{ sanitaire.produitSubstancesActives }}</td>
-                        <td>{{ sanitaire.traitementVoieAdministration }}</td>
-                        <td><span style="display:none;">{{ sanitaire.traitementDate ? sanitaire.traitementDate|date('Y-m-d') : ''}}</span>
-							{{ sanitaire.traitementDate ? sanitaire.traitementDate|date('d-m-Y') : '' }}</td>
-                        <td class="hidden">{{ sanitaire.traitementDate ? sanitaire.traitementDate|date('d-m-Y') : ''}}</td>
+                        <td>{{ sanitaire.libelleEvenementRef }}</td>
+						<td>{{ sanitaire.nomProduit }}</td>
+						<td>{{ sanitaire.quantiteAdministreeSomme|round(2) }} ml</td>
+                        <td>{{ sanitaire.voieAdministration }}</td>
+                        <td><span style="display:none;">{{ sanitaire.dateDebut ? sanitaire.dateDebut|date('Y-m-d') : ''}}</span>
+							{{ sanitaire.dateDebut ? sanitaire.dateDebut|date('d-m-Y') : '' }}</td>
+                        <td class="hidden">{{ sanitaire.dateDebut ? sanitaire.dateDebut|date('d-m-Y') : ''}}</td>
+                        <td><span style="display:none;">{{ sanitaire.dateFin ? sanitaire.dateFin|date('Y-m-d') : ''}}</span>
+							{{ sanitaire.dateFin ? sanitaire.dateFin|date('d-m-Y') : '' }}</td>
+                        <td class="hidden">{{ sanitaire.dateFin ? sanitaire.dateFin|date('d-m-Y') : ''}}</td>
 					</tr>
 				{% else %}
 					<tr>
