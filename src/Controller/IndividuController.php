@@ -22,33 +22,35 @@ class IndividuController extends AbstractController
     public function index(IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe, MouvementExploitationRepository $mvmtRepo): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $individus = $individuExploitationRepository->findAllByLot($lot->getIdLot());
+        $user = $this->getUser();
+        if ((($user->getRoles()[0] == "ROLE_SUPER_ADMIN") 
+        OR ($user->getRoles()[0] == "ROLE_ADMIN_UNITE" AND $user->getIdUnite() == $expe->getIdUnite())
+        OR ($user->getIdUtili() == $expe->getIdEstRespTechn()) 
+        OR ($user->getIdUtili() == $expe->getIdUtili()) )
+        AND $user->getFinEstMembre() == null){
 
-        //GetEffectifs
-        $effectifParIndi = [];
-        foreach ($individus as $individu){
-            $mvmts = $mvmtRepo->findEffectifByIndi($individu->getIdIndi());
-            if (sizeof($mvmts)>0){
-                $effectifParIndi[$individu->getIdIndividuExploitation()] = $mvmts[0]->getNouvelEffectif();
+            $individus = $individuExploitationRepository->findAllByLot($lot->getIdLot());
+
+            //GetEffectifs
+            $effectifParIndi = [];
+            foreach ($individus as $individu){
+                $mvmts = $mvmtRepo->findEffectifByIndi($individu->getIdIndi());
+                if (sizeof($mvmts)>0){
+                    $effectifParIndi[$individu->getIdIndividuExploitation()] = $mvmts[0]->getNouvelEffectif();
+                }
             }
-        }
+
+            return $this->render('individu/index.html.twig', [
+                'idLot' => $lot->getIdLot(),
+                'individus' => $individus,
+                'idExpe' => $expe->getIdExpe(),
+                'effectifParIndi' => $effectifParIndi,
+            ]);
             
-
-        return $this->render('individu/index.html.twig', [
-            'idLot' => $lot->getIdLot(),
-            'individus' => $individus,
-            'idExpe' => $expe->getIdExpe(),
-            'effectifParIndi' => $effectifParIndi,
-        ]);
+        }else{
+            return $this->render('security/interdit.html.twig', []);
+        }
+        
     }
 
-    /**
-     * @Route("/lot/{idIndividuExploitation}", name="individu_show", methods={"GET"})
-     */
-    public function show(IndividuExploitation $individuExploitation): Response
-    {
-        return $this->render('individu/show.html.twig', [
-            'individu_exploitation' => $individuExploitation,
-        ]);
-    }
 }

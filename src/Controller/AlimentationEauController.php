@@ -18,13 +18,25 @@ class AlimentationEauController extends AbstractController
     public function index(AlimentationEauExploitationRepository $AlimentationEauExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot, BassinExploitation $bassin, $idAlimEau): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $sources = $AlimentationEauExploitationRepository->findSourceByAlim($idAlimEau);
-        //dd($bassin);
-        return $this->render('alimentation_eau/index.html.twig', [
-            'idLot' => $lot->getIdLot(),
-            'sources' => $sources,
-            'idExpe' => $expe->getIdExpe(),
-            'idBassin' => $bassin->getIdBassin()
-        ]);
+        $user = $this->getUser();
+        if ((($user->getRoles()[0] == "ROLE_SUPER_ADMIN") 
+        OR ($user->getRoles()[0] == "ROLE_ADMIN_UNITE" AND $user->getIdUnite() == $expe->getIdUnite())
+        OR ($user->getIdUtili() == $expe->getIdEstRespTechn()) 
+        OR ($user->getIdUtili() == $expe->getIdUtili()) )
+        AND $user->getFinEstMembre() == null){
+
+            $sources = $AlimentationEauExploitationRepository->findSourceByAlim($idAlimEau);
+            return $this->render('alimentation_eau/index.html.twig', [
+                'idLot' => $lot->getIdLot(),
+                'sources' => $sources,
+                'idExpe' => $expe->getIdExpe(),
+                'idBassin' => $bassin->getIdBassin()
+            ]);
+            
+        }else{
+            return $this->render('security/interdit.html.twig', []);
+        }
+
+
     }
 }

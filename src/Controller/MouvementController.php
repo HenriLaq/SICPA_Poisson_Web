@@ -19,18 +19,31 @@ class MouvementController extends AbstractController
     public function index(MouvementExploitationRepository $mouvementExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe, ReleveAnimalExploitationRepository $relAniRepo): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $mouvements = $mouvementExploitationRepository->findHistoByLot($lot->getIdLot());
-        $releves = [];
-        foreach ($mouvements as $mouvement){
-            if (sizeof($relAniRepo->findRelByMouv($mouvement->getIdMouvement())) != 0){
-                array_push($releves, $relAniRepo->findOneRelByMouv($mouvement->getIdMouvement()));
+        $user = $this->getUser();
+        if ((($user->getRoles()[0] == "ROLE_SUPER_ADMIN") 
+        OR ($user->getRoles()[0] == "ROLE_ADMIN_UNITE" AND $user->getIdUnite() == $expe->getIdUnite())
+        OR ($user->getIdUtili() == $expe->getIdEstRespTechn()) 
+        OR ($user->getIdUtili() == $expe->getIdUtili()) )
+        AND $user->getFinEstMembre() == null){
+
+            $mouvements = $mouvementExploitationRepository->findHistoByLot($lot->getIdLot());
+            $releves = [];
+            foreach ($mouvements as $mouvement){
+                if (sizeof($relAniRepo->findRelByMouv($mouvement->getIdMouvement())) != 0){
+                    array_push($releves, $relAniRepo->findOneRelByMouv($mouvement->getIdMouvement()));
+                }
             }
+            return $this->render('mouvement/index.html.twig', [
+                'idExpe' => $expe->getIdExpe(),
+                'lot' => $lot,
+                'mouvements' => $mouvements,
+                'releves' => $releves
+            ]);
+            
+        }else{
+            return $this->render('security/interdit.html.twig', []);
         }
-        return $this->render('mouvement/index.html.twig', [
-            'idExpe' => $expe->getIdExpe(),
-            'lot' => $lot,
-            'mouvements' => $mouvements,
-            'releves' => $releves
-        ]);
+
+        
     }
 }

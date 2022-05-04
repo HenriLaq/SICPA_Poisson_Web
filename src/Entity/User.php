@@ -86,6 +86,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $idEquipe;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_Unite", type="integer", nullable=true)
+     */
+    private $idUnite;
+
     public function getIdUtili(): ?int
     {
         return $this->idUtili;
@@ -105,6 +112,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->idEquipe = $idEquipe;
 
+        return $this;
+    }
+
+    public function getIdUnite(): ?int
+    {
+        return $this->idUnite;
+    }
+
+    public function setIdUnite(int $idUnite): self
+    {
+        $this->idUnite = $idUnite;
         return $this;
     }
 

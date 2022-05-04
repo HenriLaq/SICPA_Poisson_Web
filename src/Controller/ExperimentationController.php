@@ -20,7 +20,7 @@ class ExperimentationController extends AbstractController
         $experimentations = $experimentationExploitationRepository->findByUser(
             $user->getIdUtili(),
             $user->getRoles()[0],
-            $user->getIdEquipe(),
+            $user->getIdUnite(),
             $user->getFinEstMembre()
         );
 
