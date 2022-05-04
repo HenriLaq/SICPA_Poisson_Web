@@ -21,6 +21,7 @@ class IndividuController extends AbstractController
      */
     public function index(IndividuExploitationRepository $individuExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe, MouvementExploitationRepository $mvmtRepo): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $individus = $individuExploitationRepository->findAllByLot($lot->getIdLot());
 
         //GetEffectifs

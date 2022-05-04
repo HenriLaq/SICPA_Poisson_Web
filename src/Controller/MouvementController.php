@@ -18,6 +18,7 @@ class MouvementController extends AbstractController
      */
     public function index(MouvementExploitationRepository $mouvementExploitationRepository, LotExploitation $lot, ExperimentationExploitation $expe, ReleveAnimalExploitationRepository $relAniRepo): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $mouvements = $mouvementExploitationRepository->findHistoByLot($lot->getIdLot());
         $releves = [];
         foreach ($mouvements as $mouvement){

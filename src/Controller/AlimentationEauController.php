@@ -17,6 +17,7 @@ class AlimentationEauController extends AbstractController
      */
     public function index(AlimentationEauExploitationRepository $AlimentationEauExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot, BassinExploitation $bassin, $idAlimEau): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $sources = $AlimentationEauExploitationRepository->findSourceByAlim($idAlimEau);
         //dd($bassin);
         return $this->render('alimentation_eau/index.html.twig', [

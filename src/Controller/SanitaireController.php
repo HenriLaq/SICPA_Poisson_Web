@@ -17,6 +17,7 @@ class SanitaireController extends AbstractController
      */
     public function index(SanitaireExploitationRepository $SanitaireExploitationRepository, IndividuExploitation $indi,  LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $sanitaires = $SanitaireExploitationRepository->findSanByIndi($indi->getIdIndi());
         return $this->render('sanitaire/index.html.twig', [
             'idExpe' => $expe->getIdExpe(),

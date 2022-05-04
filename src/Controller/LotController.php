@@ -23,7 +23,7 @@ class LotController extends AbstractController
      */
     public function index(LotExploitationRepository $lotExploitationRepository, ExperimentationExploitation $expe, CourbePrevisionnelleRepository $courbeRepo): Response
     {
-        $lots = [];
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $lotsExploitation = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
 
         $courbes = $this->getCourbesBDD($lotsExploitation, $courbeRepo);

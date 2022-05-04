@@ -21,10 +21,8 @@ class BassinController extends AbstractController
      */
     public function index(BassinExploitationRepository $bassinExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot, AlimentationEauExploitationRepository $alimRepo): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $bassins = $bassinExploitationRepository->findBassinById($lot->getIdBassin());
-
-        //afficher nom source
-
 
         return $this->render('bassin/index.html.twig', [
             'idLot' => $lot->getIdLot(),
@@ -39,6 +37,7 @@ class BassinController extends AbstractController
      */
     public function showZone(BassinExploitation $bassin, ZoneExploitationRepository $zoneExploitationRepository): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $zone = $zoneExploitationRepository->findOneZone($bassin->getIdZone());
         
         $plan = $zone->getPlanZone();

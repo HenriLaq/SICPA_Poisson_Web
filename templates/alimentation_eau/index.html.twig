@@ -88,10 +88,10 @@
 			const myChart = new Chart(ctx, {
 				type: 'line',
 				data: {
-					labels: dates,
+					labels: dates.reverse(),
 					datasets: [{
 						label: 'Température',
-						data: temperatures,
+						data: temperatures.reverse(),
 						backgroundColor: [
 							'rgba(255, 0, 0, 0.2)'
 						],

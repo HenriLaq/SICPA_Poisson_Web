@@ -17,6 +17,7 @@ class AlimentationController extends AbstractController
      */
     public function index(AlimentationExploitationRepository $alimentationExploitationRepository, ExperimentationExploitation $expe, LotExploitation $lot): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $alimentations = $alimentationExploitationRepository->findAlimByLot($lot->getIdLot());
 
         if (count($alimentations) > 0){

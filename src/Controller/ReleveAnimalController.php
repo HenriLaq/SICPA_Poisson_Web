@@ -17,6 +17,7 @@ class ReleveAnimalController extends AbstractController
      */
     public function index(ReleveAnimalExploitationRepository $releveAnimalExploitationRepository, IndividuExploitation $indi, LotExploitation $lot, ExperimentationExploitation $expe): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $releves = $releveAnimalExploitationRepository->findRelByIndi($indi->getIdIndi());
         return $this->render('releve_animal/index.html.twig', [
             'idExpe' => $expe->getIdExpe(),
