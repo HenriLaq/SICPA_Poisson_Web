@@ -1,7 +1,7 @@
 <!-- start: header -->
 <header class="header">
 	<div class="logo-container">
-		<a href="{{ path('home') }}" class="logo">
+		<a href="{{ path('experimentation_index') }}" class="logo">
 			<img src="{{ asset('images/Logo_INRAE.png')}}" height="35" alt="INRA">
 		</a>
 		<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
@@ -37,11 +37,11 @@
 							{# <li>
 							<a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i> Mon compte</a>
 							</li> #}
-							{# {% if is_granted('ROLE_SUPER_ADMIN') %} #}
+							{% if is_granted('ROLE_SUPER_ADMIN') %}
 							<a role="menuitem" tabindex="-1" href="#" target="_blank">
 								<i class="fa fa-unlock"></i>
 								Administration</a>
-							{# {% endif %} #}
+							{% endif %}
 							<li>
 								<a role="menuitem" tabindex="-1" href="{{path('app_logout')}}">
 									<i class="fa fa-sign-out"></i>

@@ -35,6 +35,13 @@ class LdapFormAuthenticator extends AbstractLoginFormAuthenticator
     {
         $username = $request->request->get('username', '');
         $password = $request->request->get('password', '');
+        $username = htmlspecialchars($username);
+        $password = htmlspecialchars($password);
+        //Impossible qu'il y ai des caracteres speciaux dans le username
+        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username))
+        {
+            $username = "a";
+        }
         $uid = "uid=" . $username;
 
         $passwordCredential = new PasswordCredentials($request->request->get('password', ''));
@@ -72,7 +79,7 @@ class LdapFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('experimentation_index'));
     }
 
     protected function getLoginUrl(Request $request): string

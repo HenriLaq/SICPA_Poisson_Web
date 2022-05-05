@@ -40,8 +40,15 @@ class SecurityController extends AbstractController
         $username = $request->request->get('username');
         $password = $request->request->get('password');
         //Récupération des credentials
+        $username = htmlspecialchars($username);
+        $password = htmlspecialchars($password);
+        //Impossible qu'il y ai des caracteres speciaux dans le username
+        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $username))
+        {
+            $username = "a";
+        }
         $uid = "uid=" . $username;
-
+        
         $credentials = [
             'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
