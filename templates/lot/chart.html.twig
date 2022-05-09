@@ -5,7 +5,7 @@
 				data: {
 					labels: null,
 					datasets: [{
-						label: 'Poids moyen',
+						label: 'Poids moyen (g)',
 						data: null,
 						backgroundColor: [
 							'rgba(255, 0, 0, 0.2)'
@@ -15,7 +15,7 @@
 						],
 						borderWidth: 1
 					},{
-						label: 'Poids Théorique',
+						label: 'Poids Théorique (g)',
 						data: null,
 						backgroundColor: [
 							'rgba(0, 0, 255, 0.2)'
@@ -25,7 +25,7 @@
 						],
 						borderWidth: 1
 					},{
-						label: 'Température',
+						label: 'Température (C°)',
 						data: null,
 						backgroundColor: [
 							'rgba(0, 255, 0, 0.2)'
@@ -41,9 +41,9 @@
 					scales: {
 						y: {
 							beginAtZero: true,
-							scaleLabel: {
+							title: {
 								display: true,
-								labelString: 'probability'
+								text: 'Poids (g)'
 							}
 						},
 						y1: {
@@ -56,6 +56,10 @@
 							grid: {
           						drawOnChartArea: false, // only want the grid lines for one axis to show up
         					},
+							title: {
+								display: true,
+								text: 'Température (C°)'
+							}
 						}
 					}
 				}
