@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.hidden').hide();
     $('#tableBassin').DataTable({
         select: true,
+        fixedHeader: {header: true, headerOffset: 113},
         "order": [[ 6, "desc" ]],
         "responsive": true,
         dom: "Q<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
