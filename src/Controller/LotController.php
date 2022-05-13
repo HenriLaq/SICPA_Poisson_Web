@@ -47,9 +47,9 @@ class LotController extends AbstractController
     }
 
     /**
-     * @Route("/experimentation/{idExpe}/lot/{idLot}/form.{!_format<html|csv>?html}", name="lot_form")
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/form", name="lot_form")
      */
-    public function form($_format, Request $request, ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
+    public function form(Request $request, ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
     {
         $lotsExploitation = $lotExploitationRepository->find($lotExploitation->getIdLotExploitation());
         $indis = $indiRepo->findByLotForm($lotsExploitation->getIdLot());
@@ -91,25 +91,31 @@ class LotController extends AbstractController
                     }
                 }
             }
-            return $this->redirectToRoute('lot_form', [
+            return $this->redirectToRoute('lot_bilan', [
                 'idExpe' => $expe->getIdExpe(),
                 'idLot' => $lotExploitation->getIdLot(),
-                '_format' => 'csv',
             ]);
         }
-        $return =  $this->render('lot/bilanZootechnique.'.$_format.'.twig', [
+        return $this->render('lot/bilanZootechnique.html.twig', [
             'idExpe' => $expe->getIdExpe(),
             'lots' => $lotsExploitation,
             'form' => $form->createView(),
         ]);
-        if ($_format == 'csv'){
-            $fic = 'Bialn Zootehcnique'. \date("d-m-Y") . '.csv';
-            $rep->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
-        }
-        return $return;
     }
 
 
+    /**
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/bilan.csv", name="lot_bilan")
+     */
+    public function bilan(ExperimentationExploitation $expe, LotExploitation  $lotExploitation){
+        $return = $this->render('lot/bilanZootechnique.csv.twig', [
+            'idExpe' => $expe->getIdExpe(),
+            'idLot' => $lotExploitation->getIdLot(),
+        ]);
+        $fic = 'Bilan'. \date("d-m-Y") . '.csv';
+        $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
+        return $return;
+    }
 
 
 
