@@ -47,9 +47,9 @@ class LotController extends AbstractController
     }
 
     /**
-     * @Route("/experimentation/{idExpe}/lot/{idLot}/form", name="lot_form")
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/form.{!_format<html|csv>?html}", name="lot_form")
      */
-    public function form(Request $request, ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
+    public function form($_format, Request $request, ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
     {
         $lotsExploitation = $lotExploitationRepository->find($lotExploitation->getIdLotExploitation());
         $indis = $indiRepo->findByLotForm($lotsExploitation->getIdLot());
@@ -65,31 +65,48 @@ class LotController extends AbstractController
         }
 
         $form = $this->createFormBuilder()
-            ->add('premier', ChoiceType::class, ['label' => 'Premier relevé', 'choices' => ['Date' => $idParDate],])
+            ->add('premier', ChoiceType::class, ['label' => 'Premier relevé', 'choices' => ['Date' => $idParDate]])
             ->add('dernier', ChoiceType::class, ['label' => 'Dernier relevé', 'choices' => ['Date' => $idParDate]])
             ->add('valider', SubmitType::class, ['label' => 'Valider'])
             ->getForm();
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $relsBons = [];
+            $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
+            $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
+            $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
+            $pds = $nb * $pmi;
+            $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
+            $pdsfin = $nbfin * $pmf;
+            $nbmort = 0;
+            $pdsmort = 0;
             foreach($relsSepares as $rel){
                 if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
                     array_push($relsBons, $rel);
+                    if($rel->getIdTypeMouv() == 17){
+                        $nbmort += $rel->getEffectifMouvement();
+                        $pdsmort += $rel->getValeurRelAni();
+                    }
                 }
             }
-            dd($relsBons);
-            //return $this->redirectToRoute('lot_index', array('idExpe' => $expe->getIdExpe()));
+            return $this->redirectToRoute('lot_form', [
+                'idExpe' => $expe->getIdExpe(),
+                'idLot' => $lotExploitation->getIdLot(),
+                '_format' => 'csv',
+            ]);
         }
-
-        return $this->render('lot/bilanZootechnique.html.twig', [
+        $return =  $this->render('lot/bilanZootechnique.'.$_format.'.twig', [
             'idExpe' => $expe->getIdExpe(),
             'lots' => $lotsExploitation,
             'form' => $form->createView(),
         ]);
-
+        if ($_format == 'csv'){
+            $fic = 'Bialn Zootehcnique'. \date("d-m-Y") . '.csv';
+            $rep->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
+        }
+        return $return;
     }
 
 
