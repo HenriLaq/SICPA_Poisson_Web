@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bilan Zootechnique
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="{{ path('experimentation_index') }}">Experimentations</a>
+				</li>
+				<li class="breadcrumb-item">
+					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Bilan Zootechnique</li>
+			</ol>
+		</nav>
+
+		<h1>Bilan Zootechnique</h1>
+		<br>
+		{{ form(form) }}
+
+		<br><br>
+		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+	</div>
+{% endblock %}
