@@ -76,24 +76,34 @@ class LotController extends AbstractController
             $relsBons = [];
             $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
             $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
-            $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
-            $pds = $nb * $pmi;
-            $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
-            $pdsfin = $nbfin * $pmf;
             $nbmort = 0;
             $pdsmort = 0;
-            foreach($relsSepares as $rel){
-                if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
-                    array_push($relsBons, $rel);
-                    if($rel->getIdTypeMouv() == 17){
-                        $nbmort += $rel->getEffectifMouvement();
-                        $pdsmort += $rel->getValeurRelAni();
+            $nb = 0;
+            $pds = 0;
+            $nbfin = 0;
+            $pdsfin = 0;
+            if ($relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif() != null){
+                $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
+                $pds = $nb * $pmi;
+                $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
+                $pdsfin = $nbfin * $pmf;
+                
+                foreach($relsSepares as $rel){
+                    if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
+                        array_push($relsBons, $rel);
+                        if($rel->getIdTypeMouv() == 17){
+                            $nbmort += $rel->getEffectifMouvement();
+                            $pdsmort += $rel->getValeurRelAni();
+                        }
                     }
                 }
             }
+            
             return $this->redirectToRoute('lot_bilan', [
                 'idExpe' => $expe->getIdExpe(),
                 'idLot' => $lotExploitation->getIdLot(),
+                'pmi' => $pmi,
+                'pmf' => $pmf,
             ]);
         }
         return $this->render('lot/bilanZootechnique.html.twig', [
@@ -105,14 +115,17 @@ class LotController extends AbstractController
 
 
     /**
-     * @Route("/experimentation/{idExpe}/lot/{idLot}/bilan.csv", name="lot_bilan")
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/bilan.csv/{pmi}/{pmf}", name="lot_bilan")
      */
-    public function bilan(ExperimentationExploitation $expe, LotExploitation  $lotExploitation){
+    public function bilan(ExperimentationExploitation $expe, LotExploitation $lotExploitation, $pmi, $pmf){
         $return = $this->render('lot/bilanZootechnique.csv.twig', [
             'idExpe' => $expe->getIdExpe(),
-            'idLot' => $lotExploitation->getIdLot(),
+            'idLot' => $lotExploitation->getIdLot(), 
+            'pmi' => $pmi,
+            'pmf' => $pmf,
+
         ]);
-        $fic = 'Bilan'. \date("d-m-Y") . '.csv';
+        $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
         $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
         return $return;
     }
