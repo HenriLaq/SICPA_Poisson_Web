@@ -30,7 +30,7 @@ class AlimentationEauController extends AbstractController
                 'idLot' => $lot->getIdLot(),
                 'sources' => $sources,
                 'idExpe' => $expe->getIdExpe(),
-                'idBassin' => $bassin->getIdBassin()
+                'bassin' => $bassin
             ]);
             
         }else{

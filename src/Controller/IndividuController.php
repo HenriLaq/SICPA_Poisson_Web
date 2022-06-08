@@ -30,7 +30,7 @@ class IndividuController extends AbstractController
         AND $user->getFinEstMembre() == null){
 
             $individus = $individuExploitationRepository->findAllByLot($lot->getIdLot());
-
+            /*
             //GetEffectifs
             $effectifParIndi = [];
             foreach ($individus as $individu){
@@ -39,14 +39,13 @@ class IndividuController extends AbstractController
                     $effectifParIndi[$individu->getIdIndividuExploitation()] = $mvmts[0]->getNouvelEffectif();
                 }
             }
-
+            */
             return $this->render('individu/index.html.twig', [
                 'idLot' => $lot->getIdLot(),
                 'individus' => $individus,
                 'idExpe' => $expe->getIdExpe(),
-                'effectifParIndi' => $effectifParIndi,
             ]);
-            
+
         }else{
             return $this->render('security/interdit.html.twig', []);
         }

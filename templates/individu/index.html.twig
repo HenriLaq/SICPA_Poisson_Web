@@ -39,13 +39,7 @@
 						<td>{{ individu.libGenre }}</td>
 						<td>{{ individu.libPloidie }}</td>
 						<td>{{ individu.libTypeStadeEvolution }}</td>
-						<td>
-						{% for key, value in effectifParIndi %}
-							{% if key == individu.idIndividuExploitation %}
-    							{{ value }}
-							{% endif %}
-						{% endfor %}
-						</td>
+						<td>{{ individu.effectif }}</td>
 						<td>
 							<a class="btn btn-primary" href="{{ path('releve_indi_index', {'idIndi': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}">Voir les relevés</a>
 							<a href="{{ path('sanitaire_index', {'idIndi': individu.idIndi, 'idLot': idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les traitements</a>
