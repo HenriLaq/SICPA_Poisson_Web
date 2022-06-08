@@ -50,7 +50,7 @@ class LotController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/form", name="lot_form")
      */
-    public function form(Request $request, AlimentationExploitationRepository $alimRepo,ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
+    public function form(Request $request,MouvementExploitationRepository $mouvRepo ,AlimentationExploitationRepository $alimRepo,ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
     {
         $lotsExploitation = $lotExploitationRepository->find($lotExploitation->getIdLotExploitation());
         $indis = $indiRepo->findByLotForm($lotsExploitation->getIdLot());
@@ -88,36 +88,41 @@ class LotController extends AbstractController
             $gp = round(abs($pmf-$pmi)*100/($pmi*$joursEcart),3); 
             $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
             $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
-            $icj = round(100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart,3);
+            $icj = round( 100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart ,3 );
             $qad = 0;
             foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $key=>$value){
                 $qad += $key;
             }
-            
+
             $nbmort = 0;
             $pdsmort = 0;
             $nb = 0;
             $pds = 0;
             $nbfin = 0;
             $pdsfin = 0;
-
-            //dd($relRepo->findByRelId($data['premier'])[0]);
-            $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
-            $pds = $nb * $pmi;
-            $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
-            $pdsfin = $nbfin * $pmf;
-            //Avec les donnees de mouvements
-            foreach($relsSepares as $rel){
-                if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
-                    array_push($relsBons, $rel);
-                    if($rel->getIdTypeMouv() == 17){
-                        $nbmort += $rel->getEffectifMouvement();
-                        $pdsmort += $rel->getValeurRelAni();
-                    }
-                }
+            //calcul des effectivs avec les donnees de mouvements
+            //On assume que les releves sont faits sur les lots entiers
+            foreach($indis as $i){
+                $nb += ($mouvRepo->findMouvByIndiAndDate($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                $nbfin += ($mouvRepo->findMouvByIndiAndDate($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
             }
 
-            //$indcons = $qad/(($pdsfin+$pdsmort)-$pds);
+            $pds = $nb * $pmi;
+            
+            $pdsfin = $nbfin * $pmf;
+            //calcul des effectifs morts avec les donnees de mouvements
+            //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
+            foreach($indis as $i){
+                $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
+                foreach($mouvs as $m){
+                    $nbmort += $m->getEffectifMouvement();
+                }
+            }
+            $pdsmort = $nbmort * $pmi;
+
+            $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);;
+            $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
+            $feedefic = abs(($pdsmort+$pdsfin)-$pds)/$qad;
 
             $return = $this->render('lot/bilanZootechnique.csv.twig', [
                 'expe' => $expe,
@@ -136,8 +141,10 @@ class LotController extends AbstractController
                 'gp' => $gp,
                 'gainind' => $gainind,
                 'tspecroi' => $tspecroi,
-                'icj' => $icj,
-                //'indcons' => $indcons,
+                'icj' => $icj,3,
+                'indcons' => $indcons,
+                'cons' => $cons,
+                'feedefic' => $feedefic,
             ]);
             $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
             $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
@@ -149,6 +156,7 @@ class LotController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     private function getCourbesBDD($lotsExploitation, $courbeRepo){
         $courbesByLot = [];
