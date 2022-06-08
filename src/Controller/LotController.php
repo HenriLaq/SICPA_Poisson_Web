@@ -12,6 +12,7 @@ use App\Repository\BassinExploitationRepository;
 use App\Repository\CourbePrevisionnelleRepository;
 use App\Repository\IndividuExploitationRepository;
 use App\Repository\MouvementExploitationRepository;
+use App\Repository\AlimentationExploitationRepository;
 use App\Repository\ReleveAnimalExploitationRepository;
 use App\Repository\AlimentationEauExploitationRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -49,7 +50,7 @@ class LotController extends AbstractController
     /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/form", name="lot_form")
      */
-    public function form(Request $request, ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
+    public function form(Request $request, AlimentationExploitationRepository $alimRepo,ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
     {
         $lotsExploitation = $lotExploitationRepository->find($lotExploitation->getIdLotExploitation());
         $indis = $indiRepo->findByLotForm($lotsExploitation->getIdLot());
@@ -88,29 +89,35 @@ class LotController extends AbstractController
             $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
             $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
             $icj = round(100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart,3);
-
+            $qad = 0;
+            foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $key=>$value){
+                $qad += $key;
+            }
+            
             $nbmort = 0;
             $pdsmort = 0;
             $nb = 0;
             $pds = 0;
             $nbfin = 0;
             $pdsfin = 0;
-            dd($relRepo->findByRelId($data['premier'])[0]);
-                $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
-                $pds = $nb * $pmi;
-                $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
-                $pdsfin = $nbfin * $pmf;
-                //Avec les donnees de mouvements
-                foreach($relsSepares as $rel){
-                    if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
-                        array_push($relsBons, $rel);
-                        if($rel->getIdTypeMouv() == 17){
-                            $nbmort += $rel->getEffectifMouvement();
-                            $pdsmort += $rel->getValeurRelAni();
-                        }
+
+            //dd($relRepo->findByRelId($data['premier'])[0]);
+            $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
+            $pds = $nb * $pmi;
+            $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
+            $pdsfin = $nbfin * $pmf;
+            //Avec les donnees de mouvements
+            foreach($relsSepares as $rel){
+                if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
+                    array_push($relsBons, $rel);
+                    if($rel->getIdTypeMouv() == 17){
+                        $nbmort += $rel->getEffectifMouvement();
+                        $pdsmort += $rel->getValeurRelAni();
                     }
                 }
-            
+            }
+
+            //$indcons = $qad/(($pdsfin+$pdsmort)-$pds);
 
             $return = $this->render('lot/bilanZootechnique.csv.twig', [
                 'expe' => $expe,
@@ -125,11 +132,12 @@ class LotController extends AbstractController
                 'pmf' => $pmf,
                 'pdsfin' => $pdsfin,
                 'nbfin' => $nbfin,
+                'qad' => $qad,
                 'gp' => $gp,
                 'gainind' => $gainind,
                 'tspecroi' => $tspecroi,
                 'icj' => $icj,
-
+                //'indcons' => $indcons,
             ]);
             $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
             $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');

@@ -4,9 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	<script type="text/javascript">
-            var timerStart = Date.now();
-    </script>
     
 	<div class="container-fluid">
 		<nav aria-label="breadcrumb">
@@ -89,10 +86,4 @@
 		<a href="{{ path('bassin_index', {'idExpe': idExpe, 'idLot': idLot}) }}" class="btn btn-danger">Retour</a>
 	</div>
 
-	<script>
-
-
-        console.log("Time until everything loaded: ", Date.now()-timerStart);
-
-    </script>
 {% endblock %}
