@@ -1,0 +1,64 @@
+
+<script>
+	var donneesRTemp = {};
+	var donneesPTemp = {};
+	var temperatureTemp = {};
+</script>
+{# Pour les courbes du bon lot #}
+{% for courbe in courbes|filter(courbe => courbe.idLot == lot.idLot) %}
+	<script>
+		var year = ( ({{ courbe.datePoint ? courbe.datePoint|date('Y') : '' }}).toString() );
+		var month = ( ({{ courbe.datePoint ? courbe.datePoint|date('m') : '' }}).toString() );
+		var day = ( ({{ courbe.datePoint ? courbe.datePoint|date('d') : '' }}).toString() );
+		if (month.length < 2){
+			month = '0' + month;
+		}
+		var date = (year.concat('-',month,'-',day));
+		
+		{# donnesTemp est en clef => tableau (date => valeurs), on fait la moyenne du tableau avant de l'ajouter a donnees #}
+		if (donneesRTemp[date]){
+			donneesRTemp[date].push({{ courbe.poidsReel }});
+			donneesPTemp[date].push({{ courbe.poidsPrevu }});
+		}else{
+			donneesRTemp[date] = new Array();
+			donneesRTemp[date].push({{ courbe.poidsReel }});
+			donneesPTemp[date] = new Array();
+			donneesPTemp[date].push({{ courbe.poidsPrevu }});
+		}
+
+		temperatureTemp[date] = {{ courbe.temperature }};
+		
+	</script>
+
+{% endfor %}
+
+<script>
+	var iterator = Object.keys(donneesRTemp);
+	for (const key of iterator){
+		var totalR = 0;
+		var totalP = 0;
+		for (const value of donneesRTemp[key]){
+			totalR += value;
+		}
+		for (const value of donneesPTemp[key]){
+			totalP += value;
+		}
+		donneesRTemp[key] = totalR/donneesRTemp[key].length;
+		donneesPTemp[key] = totalP/donneesPTemp[key].length;
+	}
+	var donneesRTempRangees = Object.keys(donneesRTemp).sort().reduce(
+	(obj, key) => {
+		obj[key] = donneesRTemp[key];
+		return obj;
+	}, {}
+	);
+	var donneesPTempRangees = Object.keys(donneesPTemp).sort().reduce(
+	(obj, key) => {
+		obj[key] = donneesPTemp[key];
+		return obj;
+	}, {}
+	);
+	donneesR[{{ lot.idLot }}] = donneesRTempRangees;
+	donneesP[{{ lot.idLot }}] = donneesPTempRangees;
+	temperatures[{{ lot.idLot }}] = temperatureTemp;
+</script>

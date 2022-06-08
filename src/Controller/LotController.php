@@ -56,6 +56,7 @@ class LotController extends AbstractController
         $rels = [];
         $relsSepares = [];
         $idParDate = [];
+        //query les releves
         foreach($indis as $indi){
             $rels = $relRepo->findByIndiForm($indi->getIdIndi());
             foreach($rels as $rel){
@@ -64,30 +65,42 @@ class LotController extends AbstractController
             }
         }
 
+        //construire le form
         $form = $this->createFormBuilder()
             ->add('premier', ChoiceType::class, ['label' => 'Premier relevé', 'choices' => ['Date' => $idParDate]])
             ->add('dernier', ChoiceType::class, ['label' => 'Dernier relevé', 'choices' => ['Date' => $idParDate]])
             ->add('valider', SubmitType::class, ['label' => 'Valider'])
             ->getForm();
 
+        //remplir les variables avec les bonnes valeurs
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $relsBons = [];
+
+            $debut = $relRepo->findByRelId($data['premier'])[0]->getDateRelAni();
+            $fin = $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni();
+
             $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
             $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
+            $joursEcart = $debut->diff($fin)->days ;
+            $gp = round(abs($pmf-$pmi)*100/($pmi*$joursEcart),3); 
+            $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
+            $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
+            $icj = round(100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart,3);
+
             $nbmort = 0;
             $pdsmort = 0;
             $nb = 0;
             $pds = 0;
             $nbfin = 0;
             $pdsfin = 0;
-            if ($relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif() != null){
+            dd($relRepo->findByRelId($data['premier'])[0]);
                 $nb = $relRepo->findByRelId($data['premier'])[0]->getNouvelEffectif();
                 $pds = $nb * $pmi;
                 $nbfin = $relRepo->findByRelId($data['dernier'])[0]->getNouvelEffectif();
                 $pdsfin = $nbfin * $pmf;
-                
+                //Avec les donnees de mouvements
                 foreach($relsSepares as $rel){
                     if ($rel->getDateRelAni() >= $relRepo->findByRelId($data['premier'])[0]->getDateRelAni() AND $rel->getDateRelAni() <= $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni()){
                         array_push($relsBons, $rel);
@@ -97,14 +110,30 @@ class LotController extends AbstractController
                         }
                     }
                 }
-            }
             
-            return $this->redirectToRoute('lot_bilan', [
-                'idExpe' => $expe->getIdExpe(),
-                'idLot' => $lotExploitation->getIdLot(),
+
+            $return = $this->render('lot/bilanZootechnique.csv.twig', [
+                'expe' => $expe,
+                'lot' => $lotExploitation, 
+                'debut' => $debut->format('d-m-Y'),
+                'fin' => $fin->format('d-m-Y'),
+                'pds' => $pds,
+                'nb' => $nb,
+                'pdsmort' => $pdsmort,
+                'nbmort' => $nbmort,
                 'pmi' => $pmi,
                 'pmf' => $pmf,
+                'pdsfin' => $pdsfin,
+                'nbfin' => $nbfin,
+                'gp' => $gp,
+                'gainind' => $gainind,
+                'tspecroi' => $tspecroi,
+                'icj' => $icj,
+
             ]);
+            $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
+            $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
+            return $return;
         }
         return $this->render('lot/bilanZootechnique.html.twig', [
             'idExpe' => $expe->getIdExpe(),
@@ -112,25 +141,6 @@ class LotController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
-    /**
-     * @Route("/experimentation/{idExpe}/lot/{idLot}/bilan.csv/{pmi}/{pmf}", name="lot_bilan")
-     */
-    public function bilan(ExperimentationExploitation $expe, LotExploitation $lotExploitation, $pmi, $pmf){
-        $return = $this->render('lot/bilanZootechnique.csv.twig', [
-            'idExpe' => $expe->getIdExpe(),
-            'idLot' => $lotExploitation->getIdLot(), 
-            'pmi' => $pmi,
-            'pmf' => $pmf,
-
-        ]);
-        $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
-        $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
-        return $return;
-    }
-
-
 
     private function getCourbesBDD($lotsExploitation, $courbeRepo){
         $courbesByLot = [];
