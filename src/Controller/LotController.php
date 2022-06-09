@@ -90,8 +90,13 @@ class LotController extends AbstractController
             $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
             $icj = round( 100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart ,3 );
             $qad = 0;
-            foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $key=>$value){
-                $qad += $key;
+            $aliment = "";
+            
+            foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $alim){
+                $qad += $alim->getOffert();
+                if(!strpos($aliment, $alim->getNomAliment())){
+                    $aliment = $aliment . " " . $alim->getNomAliment() . " : ";
+                }
             }
 
             $nbmort = 0;
@@ -100,6 +105,7 @@ class LotController extends AbstractController
             $pds = 0;
             $nbfin = 0;
             $pdsfin = 0;
+            $feedefic = 0;
             //calcul des effectivs avec les donnees de mouvements
             //On assume que les releves sont faits sur les lots entiers
             foreach($indis as $i){
@@ -116,22 +122,32 @@ class LotController extends AbstractController
                 $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
                 foreach($mouvs as $m){
                     $nbmort += $m->getEffectifMouvement();
+                    $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
+                    //echo $m->getIdMouvement().",";
+                    if (sizeof($pdsmortTemp)>0){
+                        $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+                        //echo "a";
+                    }
+                    
                 }
             }
-            $pdsmort = $nbmort * $pmi;
+            //$pdsmort = $nbmort * $pmi;
 
-            $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);;
+            $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
             $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
-            $feedefic = abs(($pdsmort+$pdsfin)-$pds)/$qad;
+            if($qad!=0){
+                $feedefic = abs(($pdsmort+$pdsfin)-$pds)/$qad;
+            }
 
             $return = $this->render('lot/bilanZootechnique.csv.twig', [
                 'expe' => $expe,
                 'lot' => $lotExploitation, 
                 'debut' => $debut->format('d-m-Y'),
                 'fin' => $fin->format('d-m-Y'),
+                'aliment' => $aliment,
                 'pds' => $pds,
                 'nb' => $nb,
-                'pdsmort' => $pdsmort,
+                'pdsmort' => round($pdsmort,3),
                 'nbmort' => $nbmort,
                 'pmi' => $pmi,
                 'pmf' => $pmf,
