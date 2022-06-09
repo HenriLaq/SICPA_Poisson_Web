@@ -77,7 +77,6 @@ class LotController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $relsBons = [];
 
             $debut = $relRepo->findByRelId($data['premier'])[0]->getDateRelAni();
             $fin = $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni();
@@ -106,11 +105,12 @@ class LotController extends AbstractController
             $nbfin = 0;
             $pdsfin = 0;
             $feedefic = 0;
-            //calcul des effectivs avec les donnees de mouvements
+            //calcul des effectifs avec les donnees de mouvements
             //On assume que les releves sont faits sur les lots entiers
+            //Mais si un des indis n'as pas de mouvement ce jour la alors que l'autre en a un ca plante
             foreach($indis as $i){
-                $nb += ($mouvRepo->findMouvByIndiAndDate($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
-                $nbfin += ($mouvRepo->findMouvByIndiAndDate($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
             }
 
             $pds = $nb * $pmi;
@@ -123,10 +123,8 @@ class LotController extends AbstractController
                 foreach($mouvs as $m){
                     $nbmort += $m->getEffectifMouvement();
                     $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
-                    //echo $m->getIdMouvement().",";
                     if (sizeof($pdsmortTemp)>0){
                         $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
-                        //echo "a";
                     }
                     
                 }
@@ -135,7 +133,7 @@ class LotController extends AbstractController
             $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
             $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
             if($qad!=0){
-                $feedefic = abs(($pdsmort+$pdsfin)-$pds)/$qad;
+                $feedefic = round(abs(($pdsmort+$pdsfin)-$pds)/$qad,3);
             }
             $values = array('aliment' => $aliment, 
                             'pds' => $pds,

@@ -51,7 +51,6 @@ class ExperimentationController extends AbstractController
         //Query les lots
         $lotsExploitation = $lotExploitationRepository->findAllByExpe($expe->getIdExpe());
 
-        
         $idParDate = [];
         foreach($lotsExploitation as $lots){
             $indis = $indiRepo->findByLotForm($lots->getIdLot());
@@ -76,84 +75,90 @@ class ExperimentationController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $relsBons = [];
+            $array = array();
+
             //For chaque lot
+            foreach($lotsExploitation as $lots){
+                $debut = $relRepo->findByRelId($data['premier'])[0]->getDateRelAni();
+                $fin = $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni();
 
-            //date la plus proche au dessus pour debut, au dessous pour fin
-            $debut = $relRepo->findByRelId($data['premier'])[0]->getDateRelAni();
-            $fin = $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni();
+                //Le 1er et dernier releves ne sont pas forcement du lot en cours (du 'for') donc on prends le plus proche pour ce lot dans la periode comme debut et fin
+                //...mais comment mdr
+                $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
+                $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
 
-            $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
-            $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
-            $joursEcart = $debut->diff($fin)->days ;
-            $gp = round(abs($pmf-$pmi)*100/($pmi*$joursEcart),3); 
-            $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
-            $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
-            $icj = round( 100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart ,3 );
-            $qad = 0;
-            $aliment = "";
-            
-            foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $alim){
-                $qad += $alim->getOffert();
-                if(!strpos($aliment, $alim->getNomAliment())){
-                    $aliment = $aliment . " " . $alim->getNomAliment() . " : ";
-                }
-            }
+                $joursEcart = $debut->diff($fin)->days ;
 
-            $nbmort = 0;
-            $pdsmort = 0;
-            $nb = 0;
-            $pds = 0;
-            $nbfin = 0;
-            $pdsfin = 0;
-            $feedefic = 0;
-            //calcul des effectivs avec les donnees de mouvements
-            //On assume que les releves sont faits sur les lots entiers
-            foreach($indis as $i){
-                $nb += ($mouvRepo->findMouvByIndiAndDate($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
-                $nbfin += ($mouvRepo->findMouvByIndiAndDate($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
-            }
-
-            $pds = $nb * $pmi;
-            
-            $pdsfin = $nbfin * $pmf;
-            //calcul des effectifs morts avec les donnees de mouvements
-            //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
-            foreach($indis as $i){
-                $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
-                foreach($mouvs as $m){
-                    $nbmort += $m->getEffectifMouvement();
-                    $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
-                    if (sizeof($pdsmortTemp)>0){
-                        $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+                $gp = round(abs($pmf-$pmi)*100/($pmi*$joursEcart),3); 
+                $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
+                $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
+                $icj = round( 100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart ,3 );
+                $qad = 0;
+                $aliment = "";
+                
+                foreach($alimRepo->findAlimByLotAndDate($lots->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $alim){
+                    $qad += $alim->getOffert();
+                    if(!strpos($aliment, $alim->getNomAliment())){
+                        $aliment = $aliment . " " . $alim->getNomAliment() . " : ";
                     }
-                    
                 }
-            }
 
-            $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
-            $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
-            if($qad!=0){
-                $feedefic = abs(($pdsmort+$pdsfin)-$pds)/$qad;
+                $nbmort = 0;
+                $pdsmort = 0;
+                $nb = 0;
+                $pds = 0;
+                $nbfin = 0;
+                $pdsfin = 0;
+                $feedefic = 0;
+                //calcul des effectivs avec les donnees de mouvements
+                //On assume que les releves sont faits sur les lots entiers
+                foreach($indis as $i){
+                    $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                    $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                }
+
+                $pds = $nb * $pmi;
+                
+                $pdsfin = $nbfin * $pmf;
+                //calcul des effectifs morts avec les donnees de mouvements
+                //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
+                foreach($indis as $i){
+                    $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
+                    foreach($mouvs as $m){
+                        $nbmort += $m->getEffectifMouvement();
+                        $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
+                        if (sizeof($pdsmortTemp)>0){
+                            $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+                        }
+                        
+                    }
+                }
+                
+                $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
+                $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
+                if($qad!=0){
+                    $feedefic = round(abs(($pdsmort+$pdsfin)-$pds)/$qad,3);
+                }
+                $values = array('aliment' => $aliment, 
+                                'pds' => $pds,
+                                'nb' =>$nb,
+                                'pdsmort' => $pdsmort,
+                                'nbmort' => $nbmort,
+                                'pmi' => $pmi,
+                                'pmf' => $pmf,
+                                'pdsfin' => $pdsfin,
+                                'nbfin' => $nbfin,
+                                'qad' => $qad,
+                                'gp' => $gp,
+                                'gainind' => $gainind,
+                                'tspecroi' => $tspecroi,
+                                'icj' => $icj,
+                                'indcons' => $indcons,
+                                'cons' => $cons,
+                                'feedefic' => $feedefic);
+                array_push($array, $values);
             }
-            $values = array('aliment' => $aliment, 
-                            'pds' => $pds,
-                            'nb' =>$nb,
-                            'pdsmort' => $pdsmort,
-                            'nbmort' => $nbmort,
-                            'pmi' => $pmi,
-                            'pmf' => $pmf,
-                            'pdsfin' => $pdsfin,
-                            'nbfin' => $nbfin,
-                            'qad' => $qad,
-                            'gp' => $gp,
-                            'gainind' => $gainind,
-                            'tspecroi' => $tspecroi,
-                            'icj' => $icj,
-                            'indcons' => $indcons,
-                            'cons' => $cons,
-                            'feedefic' => $feedefic);
-            $array = array($values);
+            
             $return = $this->render('bilan/bilanZootechnique.csv.twig', [
                 'expe' => $expe,
                 'debut' => $debut->format('d-m-Y'),
