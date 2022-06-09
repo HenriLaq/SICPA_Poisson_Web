@@ -10,9 +10,11 @@
 				<li class="breadcrumb-item">
 					<a href="{{ path('experimentation_index') }}">Experimentations</a>
 				</li>
+				{% if lots is defined %}
 				<li class="breadcrumb-item">
 					<a href="{{ path('lot_index', {'idExpe': idExpe}) }}">Lots</a>
 				</li>
+				{% endif %}
 				<li class="breadcrumb-item active" aria-current="page">Bilan Zootechnique</li>
 			</ol>
 		</nav>
@@ -22,6 +24,10 @@
 		{{ form(form) }}
 
 		<br><br>
-		<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+		{% if lots is defined %}
+			<a href="{{ path('lot_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+		{% else %}
+			<a href="{{ path('experimentation_index', {'idExpe': idExpe}) }}" class="btn btn-danger">Retour</a>
+		{% endif %}
 	</div>
 {% endblock %}

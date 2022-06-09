@@ -131,42 +131,42 @@ class LotController extends AbstractController
                     
                 }
             }
-            //$pdsmort = $nbmort * $pmi;
 
             $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
             $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
             if($qad!=0){
                 $feedefic = abs(($pdsmort+$pdsfin)-$pds)/$qad;
             }
-
-            $return = $this->render('lot/bilanZootechnique.csv.twig', [
+            $values = array('aliment' => $aliment, 
+                            'pds' => $pds,
+                            'nb' =>$nb,
+                            'pdsmort' => $pdsmort,
+                            'nbmort' => $nbmort,
+                            'pmi' => $pmi,
+                            'pmf' => $pmf,
+                            'pdsfin' => $pdsfin,
+                            'nbfin' => $nbfin,
+                            'qad' => $qad,
+                            'gp' => $gp,
+                            'gainind' => $gainind,
+                            'tspecroi' => $tspecroi,
+                            'icj' => $icj,
+                            'indcons' => $indcons,
+                            'cons' => $cons,
+                            'feedefic' => $feedefic);
+            $array = array($values);
+            $return = $this->render('bilan/bilanZootechnique.csv.twig', [
                 'expe' => $expe,
                 'lot' => $lotExploitation, 
                 'debut' => $debut->format('d-m-Y'),
                 'fin' => $fin->format('d-m-Y'),
-                'aliment' => $aliment,
-                'pds' => $pds,
-                'nb' => $nb,
-                'pdsmort' => round($pdsmort,3),
-                'nbmort' => $nbmort,
-                'pmi' => $pmi,
-                'pmf' => $pmf,
-                'pdsfin' => $pdsfin,
-                'nbfin' => $nbfin,
-                'qad' => $qad,
-                'gp' => $gp,
-                'gainind' => $gainind,
-                'tspecroi' => $tspecroi,
-                'icj' => $icj,3,
-                'indcons' => $indcons,
-                'cons' => $cons,
-                'feedefic' => $feedefic,
+                'array' => $array,
             ]);
             $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
             $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
             return $return;
         }
-        return $this->render('lot/bilanZootechnique.html.twig', [
+        return $this->render('bilan/bilanZootechnique.html.twig', [
             'idExpe' => $expe->getIdExpe(),
             'lots' => $lotsExploitation,
             'form' => $form->createView(),

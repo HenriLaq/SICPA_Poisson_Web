@@ -64,6 +64,7 @@
 						<td>{{ experimentation.poidsMoyen|round(2, 'common') }}</td>
 						<td>
 							<a href="{{ path('lot_index', {'idExpe': experimentation.idExpe}) }}" class="btn btn-primary">Voir les lots</a>
+							<a href="{{ path('experimentation_form', {'idExpe': experimentation.idExpe}) }}" style="margin:3px;" class="btn btn-primary">Bilan Zootechnique</a>
 						</td>
 					</tr>
 				{% else %}
