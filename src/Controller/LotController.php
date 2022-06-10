@@ -77,97 +77,107 @@ class LotController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-
             $debut = $relRepo->findByRelId($data['premier'])[0]->getDateRelAni();
             $fin = $relRepo->findByRelId($data['dernier'])[0]->getDateRelAni();
 
-            $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
-            $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
-            $joursEcart = $debut->diff($fin)->days ;
-            $gp = round(abs($pmf-$pmi)*100/($pmi*$joursEcart),3); 
-            $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
-            $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
-            $icj = round( 100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart ,3 );
-            $qad = 0;
-            $aliment = "";
-            
-            foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $alim){
-                $qad += $alim->getOffert();
-                if(!strpos($aliment, $alim->getNomAliment())){
-                    $aliment = $aliment . " " . $alim->getNomAliment() . " : ";
-                }
-            }
-
-            $nbmort = 0;
-            $pdsmort = 0;
-            $nb = 0;
-            $pds = 0;
-            $nbfin = 0;
-            $pdsfin = 0;
-            $feedefic = 0;
-            //calcul des effectifs avec les donnees de mouvements
-            //On assume que les releves sont faits sur les lots entiers
-            //Mais si un des indis n'as pas de mouvement ce jour la alors que l'autre en a un ca plante
-            foreach($indis as $i){
-                $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
-                $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
-            }
-
-            $pds = $nb * $pmi;
-            
-            $pdsfin = $nbfin * $pmf;
-            //calcul des effectifs morts avec les donnees de mouvements
-            //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
-            foreach($indis as $i){
-                $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
-                foreach($mouvs as $m){
-                    $nbmort += $m->getEffectifMouvement();
-                    $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
-                    if (sizeof($pdsmortTemp)>0){
-                        $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+            if ($data['premier'] != $data['dernier'] && $debut < $fin){
+                $pmi = $relRepo->findByRelId($data['premier'])[0]->getValeurRelAni();
+                $pmf = $relRepo->findByRelId($data['dernier'])[0]->getValeurRelAni();
+                $joursEcart = $debut->diff($fin)->days ;
+                $gp = round(abs($pmf-$pmi)*100/($pmi*$joursEcart),3); 
+                $gainind = round(abs($pmf-$pmi)/$joursEcart,3);
+                $tspecroi = round(abs(log($pmf)-log($pmi))*100/$joursEcart,3);
+                $icj = round( 100*($pmf**(1/3)-$pmi**(1/3))/$joursEcart ,3 );
+                $qad = 0;
+                $aliment = "";
+                
+                foreach($alimRepo->findAlimByLotAndDate($lotsExploitation->getIdLot(), $debut->format('Y-m-d'), $fin->format('Y-m-d')) as $alim){
+                    $qad += $alim->getOffert();
+                    if(!strpos($aliment, $alim->getNomAliment())){
+                        $aliment = $aliment . " " . $alim->getNomAliment() . " : ";
                     }
-                    
                 }
-            }
 
-            $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
-            $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
-            if($qad!=0){
-                $feedefic = round(abs(($pdsmort+$pdsfin)-$pds)/$qad,3);
+                $nbmort = 0;
+                $pdsmort = 0;
+                $nb = 0;
+                $pds = 0;
+                $nbfin = 0;
+                $pdsfin = 0;
+                $feedefic = 0;
+                //calcul des effectifs avec les donnees de mouvements
+                //On assume que les releves sont faits sur les lots entiers
+                //Mais si un des indis n'as pas de mouvement ce jour la alors que l'autre en a un ca plante
+                //Donc on prends le plus proche dans l'intervalle
+                foreach($indis as $i){
+                    $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                    $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                }
+
+                $pds = $nb * $pmi;
+                
+                $pdsfin = $nbfin * $pmf;
+                //calcul des effectifs morts avec les donnees de mouvements
+                //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
+                foreach($indis as $i){
+                    $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
+                    foreach($mouvs as $m){
+                        $nbmort += $m->getEffectifMouvement();
+                        $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
+                        if (sizeof($pdsmortTemp)>0){
+                            $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+                        }
+                        
+                    }
+                }
+
+                $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
+                $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
+                if($qad!=0){
+                    $feedefic = round(abs(($pdsmort+$pdsfin)-$pds)/$qad,3);
+                }
+                $values = array('aliment' => $aliment, 
+                                'pds' => $pds,
+                                'nb' =>$nb,
+                                'pdsmort' => $pdsmort,
+                                'nbmort' => $nbmort,
+                                'pmi' => $pmi,
+                                'pmf' => $pmf,
+                                'pdsfin' => $pdsfin,
+                                'nbfin' => $nbfin,
+                                'qad' => $qad,
+                                'gp' => $gp,
+                                'gainind' => $gainind,
+                                'tspecroi' => $tspecroi,
+                                'icj' => $icj,
+                                'indcons' => $indcons,
+                                'cons' => $cons,
+                                'feedefic' => $feedefic);
+                $array = array($values);
+                $return = $this->render('bilan/bilanZootechnique.csv.twig', [
+                    'expe' => $expe,
+                    'lot' => $lotExploitation, 
+                    'debut' => $debut->format('d-m-Y'),
+                    'fin' => $fin->format('d-m-Y'),
+                    'array' => $array,
+                ]);
+                $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
+                $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
+            }else{
+                $return = $this->render('bilan/bilanZootechnique.html.twig', [
+                    'idExpe' => $expe->getIdExpe(),
+                    'lots' => $lotsExploitation,
+                    'form' => $form->createView(),
+                    'erreur' => "Valeurs invalides."
+                ]);
             }
-            $values = array('aliment' => $aliment, 
-                            'pds' => $pds,
-                            'nb' =>$nb,
-                            'pdsmort' => $pdsmort,
-                            'nbmort' => $nbmort,
-                            'pmi' => $pmi,
-                            'pmf' => $pmf,
-                            'pdsfin' => $pdsfin,
-                            'nbfin' => $nbfin,
-                            'qad' => $qad,
-                            'gp' => $gp,
-                            'gainind' => $gainind,
-                            'tspecroi' => $tspecroi,
-                            'icj' => $icj,
-                            'indcons' => $indcons,
-                            'cons' => $cons,
-                            'feedefic' => $feedefic);
-            $array = array($values);
-            $return = $this->render('bilan/bilanZootechnique.csv.twig', [
-                'expe' => $expe,
-                'lot' => $lotExploitation, 
-                'debut' => $debut->format('d-m-Y'),
-                'fin' => $fin->format('d-m-Y'),
-                'array' => $array,
-            ]);
-            $fic = 'Bilan Zootechnique '. \date("d-m-Y") . '.csv';
-            $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
             return $return;
         }
         return $this->render('bilan/bilanZootechnique.html.twig', [
             'idExpe' => $expe->getIdExpe(),
             'lots' => $lotsExploitation,
             'form' => $form->createView(),
+            'erreur' => "",
         ]);
     }
 
