@@ -87,7 +87,7 @@ class ExperimentationController extends AbstractController
                     //Donc on prends la liste des releves (prise a partir des indis) et on prends celui avec la date la plus proche
                     $indis = $indiRepo->findByLotForm($lots->getIdLot());
                     $rels = [];
-                    //query les releves
+                    //query les releves du lot
                     foreach($indis as $indi){
                         $rels = $relRepo->findByIndiForm($indi->getIdIndi());
                         foreach($rels as $rel){
@@ -136,10 +136,22 @@ class ExperimentationController extends AbstractController
                         //On assume que les releves sont faits sur les lots entiers
                         //Mais si un des indis n'as pas de mouvement ce jour la alors que l'autre en a un ca plante
                         //Donc on prends le plus proche dans l'intervalle
-                        //Mais s'il n'a pas de mouvements ?
+                        //Mais s'il n'a pas de mouvements ? Alors on prend le plus proche
                         foreach($indis as $i){
-                            $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
-                            $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                            if (isset($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])){
+                                $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                            }else{
+                                $nb += ($mouvRepo->findMouvByIndiAndDateDebut2($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                            }
+                            
+                            if (isset($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])){
+                                $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                            }else{
+                                $nbfin += ($mouvRepo->findMouvByIndiAndDateFin2($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                            }
+                            //echo ($i->getIdIndi()." ".sizeof(($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)))." ");
+                            
+                            //$nbfin = 1;
                         }
 
                         $pds = $nb * $pmi;
