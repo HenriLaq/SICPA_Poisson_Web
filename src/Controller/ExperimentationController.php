@@ -82,19 +82,20 @@ class ExperimentationController extends AbstractController
             if ($data['premier'] != $data['dernier'] && $debut < $fin){
                 //For chaque lot
                 foreach($lotsExploitation as $lots){
-
+                    $idParDate = [];
                     //Le 1er et dernier releves ne sont pas forcement du lot en cours (du 'for') donc on prends le plus proche pour ce lot dans la periode comme debut et fin
                     //Donc on prends la liste des releves (prise a partir des indis) et on prends celui avec la date la plus proche
                     $indis = $indiRepo->findByLotForm($lots->getIdLot());
                     $rels = [];
                     //query les releves du lot
+                    //ca ne prends pas le dernier releve de chaque indiv ??????
                     foreach($indis as $indi){
                         $rels = $relRepo->findByIndiForm($indi->getIdIndi());
                         foreach($rels as $rel){
                             $idParDate[($rel->getDateRelAni())->format('d-m-Y')] = $rel->getIdRelAni();
                         }
                     }
-                    if (sizeof($idParDate)>1){
+                    if (sizeof($idParDate)>1 && sizeof($indis) > 0){
                         $dateApres = DateTime::createFromFormat('d-m-Y', "01-01-3000");
                         $dateAvant = DateTime::createFromFormat('d-m-Y', "01-01-1000");
                         foreach($idParDate as $date => $id){
@@ -138,20 +139,16 @@ class ExperimentationController extends AbstractController
                         //Donc on prends le plus proche dans l'intervalle
                         //Mais s'il n'a pas de mouvements ? Alors on prend le plus proche
                         foreach($indis as $i){
-                            if (isset($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])){
+                            if (sizeof($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut))>0){
                                 $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
                             }else{
                                 $nb += ($mouvRepo->findMouvByIndiAndDateDebut2($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
                             }
-                            
-                            if (isset($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])){
+                            if (sizeof($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin))>0){
                                 $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
                             }else{
                                 $nbfin += ($mouvRepo->findMouvByIndiAndDateFin2($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
                             }
-                            //echo ($i->getIdIndi()." ".sizeof(($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)))." ");
-                            
-                            //$nbfin = 1;
                         }
 
                         $pds = $nb * $pmi;
@@ -169,16 +166,20 @@ class ExperimentationController extends AbstractController
                                 }
                             }
                         }
-                        
+                        $indcons="Invalide.";
+                        $cons = "Invalide." ;
+
                         $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
                         $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
+                        
                         if($qad!=0){
                             $feedefic = round(abs(($pdsmort+$pdsfin)-$pds)/$qad,3);
                         }
+
                         $values = array('aliment' => $aliment, 
                                         'pds' => $pds,
                                         'nb' =>$nb,
-                                        'pdsmort' => $pdsmort,
+                                        'pdsmort' => round($pdsmort,3),
                                         'nbmort' => $nbmort,
                                         'pmi' => $pmi,
                                         'pmf' => $pmf,

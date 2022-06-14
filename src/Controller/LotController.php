@@ -110,8 +110,17 @@ class LotController extends AbstractController
                 //Mais si un des indis n'as pas de mouvement ce jour la alors que l'autre en a un ca plante
                 //Donc on prends le plus proche dans l'intervalle
                 foreach($indis as $i){
-                    $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
-                    $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                    echo " ".$i->getIdIndi();
+                    if (sizeof($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut))>0){
+                        $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                    }else{
+                        $nb += ($mouvRepo->findMouvByIndiAndDateDebut2($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
+                    }
+                    if (sizeof($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin))>0){
+                        $nbfin += ($mouvRepo->findMouvByIndiAndDateFin($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                    }else{
+                        $nbfin += ($mouvRepo->findMouvByIndiAndDateFin2($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
+                    }
                 }
 
                 $pds = $nb * $pmi;
@@ -139,7 +148,7 @@ class LotController extends AbstractController
                 $values = array('aliment' => $aliment, 
                                 'pds' => $pds,
                                 'nb' =>$nb,
-                                'pdsmort' => $pdsmort,
+                                'pdsmort' => round($pdsmort,3),
                                 'nbmort' => $nbmort,
                                 'pmi' => $pmi,
                                 'pmf' => $pmf,
