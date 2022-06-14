@@ -60,11 +60,16 @@ class ExperimentationController extends AbstractController
             foreach($indis as $indi){
                 $rels = $relRepo->findByIndiForm($indi->getIdIndi());
                 foreach($rels as $rel){
-                    $idParDate[($rel->getDateRelAni())->format('d-m-Y')] = $rel->getIdRelAni();
+                    $idParDate[($rel->getDateRelAni())->format('Y-m-d')] = $rel->getIdRelAni();
                 }
             }
         }
-
+        ksort($idParDate);
+        foreach($idParDate as $date => $id){
+            $date2 = substr($date, 8, 10).substr($date, 4, 4).substr($date, 0, 4);
+            $idParDate[$date2] = $idParDate[$date];
+            unset($idParDate[$date]);
+        }
         //construire le form
         $form = $this->createFormBuilder()
             ->add('premier', ChoiceType::class, ['label' => 'Premier relevé', 'choices' => ['Date' => $idParDate]])
@@ -90,11 +95,13 @@ class ExperimentationController extends AbstractController
                     //query les releves du lot
                     //ca ne prends pas le dernier releve de chaque indiv ??????
                     foreach($indis as $indi){
-                        $rels = $relRepo->findByIndiForm($indi->getIdIndi());
+                        $rels = $relRepo->findRelByIndiAndDates($indi->getIdIndi(), $debut, $fin);
+                        echo (" ; ".$rels[sizeof($rels)-1]->getValeurRelAni());
                         foreach($rels as $rel){
                             $idParDate[($rel->getDateRelAni())->format('d-m-Y')] = $rel->getIdRelAni();
                         }
                     }
+                    //Si le lot a au moins deux releves et un indi dans cette peridoe
                     if (sizeof($idParDate)>1 && sizeof($indis) > 0){
                         $dateApres = DateTime::createFromFormat('d-m-Y', "01-01-3000");
                         $dateAvant = DateTime::createFromFormat('d-m-Y', "01-01-1000");
@@ -149,14 +156,9 @@ class ExperimentationController extends AbstractController
                             }else{
                                 $nbfin += ($mouvRepo->findMouvByIndiAndDateFin2($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
                             }
-                        }
 
-                        $pds = $nb * $pmi;
-                        
-                        $pdsfin = $nbfin * $pmf;
-                        //calcul des effectifs morts avec les donnees de mouvements
-                        //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
-                        foreach($indis as $i){
+                            //calcul des effectifs morts avec les donnees de mouvements
+                            //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
                             $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
                             foreach($mouvs as $m){
                                 $nbmort += $m->getEffectifMouvement();
@@ -166,6 +168,11 @@ class ExperimentationController extends AbstractController
                                 }
                             }
                         }
+
+                        $pds = $nb * $pmi;
+                        
+                        $pdsfin = $nbfin * $pmf;
+                        
                         $indcons="Invalide.";
                         $cons = "Invalide." ;
 

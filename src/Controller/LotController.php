@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\LotExploitation;
 use App\Entity\ExperimentationExploitation;
 use App\Repository\LotExploitationRepository;
@@ -55,17 +56,20 @@ class LotController extends AbstractController
         $lotsExploitation = $lotExploitationRepository->find($lotExploitation->getIdLotExploitation());
         $indis = $indiRepo->findByLotForm($lotsExploitation->getIdLot());
         $rels = [];
-        $relsSepares = [];
         $idParDate = [];
         //query les releves
         foreach($indis as $indi){
             $rels = $relRepo->findByIndiForm($indi->getIdIndi());
             foreach($rels as $rel){
-                array_push($relsSepares, $rel);
-                $idParDate[($rel->getDateRelAni())->format('d-m-Y')] = $rel->getIdRelAni();
+                $idParDate[($rel->getDateRelAni())->format('Y-m-d')] = $rel->getIdRelAni();
             }
         }
-
+        ksort($idParDate);
+        foreach($idParDate as $date => $id){
+            $date2 = substr($date, 8, 10).substr($date, 4, 4).substr($date, 0, 4);
+            $idParDate[$date2] = $idParDate[$date];
+            unset($idParDate[$date]);
+        }
         //construire le form
         $form = $this->createFormBuilder()
             ->add('premier', ChoiceType::class, ['label' => 'Premier relevé', 'choices' => ['Date' => $idParDate]])
@@ -110,7 +114,6 @@ class LotController extends AbstractController
                 //Mais si un des indis n'as pas de mouvement ce jour la alors que l'autre en a un ca plante
                 //Donc on prends le plus proche dans l'intervalle
                 foreach($indis as $i){
-                    echo " ".$i->getIdIndi();
                     if (sizeof($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut))>0){
                         $nb += ($mouvRepo->findMouvByIndiAndDateDebut($i->getIdIndi(), $debut)[0])->getNouvelEffectif();
                     }else{
@@ -121,14 +124,9 @@ class LotController extends AbstractController
                     }else{
                         $nbfin += ($mouvRepo->findMouvByIndiAndDateFin2($i->getIdIndi(), $fin)[0])->getNouvelEffectif();
                     }
-                }
 
-                $pds = $nb * $pmi;
-                
-                $pdsfin = $nbfin * $pmf;
-                //calcul des effectifs morts avec les donnees de mouvements
-                //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
-                foreach($indis as $i){
+                    //calcul des effectifs morts avec les donnees de mouvements
+                    //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
                     $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
                     foreach($mouvs as $m){
                         $nbmort += $m->getEffectifMouvement();
@@ -136,9 +134,11 @@ class LotController extends AbstractController
                         if (sizeof($pdsmortTemp)>0){
                             $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
                         }
-                        
                     }
                 }
+
+                $pds = $nb * $pmi;
+                $pdsfin = $nbfin * $pmf;
 
                 $indcons = round( $qad/(($pdsfin+$pdsmort)-$pds) , 3);
                 $cons = round( abs($qad)*100/((($pdsfin+$pds)/2)*$joursEcart) , 3);
