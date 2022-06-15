@@ -132,7 +132,7 @@ class LotController extends AbstractController
                         $nbmort += $m->getEffectifMouvement();
                         $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
                         if (sizeof($pdsmortTemp)>0){
-                            $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+                            $pdsmort += $pdsmortTemp[0]->getValeurRelAni();
                         }
                     }
                 }
