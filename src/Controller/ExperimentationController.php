@@ -93,10 +93,8 @@ class ExperimentationController extends AbstractController
                     $indis = $indiRepo->findByLotForm($lots->getIdLot());
                     $rels = [];
                     //query les releves du lot
-                    //ca ne prends pas le dernier releve de chaque indiv ??????
                     foreach($indis as $indi){
                         $rels = $relRepo->findRelByIndiAndDates($indi->getIdIndi(), $debut, $fin);
-                        echo (" ; ".$rels[sizeof($rels)-1]->getValeurRelAni());
                         foreach($rels as $rel){
                             $idParDate[($rel->getDateRelAni())->format('d-m-Y')] = $rel->getIdRelAni();
                         }
@@ -106,7 +104,8 @@ class ExperimentationController extends AbstractController
                         $dateApres = DateTime::createFromFormat('d-m-Y', "01-01-3000");
                         $dateAvant = DateTime::createFromFormat('d-m-Y', "01-01-1000");
                         foreach($idParDate as $date => $id){
-                            $date = DateTime::createFromFormat('d-m-Y', $date);
+                            //temps a zero pour pouvoir bien comparer
+                            $date = DateTime::createFromFormat('d-m-Y', $date)->setTime(0,0,0);
                             if ($date >= $debut && $date < $fin && $date < $dateApres){
                                 $pmi = $relRepo->findByRelId($id)[0]->getValeurRelAni();
                                 $dateApres = $date;
@@ -158,13 +157,13 @@ class ExperimentationController extends AbstractController
                             }
 
                             //calcul des effectifs morts avec les donnees de mouvements
-                            //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et * le poids.
+                            //pour les indivs. On prends les mouvs entre 2 dates. pour les mouvs on ajoute les mortalites, et les biomasses theoriques de sortie
                             $mouvs = $mouvRepo->findMouvByIndiAndTwoDates($i->getIdIndi(), $debut, $fin);
                             foreach($mouvs as $m){
                                 $nbmort += $m->getEffectifMouvement();
                                 $pdsmortTemp = $relRepo->findRelByMouvForm($m->getIdMouvement());
                                 if (sizeof($pdsmortTemp)>0){
-                                    $pdsmort += $nbmort * $pdsmortTemp[0]->getValeurRelAni();
+                                    $pdsmort += $pdsmortTemp[0]->getValeurRelAni();
                                 }
                             }
                         }

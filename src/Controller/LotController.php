@@ -57,7 +57,7 @@ class LotController extends AbstractController
         $indis = $indiRepo->findByLotForm($lotsExploitation->getIdLot());
         $rels = [];
         $idParDate = [];
-        //query les releves
+        //query les releves, puis trier par date au bon format
         foreach($indis as $indi){
             $rels = $relRepo->findByIndiForm($indi->getIdIndi());
             foreach($rels as $rel){
