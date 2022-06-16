@@ -161,7 +161,8 @@ class LotController extends AbstractController
                                 'icj' => $icj,
                                 'indcons' => $indcons,
                                 'cons' => $cons,
-                                'feedefic' => $feedefic);
+                                'feedefic' => $feedefic,
+                                'lotId' => $lotExploitation->getNomLot());
                 $array = array($values);
                 $return = $this->render('bilan/bilanZootechnique.csv.twig', [
                     'expe' => $expe,

@@ -99,7 +99,7 @@ class ExperimentationController extends AbstractController
                             $idParDate[($rel->getDateRelAni())->format('d-m-Y')] = $rel->getIdRelAni();
                         }
                     }
-                    //Si le lot a au moins deux releves et un indi dans cette peridoe
+                    //Si le lot a au moins deux releves et un indi dans cette periode
                     if (sizeof($idParDate)>1 && sizeof($indis) > 0){
                         $dateApres = DateTime::createFromFormat('d-m-Y', "01-01-3000");
                         $dateAvant = DateTime::createFromFormat('d-m-Y', "01-01-1000");
@@ -198,7 +198,8 @@ class ExperimentationController extends AbstractController
                                         'icj' => $icj,
                                         'indcons' => $indcons,
                                         'cons' => $cons,
-                                        'feedefic' => $feedefic);
+                                        'feedefic' => $feedefic,
+                                        'lotId' => $lots->getNomLot());
                         array_push($array, $values);
                     }
                 }
