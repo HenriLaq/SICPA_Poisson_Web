@@ -1,0 +1,6 @@
+Lot : {{ nomLot }};
+
+Date;Temperature;Poids reel; Poids theorique;
+{% for c in courbe %}
+    {{ c.datePoint ? c.datePoint|date('d-m-Y') : '' }};{{ c.temperature }};{{ c.poidsReel }};{{ c.poidsPrevu }};
+{% endfor %}

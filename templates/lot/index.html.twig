@@ -27,7 +27,8 @@
 					<th class="hidden">Fin</th>
 					<th>Bassin</th>
 					<!--<th>Paramètre croissance</th><th>Aliment Actuel</th>-->
-					<th class="notexport">actions</th>
+					<th class="notexport">Actions</th>
+					<th class="notexport">Bilans</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -61,7 +62,10 @@
 							<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les individus</a>
 							<a href="{{ path('mouvement_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir les interventions</a>
 							<a href="{{ path('alimentation_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Voir l'alimentation</a>
+						</td>
+						<td class="col-sm-2">
 							<a href="{{ path('lot_form', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" style="margin:3px;" class="btn btn-primary">Bilan Zootechnique</a>
+							<a href="{{ path('lot_courbe', {'idLot': lot.idLot, 'idExpe': idExpe}) }}" class="btn btn-primary">Export des courbes</a>
 						</td>
 					</tr>
 					

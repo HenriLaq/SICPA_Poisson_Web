@@ -49,6 +49,21 @@ class LotController extends AbstractController
     }
 
     /**
+     * @Route("/experimentation/{idExpe}/lot/{idLot}/courbe", name="lot_courbe")
+     */
+    public function exportCourbe(Request $request, ExperimentationExploitation $expe, LotExploitation  $lot, CourbePrevisionnelleRepository $courbeRepo): Response
+    {
+        $courbe = $courbeRepo->findCourbeByLot($lot->getIdLot());
+        $return = $this->render('lot/exportCourbe.csv.twig', [
+            'courbe' => $courbe,
+            'nomLot' => $lot->getNomLot(),
+        ]);
+        $fic = 'Courbes prévisionnelles '. \date("d-m-Y") . '.csv';
+        $return->headers->set('Content-Disposition','attachment; filename="'.$fic.'"');
+        return $return;
+    }
+
+    /**
      * @Route("/experimentation/{idExpe}/lot/{idLot}/form", name="lot_form")
      */
     public function form(Request $request,MouvementExploitationRepository $mouvRepo ,AlimentationExploitationRepository $alimRepo,ExperimentationExploitation $expe, LotExploitationRepository $lotExploitationRepository, LotExploitation  $lotExploitation, IndividuExploitationRepository $indiRepo, ReleveAnimalExploitationRepository $relRepo): Response
