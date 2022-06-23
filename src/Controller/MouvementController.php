@@ -27,17 +27,11 @@ class MouvementController extends AbstractController
         AND $user->getFinEstMembre() == null){
 
             $mouvements = $mouvementExploitationRepository->findHistoByLot($lot->getIdLot());
-            $releves = [];
-            foreach ($mouvements as $mouvement){
-                if (sizeof($relAniRepo->findRelByMouv($mouvement->getIdMouvement())) != 0){
-                    array_push($releves, $relAniRepo->findOneRelByMouv($mouvement->getIdMouvement()));
-                }
-            }
+
             return $this->render('mouvement/index.html.twig', [
                 'idExpe' => $expe->getIdExpe(),
                 'lot' => $lot,
                 'mouvements' => $mouvements,
-                'releves' => $releves
             ]);
             
         }else{

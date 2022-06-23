@@ -33,6 +33,7 @@
 					<th>Informations</th>
 					<th>Bassin</th>
 					<th>Relevé associé</th>
+					<th>Valeur du relevé </th>
 					<th>Individu</th>
 				</tr>
 			</thead>
@@ -49,11 +50,10 @@
 						<td>{{ mouvement.infoMouv }}</td>
 						<td>{{ mouvement.nomBassin }}</td>
 						<td>
-							{% for releve in releves %}
-								{% if releve.idMouvement == mouvement.idMouvement %}
-									{{ releve.libTypeRelAni }}: {{ releve.valeurRelAni|round(2) }}
-								{% endif %}
-							{% endfor %}
+							{{mouvement.libTypeRelAni}}
+						</td>
+						<td>
+							{{mouvement.valeurRelAni}}
 						</td>
 						<td>{#<a href="{{ path('individu_index', {'idLot': lot.idLot, 'idExpe': idExpe}) }}">{{ mouvement.identifiantIndi }}</a>#}{{ mouvement.identifiantIndi }}</td>
 					</tr>
