@@ -37,7 +37,7 @@ class AlimentationController extends AbstractController
                 foreach ($alimentations as $alimentation) {
                     $semaines[$i] = $alimentation->getDateConditionAlim()->format("W-Y");
                     $semainesAffiche[$i] = $alimentation->getDateConditionAlim()->format("W");
-    
+
                     //Si on change de semaine
                     if ($enCours != $semaines[$i]) {
                         $enCours = $semaines[$i];

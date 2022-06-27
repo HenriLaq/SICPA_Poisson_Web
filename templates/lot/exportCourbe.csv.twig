@@ -1,4 +1,4 @@
-Lot : {{ nomLot }};
+Lot : {{ nomLot|convert_encoding('ISO-8859-1', 'UTF-8')|raw }};
 
 Date;Temperature;Poids reel; Poids theorique;
 {% for c in courbe %}

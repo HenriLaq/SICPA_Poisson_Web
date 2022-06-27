@@ -33,8 +33,9 @@
 					<th>Nom Aliment</th>
 					<th>Granulométrie Aliment</th>
 					<th>Coeff Aliment</th>
+					<th>Taux de Rationnement</th>
 					<th>Qtt Ingérée par semaine</th>
-					<th>Changement d'aliment</th>
+					<th>Changement d'alimentation</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,6 +54,7 @@
 							<td>{{ alimentation.nomAliment }}</td>
 							<td>{{ alimentation.granulometrieAliment }}</td>
 							<td>{{ alimentation.coeffAlim }}</td>
+							<td>{{ alimentation.tauxRationnement }}</td>
 							<td>
 								{% if qtt[semaines[i]] != 0 %}
 									{{ qtt[semaines[i]]|round(2) }}g
@@ -76,6 +78,7 @@
 								<td>{{ alimentation.nomAliment }}</td>
 								<td>{{ alimentation.granulometrieAliment }}</td>
 								<td>{{ alimentation.coeffAlim }}</td>
+								<td>{{ alimentation.tauxRationnement }}</td>
 								<td>
 									{% if qtt[semaines[i]] != 0 %}
 										{{ qtt[semaines[i]]|round(2) }}g
