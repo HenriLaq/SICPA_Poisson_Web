@@ -20,23 +20,6 @@ class SecurityController extends AbstractController
      */
     public function login(EntityManagerInterface $entityManager, Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
-        /* AVANT LE COPIE COLLE
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-        */
-
-        // $user = new User();
-        // $entityManager->persist($user);
-        // $entityManager->flush();
-
         $username = $request->request->get('username');
         $password = $request->request->get('password');
         //Récupération des credentials
