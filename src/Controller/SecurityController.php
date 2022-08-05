@@ -20,6 +20,7 @@ class SecurityController extends AbstractController
      */
     public function login(EntityManagerInterface $entityManager, Request $request, AuthenticationUtils $authenticationUtils): Response
     {
+        /*
         $username = $request->request->get('username');
         $password = $request->request->get('password');
         //Récupération des credentials
@@ -82,13 +83,24 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('experimentation_index');
         }
 
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        */
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        if (isset($_SERVER['REMOTE_USER'])) {
+            //Est ce qu'il y a besoin de set user ou token ?
+            return $this->redirectToRoute('experimentation_index', array('last_username' => $lastUsername, 'error' => $error));
+        }else{
+            // return $this->redirect('https://authentification.preproduction.inrae.fr/');
+            return $this->redirectToRoute('experimentation_index');
+        }
     }
 
     /**

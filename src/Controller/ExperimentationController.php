@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ExperimentationController extends AbstractController
 {
     /**
-     * @Route("/", name="experimentation_index")
+     * @Route("/experimentation", name="experimentation_index")
      */
     public function index(ExperimentationExploitationRepository $experimentationExploitationRepository, LotExploitationRepository $lotRepo): Response
     {
@@ -41,6 +41,7 @@ class ExperimentationController extends AbstractController
         return $this->render('experimentation/index.html.twig', [
             'experimentations' => $experimentations,
             'lotsParExpe' => $lotsParExpe,
+            'remote_user' => $_SERVER['REMOTE_USER'],
         ]);
     }
 
